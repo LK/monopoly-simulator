@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>10</zoom_level>
+  <zoom_level>9</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>330</x>
-      <y>520</y>
-      <w>80</w>
-      <h>30</h>
+      <x>279</x>
+      <y>468</y>
+      <w>72</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Player1
 bg=red
@@ -17,10 +17,10 @@ bg=red
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>430</x>
-      <y>520</y>
-      <w>80</w>
-      <h>30</h>
+      <x>369</x>
+      <y>468</y>
+      <w>72</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Player2
 bg=red
@@ -30,10 +30,10 @@ bg=red
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>530</x>
-      <y>520</y>
-      <w>80</w>
-      <h>30</h>
+      <x>459</x>
+      <y>468</y>
+      <w>72</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Player3
 bg=red
@@ -43,12 +43,12 @@ bg=red
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>190</x>
-      <y>520</y>
-      <w>70</w>
-      <h>30</h>
+      <x>144</x>
+      <y>468</y>
+      <w>81</w>
+      <h>27</h>
     </coordinates>
-    <panel_attributes>Board
+    <panel_attributes>GameState
 bg=yellow
 </panel_attributes>
     <additional_attributes/>
@@ -56,10 +56,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>100</x>
-      <y>520</y>
-      <w>70</w>
-      <h>30</h>
+      <x>63</x>
+      <y>468</y>
+      <w>63</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Engine
 bg=yellow
@@ -69,10 +69,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>690</x>
-      <y>520</y>
-      <w>70</w>
-      <h>30</h>
+      <x>603</x>
+      <y>468</y>
+      <w>63</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Color
 bg=blue
@@ -83,10 +83,10 @@ fg=white
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>780</x>
-      <y>520</y>
-      <w>80</w>
-      <h>30</h>
+      <x>684</x>
+      <y>468</y>
+      <w>72</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Non-color
 bg=blue
@@ -97,10 +97,10 @@ fg=white</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>880</x>
-      <y>520</y>
-      <w>70</w>
-      <h>30</h>
+      <x>774</x>
+      <y>468</y>
+      <w>63</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Card
 bg=blue
@@ -111,10 +111,10 @@ fg=white</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1060</x>
-      <y>520</y>
-      <w>70</w>
-      <h>30</h>
+      <x>936</x>
+      <y>468</y>
+      <w>63</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Go to jail
 bg=blue
@@ -125,10 +125,10 @@ fg=white</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1150</x>
-      <y>520</y>
-      <w>90</w>
-      <h>30</h>
+      <x>1017</x>
+      <y>468</y>
+      <w>81</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Free space
 bg=blue
@@ -139,10 +139,10 @@ fg=white</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>970</x>
-      <y>520</y>
-      <w>70</w>
-      <h>30</h>
+      <x>855</x>
+      <y>468</y>
+      <w>63</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Tax
 bg=blue
@@ -153,131 +153,131 @@ fg=white</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>120</x>
-      <y>540</y>
-      <w>30</w>
-      <h>1470</h>
+      <x>90</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1638</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;1450.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1800.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>210</x>
-      <y>540</y>
-      <w>30</w>
-      <h>1480</h>
+      <x>171</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1638</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;1460.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1800.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>360</x>
-      <y>540</y>
-      <w>30</w>
-      <h>1490</h>
+      <x>306</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1638</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;1470.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1800.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>470</x>
-      <y>540</y>
-      <w>30</w>
-      <h>1480</h>
+      <x>405</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1629</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;1460.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1790.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>570</x>
-      <y>540</y>
-      <w>30</w>
-      <h>1480</h>
+      <x>495</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1629</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;1460.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1790.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>710</x>
-      <y>540</y>
-      <w>30</w>
-      <h>1480</h>
+      <x>621</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1629</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;1460.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1790.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>810</x>
-      <y>540</y>
-      <w>30</w>
-      <h>1490</h>
+      <x>711</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1629</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;1470.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1790.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>910</x>
-      <y>540</y>
-      <w>30</w>
-      <h>1490</h>
+      <x>801</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1629</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;1470.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1790.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1000</x>
-      <y>540</y>
-      <w>30</w>
-      <h>1500</h>
+      <x>882</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1629</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;1480.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1790.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1090</x>
-      <y>540</y>
-      <w>30</w>
-      <h>1490</h>
+      <x>963</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1629</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;1470.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1790.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1180</x>
-      <y>540</y>
-      <w>30</w>
-      <h>1500</h>
+      <x>1044</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1629</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;1480.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1790.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>560</y>
-      <w>40</w>
-      <h>30</h>
+      <x>81</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -287,10 +287,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>200</x>
-      <y>560</y>
-      <w>40</w>
-      <h>30</h>
+      <x>162</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -300,10 +300,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>350</x>
-      <y>560</y>
-      <w>40</w>
-      <h>30</h>
+      <x>297</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=red
@@ -313,10 +313,10 @@ bg=red
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>460</x>
-      <y>560</y>
-      <w>40</w>
-      <h>30</h>
+      <x>396</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=red
@@ -326,10 +326,10 @@ bg=red
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>560</x>
-      <y>560</y>
-      <w>40</w>
-      <h>30</h>
+      <x>486</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=red
@@ -339,10 +339,10 @@ bg=red
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>700</x>
-      <y>560</y>
-      <w>40</w>
-      <h>30</h>
+      <x>612</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=blue
@@ -352,10 +352,10 @@ bg=blue
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>800</x>
-      <y>560</y>
-      <w>40</w>
-      <h>30</h>
+      <x>702</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=blue
@@ -365,10 +365,10 @@ bg=blue
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>900</x>
-      <y>560</y>
-      <w>40</w>
-      <h>30</h>
+      <x>792</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=blue
@@ -378,10 +378,10 @@ bg=blue
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>990</x>
-      <y>560</y>
-      <w>40</w>
-      <h>30</h>
+      <x>873</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=blue
@@ -391,10 +391,10 @@ bg=blue
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1080</x>
-      <y>560</y>
-      <w>40</w>
-      <h>30</h>
+      <x>954</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=blue
@@ -404,10 +404,10 @@ bg=blue
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1170</x>
-      <y>560</y>
-      <w>40</w>
-      <h>30</h>
+      <x>1035</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=blue
@@ -417,10 +417,10 @@ bg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>460</x>
-      <y>450</y>
-      <w>240</w>
-      <h>30</h>
+      <x>396</x>
+      <y>405</y>
+      <w>216</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;220.0;10.0</additional_attributes>
@@ -428,10 +428,10 @@ bg=blue
   <element>
     <id>Text</id>
     <coordinates>
-      <x>150</x>
-      <y>460</y>
-      <w>150</w>
-      <h>30</h>
+      <x>117</x>
+      <y>414</y>
+      <w>135</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>void method()
 style=wordwrap</panel_attributes>
@@ -440,22 +440,22 @@ style=wordwrap</panel_attributes>
   <element>
     <id>Text</id>
     <coordinates>
-      <x>150</x>
-      <y>640</y>
-      <w>130</w>
-      <h>30</h>
+      <x>144</x>
+      <y>639</y>
+      <w>144</w>
+      <h>27</h>
     </coordinates>
-    <panel_attributes>void roll(player)
+    <panel_attributes>void roll(playerNum)
 style=wordwrap</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>620</y>
-      <w>40</w>
-      <h>30</h>
+      <x>81</x>
+      <y>558</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -463,46 +463,24 @@ bg=yellow
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>140</x>
-      <y>620</y>
-      <w>1240</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>1220.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>Text</id>
     <coordinates>
-      <x>590</x>
-      <y>600</y>
-      <w>120</w>
-      <h>30</h>
+      <x>144</x>
+      <y>567</y>
+      <w>108</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>void initialize()
 style=wordwrap</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>140</x>
-      <y>670</y>
-      <w>80</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>670</y>
-      <w>40</w>
-      <h>30</h>
+      <x>81</x>
+      <y>630</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -512,10 +490,10 @@ bg=yellow
   <element>
     <id>Text</id>
     <coordinates>
-      <x>460</x>
-      <y>960</y>
-      <w>200</w>
-      <h>30</h>
+      <x>369</x>
+      <y>954</y>
+      <w>216</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>boolean willBuy(property)
 style=wordwrap</panel_attributes>
@@ -524,10 +502,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>100</x>
-      <y>1220</y>
-      <w>670</w>
-      <h>460</h>
+      <x>72</x>
+      <y>1224</y>
+      <w>1161</w>
+      <h>405</h>
     </coordinates>
     <panel_attributes>else if owned
 --
@@ -537,10 +515,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>90</x>
-      <y>1740</y>
-      <w>1180</w>
-      <h>230</h>
+      <x>63</x>
+      <y>1656</y>
+      <w>1188</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>else if player landed on card
 --
@@ -550,10 +528,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>700</x>
-      <y>880</y>
-      <w>40</w>
-      <h>30</h>
+      <x>612</x>
+      <y>837</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=blue
@@ -563,10 +541,10 @@ bg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
-      <y>890</y>
-      <w>580</w>
-      <h>30</h>
+      <x>108</x>
+      <y>846</y>
+      <w>522</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>560.0;10.0;10.0;10.0</additional_attributes>
@@ -574,10 +552,10 @@ bg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>470</x>
-      <y>470</y>
-      <w>220</w>
-      <h>30</h>
+      <x>405</x>
+      <y>423</y>
+      <w>198</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>200.0;10.0;10.0;10.0</additional_attributes>
@@ -585,10 +563,10 @@ bg=blue
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>880</y>
-      <w>40</w>
-      <h>30</h>
+      <x>81</x>
+      <y>837</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -598,22 +576,22 @@ bg=yellow
   <element>
     <id>Text</id>
     <coordinates>
-      <x>350</x>
-      <y>870</y>
-      <w>120</w>
-      <h>30</h>
+      <x>297</x>
+      <y>828</y>
+      <w>144</w>
+      <h>27</h>
     </coordinates>
-    <panel_attributes>void land()
+    <panel_attributes>void landed(player)
 style=wordwrap</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>700</x>
-      <y>980</y>
-      <w>40</w>
-      <h>30</h>
+      <x>612</x>
+      <y>972</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=blue
@@ -623,10 +601,10 @@ bg=blue
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1280</x>
-      <y>850</y>
-      <w>140</w>
-      <h>70</h>
+      <x>1251</x>
+      <y>882</y>
+      <w>126</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>This process is the same for Non-color as well
 bg=pink
@@ -636,10 +614,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>350</x>
-      <y>980</y>
-      <w>40</w>
-      <h>30</h>
+      <x>297</x>
+      <y>972</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=red
@@ -649,10 +627,10 @@ bg=red
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>380</x>
-      <y>980</y>
-      <w>340</w>
-      <h>30</h>
+      <x>324</x>
+      <y>972</y>
+      <w>306</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;320.0;10.0</additional_attributes>
@@ -660,34 +638,34 @@ bg=red
   <element>
     <id>Text</id>
     <coordinates>
-      <x>300</x>
-      <y>1070</y>
-      <w>210</w>
-      <h>30</h>
+      <x>252</x>
+      <y>1116</y>
+      <w>225</w>
+      <h>27</h>
     </coordinates>
-    <panel_attributes>void setOwnerTo(player)
+    <panel_attributes>void setOwner(property, player)
 style=wordwrap</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Text</id>
     <coordinates>
-      <x>500</x>
-      <y>1000</y>
-      <w>150</w>
-      <h>30</h>
+      <x>405</x>
+      <y>990</y>
+      <w>90</w>
+      <h>27</h>
     </coordinates>
-    <panel_attributes>&lt;answer&gt;
+    <panel_attributes>&lt;willBuy&gt;
 style=wordwrap</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>380</x>
-      <y>990</y>
-      <w>340</w>
-      <h>30</h>
+      <x>324</x>
+      <y>981</y>
+      <w>306</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>320.0;10.0;10.0;10.0</additional_attributes>
@@ -695,12 +673,12 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>100</x>
-      <y>1370</y>
-      <w>460</w>
-      <h>100</h>
+      <x>72</x>
+      <y>1422</y>
+      <w>414</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>if canAfford == true
+    <panel_attributes>if playerPaid
 --
 </panel_attributes>
     <additional_attributes/>
@@ -708,10 +686,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>700</x>
-      <y>1080</y>
-      <w>40</w>
-      <h>30</h>
+      <x>612</x>
+      <y>1125</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=blue
@@ -721,22 +699,22 @@ bg=blue
   <element>
     <id>Text</id>
     <coordinates>
-      <x>270</x>
-      <y>460</y>
-      <w>150</w>
-      <h>30</h>
+      <x>225</x>
+      <y>414</y>
+      <w>81</w>
+      <h>27</h>
     </coordinates>
-    <panel_attributes>void method()
+    <panel_attributes>&lt;return&gt;
 style=wordwrap</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>700</x>
-      <y>1270</y>
-      <w>40</w>
-      <h>30</h>
+      <x>612</x>
+      <y>1278</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=blue
@@ -744,47 +722,34 @@ bg=blue
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLClass</id>
+    <id>Relation</id>
     <coordinates>
-      <x>200</x>
-      <y>670</y>
-      <w>40</w>
-      <h>30</h>
+      <x>621</x>
+      <y>396</y>
+      <w>63</w>
+      <h>72</h>
     </coordinates>
-    <panel_attributes>
-bg=yellow
-</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;60.0;50.0;60.0;50.0;10.0;20.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>710</x>
-      <y>440</y>
-      <w>70</w>
-      <h>80</h>
+      <x>189</x>
+      <y>1134</y>
+      <w>441</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;30.0;10.0;60.0;50.0;60.0;50.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>140</x>
-      <y>1090</y>
-      <w>580</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;560.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;470.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>1080</y>
-      <w>40</w>
-      <h>30</h>
+      <x>162</x>
+      <y>1125</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -794,12 +759,12 @@ bg=yellow
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>380</x>
-      <y>700</y>
-      <w>210</w>
-      <h>90</h>
+      <x>315</x>
+      <y>738</y>
+      <w>189</w>
+      <h>81</h>
     </coordinates>
-    <panel_attributes>Whenever the board state is changed, notify all players - see decision-making seq. diag.
+    <panel_attributes>Whenever the GameState is changed, notify all players - see decision-making seq. diag.
 bg=pink
 style=wordwrap</panel_attributes>
     <additional_attributes/>
@@ -807,10 +772,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>320</x>
-      <y>930</y>
-      <w>450</w>
-      <h>110</h>
+      <x>270</x>
+      <y>927</y>
+      <w>963</w>
+      <h>162</h>
     </coordinates>
     <panel_attributes>if unowned
 --
@@ -820,10 +785,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>1270</y>
-      <w>40</w>
-      <h>30</h>
+      <x>81</x>
+      <y>1278</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -833,10 +798,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
-      <y>1270</y>
-      <w>580</w>
-      <h>30</h>
+      <x>108</x>
+      <y>1278</y>
+      <w>522</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;560.0;10.0</additional_attributes>
@@ -844,10 +809,10 @@ bg=yellow
   <element>
     <id>Text</id>
     <coordinates>
-      <x>300</x>
-      <y>1250</y>
-      <w>280</w>
-      <h>30</h>
+      <x>252</x>
+      <y>1260</y>
+      <w>252</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>void chargeRentOn(player, amount)
 style=wordwrap</panel_attributes>
@@ -856,12 +821,12 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>950</x>
-      <y>1800</y>
-      <w>390</w>
-      <h>80</h>
+      <x>837</x>
+      <y>1683</y>
+      <w>333</w>
+      <h>72</h>
     </coordinates>
-    <panel_attributes>Other examples:
+    <panel_attributes>Procedure is similar to above. Other examples:
 - Collect $50 from each player, give to Player1
 - Add to Player1's "Get out of jail free" card count
 bg=pink
@@ -871,23 +836,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>90</x>
-      <y>840</y>
-      <w>1180</w>
-      <h>900</h>
-    </coordinates>
-    <panel_attributes>if player landed on property
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>900</x>
-      <y>1840</y>
-      <w>40</w>
-      <h>30</h>
+      <x>792</x>
+      <y>1710</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=blue
@@ -897,10 +849,10 @@ bg=blue
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>1840</y>
-      <w>40</w>
-      <h>30</h>
+      <x>81</x>
+      <y>1710</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -910,10 +862,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
-      <y>1850</y>
-      <w>780</w>
-      <h>30</h>
+      <x>108</x>
+      <y>1719</y>
+      <w>702</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;760.0;10.0</additional_attributes>
@@ -921,73 +873,24 @@ bg=yellow
   <element>
     <id>Text</id>
     <coordinates>
-      <x>430</x>
-      <y>1830</y>
-      <w>400</w>
-      <h>30</h>
+      <x>360</x>
+      <y>1701</y>
+      <w>360</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>e.g. tax(player, amount), movePlayerTo(square), etc.
 style=wordwrap</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>900</x>
-      <y>1780</y>
-      <w>40</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>
-bg=blue
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>140</x>
-      <y>1790</y>
-      <w>780</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>760.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>110</x>
-      <y>1780</y>
-      <w>40</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>
-bg=yellow
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Text</id>
-    <coordinates>
-      <x>350</x>
-      <y>1770</y>
-      <w>120</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>void land()
-style=wordwrap</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>780</x>
-      <y>1220</y>
-      <w>440</w>
-      <h>110</h>
+      <x>657</x>
+      <y>1269</y>
+      <w>423</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>Maybe have a central chargeMoneyTo(player) method, and have several wrapper methods that call the central one and describe the purpose of charging money.
+    <panel_attributes>TODO - Decide: Maybe have a central chargeMoneyTo(player) method, and have several wrapper methods that call the central one and describe the purpose of charging money.
 e.g. chargeRentOn(player) ---&gt; chargeMoneyOn(player) is used to describe paying rent specifically.
 bg=pink
 style=wordwrap</panel_attributes>
@@ -996,23 +899,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>1130</y>
-      <w>40</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>
-bg=yellow
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>80</x>
+      <x>54</x>
       <y>0</y>
-      <w>1190</w>
-      <h>410</h>
+      <w>1071</w>
+      <h>369</h>
     </coordinates>
     <panel_attributes>if player landed on property
 --
@@ -1020,35 +910,12 @@ bg=yellow
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLInterface</id>
-    <coordinates>
-      <x>290</x>
-      <y>1130</y>
-      <w>60</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes>*Notify*
-bg=orange</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>140</x>
-      <y>1140</y>
-      <w>190</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>170.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>730</y>
-      <w>40</w>
-      <h>30</h>
+      <x>81</x>
+      <y>747</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -1058,10 +925,10 @@ bg=yellow
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>290</x>
-      <y>730</y>
-      <w>60</w>
-      <h>70</h>
+      <x>243</x>
+      <y>747</y>
+      <w>54</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>*Notify*
 bg=orange</panel_attributes>
@@ -1070,10 +937,10 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
-      <y>740</y>
-      <w>190</w>
-      <h>30</h>
+      <x>108</x>
+      <y>756</y>
+      <w>171</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>170.0;10.0;10.0;10.0</additional_attributes>
@@ -1081,10 +948,10 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>1600</y>
-      <w>40</w>
-      <h>30</h>
+      <x>81</x>
+      <y>1773</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -1094,10 +961,10 @@ bg=yellow
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>290</x>
-      <y>1600</y>
-      <w>60</w>
-      <h>70</h>
+      <x>234</x>
+      <y>1773</y>
+      <w>54</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>*Notify*
 bg=orange</panel_attributes>
@@ -1106,57 +973,21 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
-      <y>1610</y>
-      <w>190</w>
-      <h>30</h>
+      <x>108</x>
+      <y>1782</y>
+      <w>162</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>170.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>160.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>1890</y>
-      <w>40</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>
-bg=yellow
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLInterface</id>
-    <coordinates>
-      <x>290</x>
-      <y>1890</y>
-      <w>60</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes>*Notify*
-bg=orange</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>140</x>
-      <y>1900</y>
-      <w>190</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>170.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>350</x>
-      <y>1320</y>
-      <w>40</w>
-      <h>30</h>
+      <x>297</x>
+      <y>1332</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=red
@@ -1166,10 +997,10 @@ bg=red
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>1320</y>
-      <w>40</w>
-      <h>30</h>
+      <x>81</x>
+      <y>1332</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -1179,10 +1010,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
-      <y>1320</y>
-      <w>230</w>
-      <h>30</h>
+      <x>108</x>
+      <y>1332</y>
+      <w>207</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>210.0;10.0;10.0;10.0</additional_attributes>
@@ -1190,10 +1021,10 @@ bg=yellow
   <element>
     <id>Text</id>
     <coordinates>
-      <x>160</x>
-      <y>1300</y>
-      <w>250</w>
-      <h>30</h>
+      <x>117</x>
+      <y>1314</y>
+      <w>225</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>boolean payTo(player, amount)
 style=wordwrap</panel_attributes>
@@ -1202,10 +1033,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
-      <y>1330</y>
-      <w>230</w>
-      <h>30</h>
+      <x>108</x>
+      <y>1341</y>
+      <w>207</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;210.0;10.0</additional_attributes>
@@ -1213,22 +1044,22 @@ style=wordwrap</panel_attributes>
   <element>
     <id>Text</id>
     <coordinates>
-      <x>180</x>
-      <y>1340</y>
-      <w>120</w>
-      <h>30</h>
+      <x>144</x>
+      <y>1350</y>
+      <w>108</w>
+      <h>27</h>
     </coordinates>
-    <panel_attributes>&lt;canAfford&gt;
+    <panel_attributes>&lt;playerPaid&gt;
 style=wordwrap</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>1420</y>
-      <w>40</w>
-      <h>30</h>
+      <x>81</x>
+      <y>1467</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -1238,10 +1069,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
-      <y>1420</y>
-      <w>340</w>
-      <h>30</h>
+      <x>108</x>
+      <y>1467</y>
+      <w>306</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>320.0;10.0;10.0;10.0</additional_attributes>
@@ -1249,10 +1080,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>460</x>
-      <y>1420</y>
-      <w>40</w>
-      <h>30</h>
+      <x>396</x>
+      <y>1467</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=red
@@ -1262,12 +1093,12 @@ bg=red
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>100</x>
-      <y>1040</y>
-      <w>670</w>
-      <h>180</h>
+      <x>72</x>
+      <y>1089</y>
+      <w>603</w>
+      <h>135</h>
     </coordinates>
-    <panel_attributes>if answer == yes
+    <panel_attributes>if willBuy
 --
 </panel_attributes>
     <additional_attributes/>
@@ -1275,10 +1106,10 @@ bg=red
   <element>
     <id>Text</id>
     <coordinates>
-      <x>190</x>
-      <y>1400</y>
-      <w>250</w>
-      <h>30</h>
+      <x>171</x>
+      <y>1449</y>
+      <w>225</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>void receive(amount)
 style=wordwrap</panel_attributes>
@@ -1287,12 +1118,12 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>100</x>
-      <y>1470</y>
-      <w>460</w>
-      <h>100</h>
+      <x>72</x>
+      <y>1512</y>
+      <w>414</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>else if canAfford == false
+    <panel_attributes>else if not playerPaid
 --
 </panel_attributes>
     <additional_attributes/>
@@ -1300,10 +1131,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
-      <y>1520</y>
-      <w>40</w>
-      <h>30</h>
+      <x>81</x>
+      <y>1557</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=yellow
@@ -1313,10 +1144,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
-      <y>1520</y>
-      <w>340</w>
-      <h>30</h>
+      <x>108</x>
+      <y>1557</y>
+      <w>306</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>320.0;10.0;10.0;10.0</additional_attributes>
@@ -1324,10 +1155,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>460</x>
-      <y>1520</y>
-      <w>40</w>
-      <h>30</h>
+      <x>396</x>
+      <y>1557</y>
+      <w>36</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>
 bg=red
@@ -1337,12 +1168,365 @@ bg=red
   <element>
     <id>Text</id>
     <coordinates>
-      <x>170</x>
-      <y>1500</y>
-      <w>290</w>
-      <h>30</h>
+      <x>135</x>
+      <y>1539</y>
+      <w>261</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>void receive(otherPlayersBelongings)
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>81</x>
+      <y>702</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>297</x>
+      <y>702</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>108</x>
+      <y>702</y>
+      <w>207</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>210.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>117</x>
+      <y>684</y>
+      <w>225</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>void setPositionTo(squareNum)
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>297</x>
+      <y>1035</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>324</x>
+      <y>1035</y>
+      <w>882</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>960.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1143</x>
+      <y>468</y>
+      <w>126</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>DecisionMaker1
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1197</x>
+      <y>486</y>
+      <w>27</w>
+      <h>1629</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;1790.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1188</x>
+      <y>504</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1188</x>
+      <y>1035</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>657</x>
+      <y>1017</y>
+      <w>225</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>boolean willBuy(property)
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>324</x>
+      <y>1044</y>
+      <w>882</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;960.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>630</x>
+      <y>1053</y>
+      <w>252</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>&lt;decisionAnswer --&gt; willBuy&gt;
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>63</x>
+      <y>882</y>
+      <w>1188</w>
+      <h>774</h>
+    </coordinates>
+    <panel_attributes>if player landed on property
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>162</x>
+      <y>1179</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>297</x>
+      <y>1179</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>189</x>
+      <y>1179</y>
+      <w>126</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>198</x>
+      <y>1161</y>
+      <w>198</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>void addProperty(property)
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>297</x>
+      <y>1377</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1188</x>
+      <y>1377</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>324</x>
+      <y>1377</y>
+      <w>882</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>960.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>666</x>
+      <y>1359</y>
+      <w>171</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>boolean pay(amount)
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1125</x>
+      <y>378</y>
+      <w>171</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>DecisionMaker has a reference to the current GameState, so it does not have to be passed.
+bg=pink
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>324</x>
+      <y>1386</y>
+      <w>882</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;960.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>648</x>
+      <y>1395</y>
+      <w>216</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>&lt;decisionPaid --&gt; playerPaid&gt;
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>495</x>
+      <y>1449</y>
+      <w>108</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Assuming player to be paid is Player2
+bg=pink
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>99</x>
+      <y>630</y>
+      <w>63</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;60.0;50.0;60.0;50.0;10.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>99</x>
+      <y>558</y>
+      <w>63</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;60.0;50.0;60.0;50.0;10.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>495</x>
+      <y>1539</y>
+      <w>189</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>TODO - Somehow Player1 must be eliminated from the game
+bg=pink
 style=wordwrap</panel_attributes>
     <additional_attributes/>
   </element>
