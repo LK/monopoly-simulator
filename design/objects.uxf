@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>60</y>
+      <w>240</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>Board
+--
+- Player[] players
+- Square[] squares
+- 
+
+
+--
++ void initialize()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>60</y>
+      <w>330</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>Player
+--
+- Square position
+- Square[] properties
+- int jailFreeCount
+
+--
++ boolean willBuy(Property property)
++ boolean payTo(Player player, int amount)
++ void receieve(int amount)
++ void receieve(??? playersBelongings)
++ void notifyOf(Board newState)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>80</x>
+      <y>60</y>
+      <w>240</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>Engine
+--
+- blah
+
+
+--
++ blah</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>340</y>
+      <w>160</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Square
+--
+- String name
+
+--
++ void land()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>310</x>
+      <y>450</y>
+      <w>270</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>250.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>190</x>
+      <y>540</y>
+      <w>220</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Property
+--
+- int price
+- int[] rents (i = 0..5 houses)
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>710</y>
+      <w>220</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>ColorProperty
+--
+
+
+--
+implements land()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>160</x>
+      <y>650</y>
+      <w>90</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>310</x>
+      <y>710</y>
+      <w>220</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>NonColorProperty
+--
+
+
+--
+implements land()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>650</y>
+      <w>80</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>540</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Card
+--
+
+--
+implements land()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>450</y>
+      <w>130</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>580</x>
+      <y>540</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Tax
+--
+
+--
+implements land()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>740</x>
+      <y>540</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>GoToJail
+--
+
+--
+implements land()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>540</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>FreeSpace
+--
+
+--
+implements land()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>640</x>
+      <y>450</y>
+      <w>30</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>450</y>
+      <w>150</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>710</x>
+      <y>450</y>
+      <w>280</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;260.0;90.0</additional_attributes>
+  </element>
+</diagram>
