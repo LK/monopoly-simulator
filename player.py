@@ -9,6 +9,7 @@ class Player(object):
             self.money -= money
             return True
         else:
+            # TODO: Mortgage
             return False
 
     def receive(self, money):
