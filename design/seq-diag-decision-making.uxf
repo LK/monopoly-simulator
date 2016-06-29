@@ -864,9 +864,9 @@ style=wordwrap</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>144</x>
-      <y>0</y>
+      <y>135</y>
       <w>1071</w>
-      <h>315</h>
+      <h>180</h>
     </coordinates>
     <panel_attributes>if player landed on property
 --
@@ -928,7 +928,7 @@ bg=yellow
       <w>243</w>
       <h>27</h>
     </coordinates>
-    <panel_attributes>void changeTo(proposalState)
+    <panel_attributes>void changeTo(newState)
 style=wordwrap</panel_attributes>
     <additional_attributes/>
   </element>
@@ -1011,10 +1011,10 @@ style=wordwrap</panel_attributes>
     <coordinates>
       <x>945</x>
       <y>504</y>
-      <w>198</w>
-      <h>90</h>
+      <w>216</w>
+      <h>126</h>
     </coordinates>
-    <panel_attributes>At this point, DecisionMaker may request any attribute of the state to make a decision, so GameState needs getters for everything.
+    <panel_attributes>At this point, DecisionMaker may request any attribute of the state to make a decision, so GameState needs getters for everything - including things that players have -&gt; Player needs getters for everything.
 bg=pink
 style=wordwrap</panel_attributes>
     <additional_attributes/>
