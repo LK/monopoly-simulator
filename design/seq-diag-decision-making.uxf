@@ -864,7 +864,7 @@ style=wordwrap</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>144</x>
-      <y>0</y>
+      <y>135</y>
       <w>1071</w>
       <h>180</h>
     </coordinates>
@@ -1010,7 +1010,11 @@ style=wordwrap</panel_attributes>
     <id>UMLNote</id>
     <coordinates>
       <x>945</x>
+<<<<<<< HEAD
       <y>369</y>
+=======
+      <y>504</y>
+>>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
       <w>216</w>
       <h>126</h>
     </coordinates>
