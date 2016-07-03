@@ -4,394 +4,436 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>260</x>
-<<<<<<< HEAD
-      <y>240</y>
-      <w>410</w>
-      <h>340</h>
-=======
-      <y>250</y>
-      <w>410</w>
-      <h>290</h>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
+      <x>900</x>
+      <y>0</y>
+      <w>450</w>
+      <h>600</h>
     </coordinates>
-    <panel_attributes>GameState
+    <panel_attributes>Player
 --
-- Player[] players
-- Square[] squares
-<<<<<<< HEAD
-- int totalHousesRequested
-- Map&lt;Property, int&gt; housesRequested
-=======
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
+- Square position
+- int cash
+- Property[] properties
+- Map&lt;int, int&gt; propertyGroupCount
+- DecisionMaker decisionMaker
+- int jailFreeCount
+- int jailMoves
 
 --
 Getters:
-+ Square getSquare(int num)  // index by Square or int?
-+ Player getPlayer(int num)  // index by Player or int?
-<<<<<<< HEAD
-+ int housesRequestedOn(Property property)
-=======
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
++ int getCash()
++ Property[] getProperties()
++ Square getPosition()
++ int getJailFreeCount()
++ int getJailMoves()
++ boolean isPropertyGroupComplete(int propertyGroup)
 
 Other:
-+ void setOwner(Property property, Player player)
-+ void mortgage(Property property)
-<<<<<<< HEAD
-+ void requestHousesOn(Property property, int qty)
-+ boolean areEnoughHouses()
-+ void buildAll()
-=======
-+ boolean areEnoughHouses(int numRequested)
-+ void buildOn(Map&lt;Property, numHouses&gt; properties)
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-+ void changeTo(GameState newState)</panel_attributes>
++ GSC buyOrDeny(Property property, GS state)
++ GSC pay(Player player, int amount, GS state)
++ GSC bid(int highestBid, GS state)
++ boolean isInJail()
++ boolean willTrade(GSC proposal)
++ GOC notifyOf(GS newState)
++ void setPosition(Square square)
++ void changeCash(int amount)
++ void addProperties(Property[] properties)
++ void removeProperties(Property[] properties)
++ void changePropertyGroupCount(int propertyGroup, int qty)
++ void changeJailFreeCount(int qty)
++ void changeJailMoves(int qty)
++ void eliminate()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>740</x>
-<<<<<<< HEAD
-      <y>0</y>
-=======
-      <y>10</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>330</w>
-      <h>390</h>
+      <x>50</x>
+      <y>1370</y>
+      <w>260</w>
+      <h>220</h>
     </coordinates>
-    <panel_attributes>Player
+    <panel_attributes>ColorProperty
 --
-- Square position
-- Square[] properties
-- DecisionMaker decisionMaker
-- int jailFreeCount
+- int numHouses
 
 --
 Getters:
-+ Square[] getProperties()
-+ Square getPosition()
-+ DecisionMaker getDecisionMaker()
-+ int getJailFreeCount()
++ int getNumHouses()
++ int getRentWith(int numHouses)
 
 Other:
-+ void setPositionTo(int squareNum)
-+ boolean willBuy(Property property)
-+ void addProperty(Property property)
-+ boolean payTo(Player player, int amount)
-+ void receieve(int amount)
-+ void receieve(??? playersBelongings)
-+ void notifyOf(GameState newState)
++ void build(int qty)
++ void demolish(int qty)
++ void demolishAll()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>0</y>
+      <w>340</w>
+      <h>510</h>
+    </coordinates>
+    <panel_attributes>GameState (GS)
+--
+- Player[] players
+- Square[] squares
+
+--
+Getters:
+From itself:
++ Player getPlayer(int i)
++ Square getSquare(int i)
+From players:
++ Player getOwner(Property property)
++ int getCash(Player player)
++ Property[] getProperties(Player player)
++ Square getPosition(Player player)
++ int getJailFreeCount(Player player)
++ int getJailMoves(Player player)
+From squares:
++ int getNumHouses(ColorProperty property)
++ int getRent(Property property)
++ boolean isMortgaged(Property property)
+
+Private:
+- GS copy()
+
+Other:
++ GS apply(GSC changes)
++ boolean areEnoughHouses(int qty)
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>230</x>
-<<<<<<< HEAD
-      <y>30</y>
-=======
-      <y>40</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>470</w>
-      <h>180</h>
+      <x>240</x>
+      <y>650</y>
+      <w>220</w>
+      <h>170</h>
     </coordinates>
     <panel_attributes>Engine
 --
-- GameState state
+- GS state
 
 --
-+ void initialize()
-+ void roll(int playerNum)  // advance player 2-12 squares
-+ void chargeRentOn(Player player, int amount)
-+ void tax(Player player, int amount)
-+ move(Player player, Square square)  // move player to square</panel_attributes>
+Private:
+- GS initialize()
+- GSC roll(int playerNum)
+- GSC auction()
+
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>630</x>
-<<<<<<< HEAD
+      <x>500</x>
+      <y>0</y>
+      <w>380</w>
+      <h>640</h>
+    </coordinates>
+    <panel_attributes>GameStateChange (GSC)
+--
+Changes to players:
+- Map&lt;Player, int&gt; changeInCash
+- Map&lt;Player, Square&gt; newPosition
+- Map&lt;Player, Property[]&gt; addedProperties
+- Map&lt;Player, Property[]&gt; removedProperties
+- Map&lt;Player, int&gt; changeInJailMoves
+- Map&lt;Player, int&gt; changeInJailFreeCount
+- Map&lt;Player, boolean&gt; isInGame
+
+Changes to properties:
+- Map&lt;ColorProperty, int&gt; changeInHouses
+- Map&lt;Property, boolean&gt; isMortgaged
+
+--
+Getters:
+For changes to players:
++ int getChangeInCash(Player player)
++ Square getNewPosition(Player player)
++ Property[] getaddedProperties(Player player)
++ Property[] getRemovedProperties(Player player)
++ int getChangeInJailMoves(Player player)
++ int getChangeInJailFreeCount(Player player)
++ boolean isInGame(Player player)
+For changes to properties:
++ int getChangeInHouses(ColorProperty property)
++ boolean isMortgaged(Property property)
+
+Static:
++ GSC combine(GSC[] changes)
+
+Other:
++ int totalHousesBuilt()
++ int totalSpent(Player player)  // includes cash, mortgages, and house demolitions
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
       <y>650</y>
-=======
-      <y>660</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>220</w>
-      <h>120</h>
+      <w>250</w>
+      <h>140</h>
     </coordinates>
-    <panel_attributes>Square
+    <panel_attributes>GroupOfChanges (GOC)
 --
-- String name
+- GSC[] changes
 
 --
-+ void landed(Player player)</panel_attributes>
++ GSC getBuildingChanges()
++ GSC getOtherChanges()
+</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>380</x>
-<<<<<<< HEAD
-      <y>760</y>
-=======
-      <y>770</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>270</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>250.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>260</x>
-<<<<<<< HEAD
-      <y>850</y>
-=======
-      <y>860</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>220</w>
-      <h>120</h>
+      <x>850</x>
+      <y>650</y>
+      <w>370</w>
+      <h>180</h>
     </coordinates>
-    <panel_attributes>Property
+    <panel_attributes>DecisionMaker
 --
-- int price
-- int[] rents (i = 0..5 houses)
 
---</panel_attributes>
+
+--
++ GSC buyOrDeny(Property property, GS state)
++ GSC pay(Player player, int amount, GS state)
++ GSC bid(int highestBid, GS state)
++ boolean willTrade(GSC proposal)
++ GOC notifyOf(GS newState)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>180</x>
-<<<<<<< HEAD
-      <y>1020</y>
-=======
-      <y>1030</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>180</w>
-      <h>120</h>
+      <y>1040</y>
+      <w>260</w>
+      <h>290</h>
     </coordinates>
-    <panel_attributes>ColorProperty
+    <panel_attributes>Property
 --
-
+- int price
+- int[] rents
+- int propertyGroup  // int is a label
+- boolean mortgaged
 
 --
-implements landed()</panel_attributes>
+Getters:
++ int getPrice()
++ int getCurrentRent()
++ int getPropertyGroup()
++ boolean isMortgaged()
+
+Other:
++ void mortgage()</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>270</x>
-<<<<<<< HEAD
-      <y>960</y>
-=======
-      <y>970</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>50</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>30.0;10.0;10.0;60.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>370</x>
-<<<<<<< HEAD
-      <y>1020</y>
-=======
-      <y>1030</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>190</w>
-      <h>120</h>
+      <x>330</x>
+      <y>1370</y>
+      <w>260</w>
+      <h>220</h>
     </coordinates>
     <panel_attributes>NonColorProperty
 --
 
 
 --
-implements landed()</panel_attributes>
+(implements landed())</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>580</x>
+      <y>850</y>
+      <w>300</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Square
+--
+
+
+--
++ GSC landed(Player player, GS state)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>430</x>
-<<<<<<< HEAD
-      <y>960</y>
-=======
+      <x>370</x>
       <y>970</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>60</w>
-      <h>80</h>
+      <w>240</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;40.0;60.0</additional_attributes>
+    <additional_attributes>220.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>180</x>
+      <y>1320</y>
+      <w>60</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>40.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>1320</y>
+      <w>60</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;40.0;50.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>490</x>
-<<<<<<< HEAD
-      <y>850</y>
-=======
-      <y>860</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>160</w>
-      <h>120</h>
+      <x>460</x>
+      <y>1040</y>
+      <w>190</w>
+      <h>290</h>
     </coordinates>
     <panel_attributes>Card
 --
 
+
+
+
+
 --
-implements landed()</panel_attributes>
+(implements landed())</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>550</x>
-<<<<<<< HEAD
-      <y>760</y>
-=======
-      <y>770</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>140</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>120.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>660</x>
-<<<<<<< HEAD
-      <y>850</y>
-=======
-      <y>860</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>160</w>
-      <h>120</h>
+      <x>670</x>
+      <y>1040</y>
+      <w>190</w>
+      <h>290</h>
     </coordinates>
     <panel_attributes>Tax
 --
+- int tax
+
+
+
 
 --
-implements landed()</panel_attributes>
+(implements landed())</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>830</x>
-<<<<<<< HEAD
-      <y>850</y>
-=======
-      <y>860</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>160</w>
-      <h>120</h>
+      <x>880</x>
+      <y>1040</y>
+      <w>190</w>
+      <h>290</h>
     </coordinates>
     <panel_attributes>GoToJail
 --
 
+
+
+
+
 --
-implements landed()</panel_attributes>
+(implements landed())</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1000</x>
-<<<<<<< HEAD
-      <y>850</y>
-=======
-      <y>860</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>160</w>
-      <h>120</h>
+      <x>1090</x>
+      <y>1040</y>
+      <w>190</w>
+      <h>290</h>
     </coordinates>
     <panel_attributes>FreeSpace
 --
 
+
+
+
+
 --
-implements landed()</panel_attributes>
+(implements landed())</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>720</x>
-<<<<<<< HEAD
-      <y>760</y>
-=======
-      <y>770</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>40</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;20.0;90.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>790</x>
-<<<<<<< HEAD
-      <y>760</y>
-=======
-      <y>770</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
+      <x>530</x>
+      <y>970</y>
       <w>130</w>
-      <h>110</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;110.0;90.0</additional_attributes>
+    <additional_attributes>110.0;10.0;10.0;70.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>840</x>
-<<<<<<< HEAD
-      <y>760</y>
-=======
-      <y>770</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>250</w>
-      <h>110</h>
+      <x>730</x>
+      <y>970</y>
+      <w>30</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;230.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
   </element>
   <element>
-    <id>UMLClass</id>
+    <id>Relation</id>
     <coordinates>
-      <x>720</x>
-<<<<<<< HEAD
-      <y>410</y>
-=======
-      <y>420</y>
->>>>>>> f5020ec36bf13b8b3f8080971ed7059f81c83a64
-      <w>360</w>
-      <h>180</h>
+      <x>800</x>
+      <y>970</y>
+      <w>180</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>DecisionMaker
---
-- GameState state
-- Player player  // ref. to its player?
-
---
-+ boolean willBuy(Property property)
-+ boolean pay(amount)  // returns T if can afford
-+ decideOnNewState()
-+ boolean willTrade(GameState proposalState)</panel_attributes>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;160.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>860</x>
+      <y>970</y>
+      <w>310</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;290.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>20</x>
+      <y>1060</y>
+      <w>150</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>TODO - How to address rent doubling when a color group is together?
+style=wordwrap
+bg=pink</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

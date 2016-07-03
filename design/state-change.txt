@@ -1,0 +1,15 @@
+Possible changes:
+
+Player:
+Change money
+Change position
+Change property list
+    List to add
+    List to remove
+Change num. of jail turns remaining
+Change get-out-of-jail-free count
+Change in-game status
+
+Property:
+Change number of houses/hotels
+Change mortgage status

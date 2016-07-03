@@ -1,0 +1,1153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>180</x>
+      <y>270</y>
+      <w>135</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>void method()
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>567</x>
+      <y>288</y>
+      <w>216</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>220.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>522</x>
+      <y>324</y>
+      <w>72</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>Player1
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>612</x>
+      <y>324</y>
+      <w>72</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>Player2
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>738</x>
+      <y>324</y>
+      <w>72</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>Property
+bg=blue
+fg=white
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>207</x>
+      <y>324</y>
+      <w>90</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>GameState
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>126</x>
+      <y>324</y>
+      <w>63</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>Engine
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>855</x>
+      <y>324</y>
+      <w>126</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>DecisionMaker1
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>999</x>
+      <y>324</y>
+      <w>126</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>DecisionMaker2
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>567</x>
+      <y>270</y>
+      <w>216</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;220.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>315</x>
+      <y>324</y>
+      <w>135</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>GameStateChange
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>153</x>
+      <y>342</y>
+      <w>27</w>
+      <h>1404</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1540.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>243</x>
+      <y>342</y>
+      <w>27</w>
+      <h>1404</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1540.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>369</x>
+      <y>342</y>
+      <w>27</w>
+      <h>1404</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1540.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>549</x>
+      <y>342</y>
+      <w>27</w>
+      <h>1404</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1540.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>639</x>
+      <y>342</y>
+      <w>27</w>
+      <h>1404</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1540.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>765</x>
+      <y>342</y>
+      <w>27</w>
+      <h>1404</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1540.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>909</x>
+      <y>342</y>
+      <w>27</w>
+      <h>1404</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1540.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1053</x>
+      <y>342</y>
+      <w>27</w>
+      <h>1404</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1540.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>144</x>
+      <y>360</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>234</x>
+      <y>360</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>360</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>360</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>756</x>
+      <y>360</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=blue
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>360</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1044</x>
+      <y>360</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>360</x>
+      <y>360</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>144</x>
+      <y>414</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>783</x>
+      <y>261</y>
+      <w>63</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;60.0;50.0;60.0;50.0;10.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>162</x>
+      <y>414</y>
+      <w>63</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;60.0;50.0;60.0;50.0;10.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>207</x>
+      <y>432</y>
+      <w>135</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>GSC auction()
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>144</x>
+      <y>531</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>594</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>234</x>
+      <y>531</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>171</x>
+      <y>531</y>
+      <w>81</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>171</x>
+      <y>504</y>
+      <w>225</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>Player getPlayer(int playerNum)
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>171</x>
+      <y>540</y>
+      <w>81</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>180</x>
+      <y>558</y>
+      <w>99</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>&lt;player&gt;
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>144</x>
+      <y>594</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>171</x>
+      <y>585</y>
+      <w>387</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+GSC bid(int highestBid, GS state)</panel_attributes>
+    <additional_attributes>410.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>648</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>648</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>567</x>
+      <y>639</y>
+      <w>351</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+GSC bid(int highestBid, GS state)</panel_attributes>
+    <additional_attributes>370.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>567</x>
+      <y>648</y>
+      <w>351</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+&lt;stateChangeIncludingBid&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;370.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>360</x>
+      <y>765</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>144</x>
+      <y>765</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>171</x>
+      <y>594</y>
+      <w>387</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+&lt;stateChangeIncludingBid&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;410.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>306</x>
+      <y>270</y>
+      <w>99</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>&lt;return&gt;
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>171</x>
+      <y>765</y>
+      <w>207</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>210.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>180</x>
+      <y>738</y>
+      <w>252</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>int totalSpent(Player player)
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>171</x>
+      <y>765</y>
+      <w>207</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+&lt;playerBid&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>162</x>
+      <y>855</y>
+      <w>108</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Engine resets highestBid
+bg=pink
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>162</x>
+      <y>981</y>
+      <w>108</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Engine stops querying that player for bids
+bg=pink
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>189</x>
+      <y>1467</y>
+      <w>108</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Lastly, Engine updates its GS reference
+bg=pink
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>360</x>
+      <y>702</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>702</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>387</x>
+      <y>693</y>
+      <w>531</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+init()</panel_attributes>
+    <additional_attributes>10.0;20.0;570.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>387</x>
+      <y>702</y>
+      <w>531</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+
+&lt;stateChangeIncludingBid&gt;</panel_attributes>
+    <additional_attributes>570.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>81</x>
+      <y>414</y>
+      <w>72</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>*Auction*
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>144</x>
+      <y>1485</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>918</x>
+      <y>252</y>
+      <w>126</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Note
+bg=pink
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>135</x>
+      <y>0</y>
+      <w>909</w>
+      <h>243</h>
+    </coordinates>
+    <panel_attributes>conditional/loop</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>99</x>
+      <y>477</y>
+      <w>1035</w>
+      <h>612</h>
+    </coordinates>
+    <panel_attributes>for each player, until only 1 player is left to query for bids</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>126</x>
+      <y>819</y>
+      <w>198</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>if playerBid &gt; highestBid</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>126</x>
+      <y>945</y>
+      <w>198</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>else</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>819</x>
+      <y>90</y>
+      <w>207</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=..</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>864</x>
+      <y>252</y>
+      <w>27</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>153</x>
+      <y>432</y>
+      <w>27</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>549</x>
+      <y>612</y>
+      <w>27</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>909</x>
+      <y>666</y>
+      <w>27</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>234</x>
+      <y>1125</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>144</x>
+      <y>1125</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>171</x>
+      <y>1134</y>
+      <w>81</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>162</x>
+      <y>1152</y>
+      <w>99</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>&lt;newState&gt;
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>162</x>
+      <y>1098</y>
+      <w>180</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>GS apply(GSC changes)
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>171</x>
+      <y>1125</y>
+      <w>81</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>234</x>
+      <y>1206</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>252</x>
+      <y>1206</y>
+      <w>63</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;50.0;50.0;50.0;50.0;10.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>297</x>
+      <y>1215</y>
+      <w>90</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>GS copy()
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>243</x>
+      <y>1143</y>
+      <w>27</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;52.0;10.0;15.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>189</x>
+      <y>1188</y>
+      <w>783</w>
+      <h>261</h>
+    </coordinates>
+    <panel_attributes>lt=..
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>234</x>
+      <y>1269</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>261</x>
+      <y>1260</y>
+      <w>297</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+void changeCash(int amount)</panel_attributes>
+    <additional_attributes>310.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>1269</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>234</x>
+      <y>1314</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>234</x>
+      <y>1350</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>756</x>
+      <y>1314</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=blue
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>756</x>
+      <y>1350</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=blue
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>261</x>
+      <y>1305</y>
+      <w>513</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+void mortgage()</panel_attributes>
+    <additional_attributes>550.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>261</x>
+      <y>1341</y>
+      <w>513</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+void demolish(int qty)</panel_attributes>
+    <additional_attributes>550.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>342</x>
+      <y>1107</y>
+      <w>162</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Applies changes corresponding to the highest bid
+bg=pink
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>234</x>
+      <y>1395</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>756</x>
+      <y>1395</y>
+      <w>36</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>
+bg=blue
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>261</x>
+      <y>1386</y>
+      <w>513</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+void build(int qty)</panel_attributes>
+    <additional_attributes>550.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+</diagram>
