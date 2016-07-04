@@ -91,7 +91,7 @@ class GameState(object):
     for prop in self._houses_requested.keys():
       prop.build(self._houses_requested[prop]) # TODO 3
       if (prop.has_hotel()):
-        self._total_hotels--
+        self._total_hotels -= 1
       else:
         self._total_houses -= self._houses_requested[prop]
     self._houses_requested = { }
@@ -99,7 +99,7 @@ class GameState(object):
 
   def demolish_houses_on(self, prop, qty):
     if (prop.has_hotel()):
-      self._total_hotels++
+      self._total_hotels += 1
       self._total_houses += qty - 1
     else:
       self._total_houses += qty
