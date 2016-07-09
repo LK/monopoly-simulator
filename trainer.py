@@ -17,8 +17,6 @@ def linear(name, in_, in_size, out_size):
 def relu(name, in_, in_size, out_size):
 	return tf.nn.relu(linear(name, in_, in_size, out_size))
 
-
-
 error = tf.reduce_mean(tf.square(y - y_))
 train_step = tf.train.AdamOptimizer(1e-2).minimize(error)
 
