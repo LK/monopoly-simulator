@@ -11,8 +11,11 @@ class Player(object):
 		self._is_in_game				= is_in_game
 
 		# Use the setter so property_group_count is updated
-		self.props 				= props
+		self.props 							= props
 	
+	def copy(self):
+		return Player(position=self.position, cash=self.cash, props=self.props, decision_maker=self.decision_maker, jail_free_count=self.jail_free_count, jail_moves=self.jail_moves, is_in_game=self.is_in_game)
+
 	# Properties
 
 	@property
