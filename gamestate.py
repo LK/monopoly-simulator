@@ -12,7 +12,6 @@ TODO
 In-line:
 1)  Assumes Square/Card class initializes by its name, as specified in squares.txt.
 2)  Insert checks to ensure even building given the GSC that builds houses
-3)  Write apply()
 '''
 
 class GameState(object):
@@ -78,5 +77,31 @@ class GameState(object):
 	def builds_evenly(self, changes):
 		# TODO 2
 
-	def apply(self, changes):
-    # TODO 3
+	def apply(self, changes): 
+    for player, change_in_cash in changes.change_in_cash.iteritems():
+      player.cash += change_in_cash
+
+    for player, new_position in changes.new_position.iteritems():
+      player.position = new_position
+
+    for player, added_props in changes.added_props.iteritems():
+      player.props += added_props
+
+    for player, removed_props in changes.removed_props.iteritems():
+      for prop in removed_props:
+        player.props.remove(prop)
+
+    for player, change_in_jail_moves in changes.change_in_jail_moves.iteritems():
+      player.jail_moves += change_in_jail_moves
+
+    for player, change_in_jail_free_count in changes.change_in_jail_free_count.iteritems():
+      player.jail_free_count += change_in_jail_free_count
+
+    for player, is_in_game in changes.is_in_game.iteritems():
+      player.is_in_game = is_in_game
+
+    for prop, change_in_houses in changes.change_in_houses.iteritems():
+      prop.num_houses += change_in_houses
+
+    for prop, is_mortgaged in changes.is_mortgaged.iteritems():
+      prop.is_mortgaged = is_mortgaged     

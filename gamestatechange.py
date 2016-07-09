@@ -1,9 +1,9 @@
 class GameStateChange(object):
-	def __init__(self, change_in_cash={}, new_position={}, added_properties={}, removed_properties={}, change_in_jail_moves={}, change_in_jail_free_count={}, is_in_game={}, change_in_houses={}, is_mortgaged={}):
+	def __init__(self, change_in_cash={}, new_position={}, added_props={}, removed_props={}, change_in_jail_moves={}, change_in_jail_free_count={}, is_in_game={}, change_in_houses={}, is_mortgaged={}):
 		self._change_in_cash            = change_in_cash
 		self._new_position              = new_position
-		self._added_properties          = added_properties
-		self._removed_properties        = removed_properties
+		self._added_props          			= added_props
+		self._removed_props        			= removed_props
 		self._change_in_jail_moves			= change_in_jail_moves
 		self._change_in_jail_free_count	= change_in_jail_free_count
 		self._is_in_game								= is_in_game
@@ -12,23 +12,39 @@ class GameStateChange(object):
 
 	@property
 	def change_in_cash(self):
-		return change_in_cash
+		return self._change_in_cash
 		
 	@property
 	def new_position(self):
-		return new_position
+		return self._new_position
 		
 	@property
-	def added_properties(self):
-		return added_properties
+	def added_props(self):
+		return self._added_props
 	
 	@property
-	def removed_properties(self):
-		return removed_properties
+	def removed_props(self):
+		return self._removed_props
 	
 	@property
 	def change_in_jail_moves(self):
-		return change_in_jail_moves
+		return self._change_in_jail_moves
+
+	@property
+	def change_in_jail_free_count(self):
+		return self._change_in_jail_free_count
+
+	@property
+	def is_in_game(self):
+		return self._is_in_game
+	
+	@property
+	def change_in_houses(self):
+		return self._change_in_houses
+	
+	@property
+	def is_mortgaged(self):
+		return self._is_mortgaged
 	
 	@staticmethod
 	def combine(self, changes):
@@ -44,29 +60,29 @@ class GameStateChange(object):
 			for player, new_position in change._new_position.iteritems():
 				combined._new_position[player] = new_position
 
-			# Merge added_properties
-			for player, props in change._added_properties.iteritems():
-				if player not in combined._added_properties:
-					combined._added_properties[player] = []
+			# Merge added_props
+			for player, props in change._added_props.iteritems():
+				if player not in combined._added_props:
+					combined._added_props[player] = []
 				
 				for prop in props:
-					if prop in combined._removed_properties[player]:
-						combined._removed_properties[player].remove(prop)
+					if prop in combined._removed_props[player]:
+						combined._removed_props[player].remove(prop)
 
-					if prop not in combined._added_properties[player]:
-						combined._added_properties[player].append(prop)
+					if prop not in combined._added_props[player]:
+						combined._added_props[player].append(prop)
 
-			# Merge removed_properties
-			for player, props in change._removed_properties.iteritems():
-				if player not in combined._removed_properties:
-					combined._removed_properties[player] = []
+			# Merge removed_props
+			for player, props in change._removed_props.iteritems():
+				if player not in combined._removed_props:
+					combined._removed_props[player] = []
 				
 				for prop in props:
-					if prop in combined._added_properties[player]:
-						combined._added_properties[player].remove(prop)
+					if prop in combined._added_props[player]:
+						combined._added_props[player].remove(prop)
 
-					if prop not in combined._removed_properties[player]:
-						combined._removed_properties[player].append(prop)
+					if prop not in combined._removed_props[player]:
+						combined._removed_props[player].append(prop)
 
 			# Merge change_in_jail_moves
 			for player, change_in_jail_moves in change._change_in_jail_moves.iteritems():
@@ -85,10 +101,10 @@ class GameStateChange(object):
 				combined._is_in_game[player] = is_in_game
 
 			# Merge change_in_houses
-			for color_property, change_in_houses in change._change_in_houses.iteritems():
+			for color_prop, change_in_houses in change._change_in_houses.iteritems():
 				if player not in combined._change_in_houses:
-					combined._change_in_houses[color_property] = 0
-				combined._change_in_houses[color_property] += change_in_houses
+					combined._change_in_houses[color_prop] = 0
+				combined._change_in_houses[color_prop] += change_in_houses
 
 			# Merge is_mortgaged
 			for prop, is_mortgaged in change._is_mortgaged.iteritems():
