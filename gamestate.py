@@ -13,15 +13,8 @@ In-line:
 1)  Assumes Square/Card class initializes by its name, as specified in squares.txt.
     Can implement with a map from strings to functions and use eval() to run a
     method by string name.
-2)  How to charge the owner for building? Properties don't have references to their
-    owners
-3)  Insert checks to ensure even building
-4)  Insert checks to ensure even demolition
-
-Other:
-A)  Add methods for drawing a chance/community chest card. Entire implementation of
-    the card decks belongs in the Card class! When landed() is called, Card will draw
-    from the deck and make corresponding changes to the GameState.
+2)  Insert checks to ensure even building given the GSC that builds houses
+3)  Write apply()
 '''
 
 class GameState(object):
@@ -50,57 +43,43 @@ class GameState(object):
       self._squares                = initialize_squares()
       self._total_houses           = NUM_HOUSES
       self._total_hotels           = NUM_HOTELS
-      self._houses_requested       = { }  # maps a property to qty of houses requested there
-      self._total_houses_requested = 0
-      
+
+  # Private
+  def _copy(self):
+    num_players = len(self._players)
+    copy = GameState(num_players)
+    for i in range(0, num_players):
+        copy._players[i] = self._players[i]
+    for square in self._squares:
+        copy._squares.append(square)
+    copy._total_houses = self._total_houses
+    copy._total_hotels = self._total_hotels
+    return copy
 
   # Getters
-  def get_square(self, i):
-    return self._squares[i]
+  @property
+  def squares(self):
+      return self._squares
+  
+  @property
+  def players(self):
+      return self._players
+  
+  def get_owner(self, prop):
+    for player in self._players:
+        props = player.props
+        for p in props:
+            if (p == prop):
+                return player
+    return None
 
-  def get_player(self, i):
-    return self._players[i]
+  # Other
+  def are_enough_houses(self, qty):
+    return self._num_houses - qty >= 0
 
-  def houses_requested_on(self, prop):
-    return self._houses_requested[prop]
+  def builds_evenly(self, changes):
+    # TODO 2
 
+  def apply(self, changes):
+    # TODO 3
 
-  # State-changing methods
-  def set_owner(self, prop, player):
-    player.add_prop(prop)
-
-  def mortgage(self, prop):
-    prop.mortgage()
-
-  def unmortgage(self, prop):
-    prop.unmortgage()
-
-  def change_to(self, new_state):
-    self = new_state
-
-
-  # Building methods
-  def request_houses_on(self, prop, qty):
-    self._houses_requested[prop] = qty
-    self._total_houses_requested += qty
-
-  def are_enough_houses(self):
-    return self._total_houses - self._total_houses_requested >= 0
-
-  def build_all(self):    # TODO 2
-    for prop in self._houses_requested.keys():
-      prop.build(self._houses_requested[prop]) # TODO 3
-      if (prop.has_hotel()):
-        self._total_hotels -= 1
-      else:
-        self._total_houses -= self._houses_requested[prop]
-    self._houses_requested = { }
-    self._total_houses_requested = 0
-
-  def demolish_houses_on(self, prop, qty):
-    if (prop.has_hotel()):
-      self._total_hotels += 1
-      self._total_houses += qty - 1
-    else:
-      self._total_houses += qty
-    prop.demolish(qty)  # TODO 4

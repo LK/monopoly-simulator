@@ -1,0 +1,17 @@
+CHANGED:
+Player:
+- position is an int (not a Square)
+- Buying properties:
+    - buyOrDeny() returns a boolean
+    - pay() can be used to pay a player if one is provided, otherwise pays the bank
+    - If buyOrDeny() is true, pay() will be called with no player provided (i.e. pay
+        the bank), and a GSC will be returned making the payment
+
+
+NEED TO ADD:
+Property:
+- Instance variable for number of properties in the property group
+
+GameState:
+- Method to check if a given GSC builds evenly
+    - Insert after checking are_enough_houses in seq-diag-decision-making
