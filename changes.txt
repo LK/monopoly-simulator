@@ -7,6 +7,11 @@ Player:
     - If buyOrDeny() is true, pay() will be called with no player provided (i.e. pay
         the bank), and a GSC will be returned making the payment
 
+Auction sequence:
+- When asked to bid, player returns an int with their bid
+- If the player wins, the engine calls pay() with that bid, and the player then returns a GSC making the payment
+- GS applies the changes
+
 
 NEED TO ADD:
 Property:

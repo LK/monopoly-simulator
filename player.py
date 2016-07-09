@@ -2,7 +2,7 @@ from collections import Counter
 
 class Player(object):
 	# TODO: Proper default decision maker
-	def __init__(self, position=0, cash=1500, properties=[], decision_maker=None, jail_free_count=0, jail_moves=0, is_in_game=True):
+	def __init__(self, position=0, cash=1500, props=[], decision_maker=None, jail_free_count=0, jail_moves=0, is_in_game=True):
 		self._position					= position
 		self._cash 							= cash
 		self._decision_maker		= decision_maker
@@ -11,7 +11,7 @@ class Player(object):
 		self._is_in_game				= is_in_game
 
 		# Use the setter so property_group_count is updated
-		self.properties 				= properties
+		self.props 				= props
 	
 	# Properties
 
@@ -32,15 +32,15 @@ class Player(object):
 		self._cash = cash
 
 	@property
-	def properties(self):
-		return self._properties
+	def props(self):
+		return self._props
 	
-	@properties.setter
-	def properties(self, properties):
-		self._properties = properties
+	@props.setter
+	def props(self, props):
+		self._props = props
 		
 		# When setting the properties, recompute property group count
-		groups = [prop.property_group for prop in properties]
+		groups = [prop.property_group for prop in props]
 		self._property_group_count = Counter(groups)
 
 	def add_properties(self, added_properties):

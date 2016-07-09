@@ -37,46 +37,46 @@ class GameState(object):
     return squares
 
   def __init__(self, num_players):
-      self._players                = initialize_players(num_players)
-      self._squares                = initialize_squares()
-      self._total_houses           = NUM_HOUSES
-      self._total_hotels           = NUM_HOTELS
+		self._players                = initialize_players(num_players)
+		self._squares                = initialize_squares()
+		self._total_houses           = NUM_HOUSES
+		self._total_hotels           = NUM_HOTELS
 
   # Private
   def _copy(self):
-    num_players = len(self._players)
-    copy = GameState(num_players)
-    for i in range(0, num_players):
-        copy._players[i] = self._players[i]
-    for square in self._squares:
-        copy._squares.append(square)
-    copy._total_houses = self._total_houses
-    copy._total_hotels = self._total_hotels
-    return copy
+		num_players = len(self._players)
+		copy = GameState(num_players)
+		for i in range(0, num_players):
+			copy._players[i] = self._players[i]
+		for square in self._squares:
+			copy._squares.append(square)
+		copy._total_houses = self._total_houses
+		copy._total_hotels = self._total_hotels
+		return copy
 
   # Getters
   @property
   def squares(self):
-      return self._squares
+  	return self._squares
   
   @property
   def players(self):
-      return self._players
+  	return self._players
   
-  def get_owner(self, prop):
-    for player in self._players:
-        props = player.props
-        for p in props:
-            if (p == prop):
-                return player
-    return None
+	def get_owner(self, prop):
+		for player in self._players:
+	  	props = player.props
+	  	for p in props:
+	  		if (p == prop):
+	  			return player
+	  return None
 
-  # Other
-  def are_enough_houses(self, qty):
-    return self._num_houses - qty >= 0
+	# Other
+	def are_enough_houses(self, qty):
+		return self._num_houses - qty >= 0
 
-  def builds_evenly(self, changes):
-    # TODO 2
+	def builds_evenly(self, changes):
+		# TODO 2
 
-  def apply(self, changes):
+	def apply(self, changes):
     # TODO 3
