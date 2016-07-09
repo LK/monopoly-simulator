@@ -11,8 +11,6 @@ of the game should go through this object via the state-changing methods.
 TODO
 In-line:
 1)  Assumes Square/Card class initializes by its name, as specified in squares.txt.
-    Can implement with a map from strings to functions and use eval() to run a
-    method by string name.
 2)  Insert checks to ensure even building given the GSC that builds houses
 3)  Write apply()
 '''
@@ -82,4 +80,3 @@ class GameState(object):
 
   def apply(self, changes):
     # TODO 3
-
