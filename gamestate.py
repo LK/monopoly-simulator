@@ -46,9 +46,9 @@ class GameState(object):
 		num_players = len(self._players)
 		copy = GameState(num_players)
 		for i in range(0, num_players):
-			copy._players[i] = self._players[i]
+			copy._players[i] = self._players[i].copy()
 		for square in self._squares:
-			copy._squares.append(square)
+			copy._squares.append(square.copy())
 		copy._total_houses = self._total_houses
 		copy._total_hotels = self._total_hotels
 		return copy
