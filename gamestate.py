@@ -8,7 +8,7 @@ state: players, squares, chance/community chest cards, etc. Any changes to the s
 of the game should go through this object via the state-changing methods.
 
 
-TODO
+TODO:
 In-line:
 1)  Assumes Square/Card class initializes by its name, as specified in squares.txt.
 2)  Insert checks to ensure even building given the GSC that builds houses
@@ -32,7 +32,7 @@ class GameState(object):
     f = open(squares_file, "r")
     square_names = f.read().split("\n")
     for square_name in square_names:
-      squares.append(Square(square_name)) # TODO 1
+      squares.append(Square(square_name)) # TODO: Initialize squares 1
     return squares
 
   def __init__(self, num_players):
@@ -75,7 +75,7 @@ class GameState(object):
 		return self._num_houses - qty >= 0
 
 	def builds_evenly(self, changes):
-		# TODO 2
+		# TODO: 2 - Implement builds_evenly()
 
 	def apply(self, changes): 
     for player, change_in_cash in changes.change_in_cash.iteritems():
