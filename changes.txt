@@ -20,3 +20,6 @@ Property:
 GameState:
 - Method to check if a given GSC builds evenly
     - Insert after checking are_enough_houses in seq-diag-decision-making
+
+Card:
+- Also uses GameStateChange.combine() in pay_each_player_50() and receive_50_from_each_player()
