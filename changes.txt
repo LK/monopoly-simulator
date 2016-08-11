@@ -26,3 +26,6 @@ GameState:
 Engine:
 - Removed initialize() method
 - Added run() method
+
+Card:
+- Also uses GameStateChange.combine() in pay_each_player_50() and receive_50_from_each_player()
