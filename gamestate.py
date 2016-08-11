@@ -38,8 +38,8 @@ class GameState(object):
   def __init__(self, num_players):
 		self._players                = initialize_players(num_players)
 		self._squares                = initialize_squares()
-		self._total_houses           = NUM_HOUSES
-		self._total_hotels           = NUM_HOTELS
+		self._houses_remaining       = NUM_HOUSES
+		self._hotels_remaining       = NUM_HOTELS
 
   # Private
   def _copy(self):
@@ -61,6 +61,15 @@ class GameState(object):
   @property
   def players(self):
   	return self._players
+
+  @property
+  def total_houses(self):
+    return self._total_houses
+  
+  @property
+  def total_hotels(self):
+    return self._total_hotels
+  
   
 	def get_owner(self, prop):
 		for player in self._players:
@@ -72,12 +81,15 @@ class GameState(object):
 
 	# Other
 	def are_enough_houses(self, qty):
-		return self._num_houses - qty >= 0
+		return self._houses_remaining - qty >= 0
+
+  def are_enough_hotels(self, qty):
+    return self._hotels_remaining - qty >= 0
 
 	def builds_evenly(self, changes):
 		# TODO 2
 
-	def apply(self, changes): 
+	def apply(self, changes):
     for player, change_in_cash in changes.change_in_cash.iteritems():
       player.cash += change_in_cash
 
@@ -101,7 +113,16 @@ class GameState(object):
       player.is_in_game = is_in_game
 
     for prop, change_in_houses in changes.change_in_houses.iteritems():
+      if change_in_houses == 0:
+        continue
+      
+      prev = prop.num_houses
       prop.num_houses += change_in_houses
+      if prop.num_houses == 5:
+        self._houses_remaining += prev
+        self._hotels_remaining -= 1
+      else:
+        self._houses_remaining -= change_in_houses
 
     for prop, is_mortgaged in changes.is_mortgaged.iteritems():
       prop.is_mortgaged = is_mortgaged     

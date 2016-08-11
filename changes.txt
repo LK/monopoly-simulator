@@ -20,3 +20,9 @@ Property:
 GameState:
 - Method to check if a given GSC builds evenly
     - Insert after checking are_enough_houses in seq-diag-decision-making
+- Added hotels_remaining and houses_remaining properties
+- Added are_enough_hotels method
+
+Engine:
+- Removed initialize() method
+- Added run() method
