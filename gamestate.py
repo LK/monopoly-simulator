@@ -97,11 +97,10 @@ class GameState(object):
 			player.position = new_position
 
 		for player, added_props in changes.added_props.iteritems():
-			player.props += added_props
+			player.add_properties(added_props)
 
 		for player, removed_props in changes.removed_props.iteritems():
-			for prop in removed_props:
-				player.props.remove(prop)
+			player.remove_properties(removed_props)
 
 		for player, change_in_jail_moves in changes.change_in_jail_moves.iteritems():
 			player.jail_moves += change_in_jail_moves

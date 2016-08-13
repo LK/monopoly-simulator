@@ -11,6 +11,7 @@ Auction sequence:
 - When asked to bid, player returns an int with their bid
 - If the player wins, the engine calls pay() with that bid, and the player then returns a GSC making the payment
 - GS applies the changes
+- Execution of bid method is timed and used  to break ties
 
 
 NEED TO ADD:
@@ -23,9 +24,33 @@ GameState:
 - Added hotels_remaining and houses_remaining properties
 - Added are_enough_hotels method
 
+GOC:
+- Can't combine house and hotel requests on the same property into one GOC
+
 Engine:
 - Removed initialize() method
 - Added run() method
 
 Card:
 - Also uses GameStateChange.combine() in pay_each_player_50() and receive_50_from_each_player()
+
+Building order (auction as necessary):
+No shortage
+- DEMO HOTELS
+- BUILD HOUSES
+- BUILD HOTELS
+
+Hotel shortage
+- BUILD HOUSES
+- DEMO HOTELS
+- BUILD HOTELS
+
+Housing shortage
+- BUILD HOTELS
+- BUILD HOUSES
+- DEMO HOTELS
+
+Hotel + housing shortage
+- BUILD HOUSES
+- DEMO HOTELS
+- BUILD HOTELS

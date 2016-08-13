@@ -13,7 +13,12 @@ class Engine(object):
 	def roll(self, player):
 		dice = random.randint(1,6) + random.randint(1,6)
 		position = (player.position + dice) % 40
-		self.state.apply(GameStateChange(new_position={player: position}))
+		
+		if player.position + dice >= 40:
+			self.state.apply(GameStateChange(new_position={player: position}, change_in_cash={player: 200}))
+		else:
+			self.state.apply(GameStateChange(new_position={player: position}))
+
 		self.notify_all()
 		self.state.apply(self.state.squares[position].landed(player, self.state))
 		self.notify_all()
