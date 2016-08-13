@@ -85,10 +85,6 @@ class GameState(object):
 	def are_enough_hotels(self, qty):
 		return self._hotels_remaining - qty >= 0
 
-	def builds_evenly(self, changes):
-		# TODO: 2 - Implement builds_evenly()
-		return None
-
 	def apply(self, changes):
 		for player, change_in_cash in changes.change_in_cash.iteritems():
 			player.cash += change_in_cash

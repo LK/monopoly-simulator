@@ -54,3 +54,25 @@ Hotel + housing shortage
 - BUILD HOUSES
 - DEMO HOTELS
 - BUILD HOTELS
+
+Square.landed():
+- Always pass in the player's last roll
+	- Use for utilities
+	- Ignore for other properties
+
+Card.landed()
+- Check if the player was moved to another square by the card, and if so call that
+  square's landed(), combine changes, then return
+
+
+-------------------------------------------------------------------------------------
+TODO
+
+M 	- Write the HouseResolver
+L 	- Write Engine.auction(), finish Engine
+L	- Figure out how to initialize cards (in GameState)
+M 	- Remove get out of jail free from the deck while a player has it
+M/L - Write the Validator
+M/L - Write the DecisionMaker
+M 	- Add player's roll as an argument to Square.landed() everywhere, use it to
+	  determine the rent on utilities
