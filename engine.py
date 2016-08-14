@@ -45,7 +45,7 @@ class Engine(object):
 	def completed(self):
 		remaining = 0
 		for player in self.state.players:
-			remaining += 1 if not player.eliminated
+			remaining += 1 if player.is_in_game
 
 		return remaining <= 1
 

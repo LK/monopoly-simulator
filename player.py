@@ -14,7 +14,7 @@ class Player(object):
 		self.props 							= props
 	
 	def copy(self):
-		return Player(position=self.position, cash=self.cash, props=self.props, decision_maker=self.decision_maker, jail_free_count=self.jail_free_count, jail_moves=self.jail_moves, is_in_game=self.is_in_game)
+		return Player(position=self._position, cash=self._cash, props=self._props, decision_maker=self._decision_maker, jail_free_count=self._jail_free_count, jail_moves=self._jail_moves, is_in_game=self._is_in_game)
 
 	# Properties
 
@@ -88,7 +88,7 @@ class Player(object):
 		return self._jail_moves
 
 	def is_in_jail(self):
-		return self.jail_moves > 0
+		return self._jail_moves > 0
 	
 	@jail_moves.setter
 	def jail_moves(self, jail_moves):
@@ -103,7 +103,7 @@ class Player(object):
 		self._is_in_game = is_in_game
 
 	def eliminate(self):
-		self.is_in_game = False
+		self._is_in_game = False
 
 	# DecisionMaker interactions
 

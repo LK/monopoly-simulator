@@ -1,12 +1,12 @@
 from square import Square
 
 class Property(Square):
-	def __init__(self, price, rents, property_group, properties_in_group=3,
+	def __init__(self, price, rents, property_group, size_of_property_group=3,
 							 mortgaged=False):
 		self._price = price
 		self._rents = rents
 		self._property_group = property_group
-		self._properties_in_group = properties_in_group
+		self._size_of_property_group = size_of_property_group
 		self._mortgaged = mortgaged
 
 	@property
@@ -26,8 +26,8 @@ class Property(Square):
 		return self._property_group
 
 	@property
-	def properties_in_group(self):
-		return self._properties_in_group
+	def size_of_property_group(self):
+		return self._size_of_property_group
 
 	@property
 	def mortgaged(self):

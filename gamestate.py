@@ -6,12 +6,6 @@ Description:
 This class serves as a container for all the components of the game in its current
 state: players, squares, chance/community chest cards, etc. Any changes to the state
 of the game should go through this object via the state-changing methods.
-
-
-TODO:
-In-line:
-1)  Assumes Square/Card class initializes by its name, as specified in squares.txt.
-2)  Insert checks to ensure even building given the GSC that builds houses
 '''
 
 class GameState(object):
@@ -33,7 +27,7 @@ class GameState(object):
 		f = open(squares_file, "r")
 		square_names = f.read().split("\n")
 		for square_name in square_names:
-			squares.append(Square(square_name)) # TODO: Initialize squares 1
+			squares.append(Square(square_name)) # TODO: GameState must initialize all squares
 		return squares
 
 	def __init__(self, num_players):
@@ -49,7 +43,7 @@ class GameState(object):
 		for i in range(0, num_players):
 			copy._players[i] = self._players[i].copy()
 		for square in self._squares:
-			copy._squares.append(square.copy())
+			copy._squares.append(square.copy())		# TODO: Implement Square.copy() for all subclasses
 		copy._total_houses = self._total_houses
 		copy._total_hotels = self._total_hotels
 		return copy
