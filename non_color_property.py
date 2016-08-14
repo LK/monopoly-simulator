@@ -1,15 +1,32 @@
 from property import Property
 from gamestatechange import GameStateChange
+from square import Square
 
 class NonColorProperty(Property):
+
+	# Constants
+	UTILIY_MULTIPLIERS = { 1: 4, 2: 10 } # multipliers for owning 1 or 2 utilities
+
 	def __init__(self):
 		pass
 
-	def landed(self, player, state):
+	# Returns the rent on this property based on the number of properties in this
+	# group owned and the landing player's roll
+	def get_rent(self, num_owned, roll, state):
+		water_works				= state.props[Square.INDEX["water_works"]]
+		electric_company	= state.props[Square.INDEX["electric_company"]]
+		if self == water_works or self == electric_company:
+			multiplier = NonColorProperty.UTILIY_MULTIPLIERS[num_owned]
+			return multiplier * roll
+		else:
+			return self.rents[num_owned]
+
+	def landed(self, player, roll, state):
 		owner = state.get_owner(self)
 		if owner == player:
 			return GameStateChange()
 
-		num_owned = owner.property_group_count()[self.property_group]
-		return player.pay(owner, self.rents[num_owned], state)
+		num_owned = owner.property_group_count[self.property_group]
+		rent = get_rent(num_owned, roll, state)
+		return player.pay(owner, rent, state)
 

@@ -18,7 +18,7 @@ class Card(Square):
 	# Chance and community chest functions
 	@staticmethod
 	def _advance_to_square(player, state, square_name):
-		return GameStateChange(new_position={ player : Square.INDEX[square_name] })
+		return GameStateChange(new_position={ player: Square.INDEX[square_name] })
 
 	@staticmethod
 	def _advance_to_go(player, state):
@@ -26,7 +26,7 @@ class Card(Square):
 
 	@staticmethod
 	def _go_to_jail(player, state):
-		return GameStateChange(new_position={ player : Square.INDEX["jail"] },
+		return GameStateChange(new_position={ player: Square.INDEX["jail"] },
 			chance_in_jail_moves={ player : GoToJail.JAIL_MOVES })
 
 	@staticmethod
@@ -44,12 +44,12 @@ class Card(Square):
 
 	@staticmethod
 	def _collect(player, state, amount):
-		return GameStateChange(change_in_cash={ player : amount })
+		return GameStateChange(change_in_cash={ player: amount })
 
 	@staticmethod
 	# TODO: Need to remove "get out of jail free" from the deck while a player has it
 	def _get_out_of_jail_free(player, state):
-		return GameStateChange(change_in_jail_free_count={ player : +1 })
+		return GameStateChange(change_in_jail_free_count={ player: +1 })
 
 
 
@@ -105,7 +105,7 @@ class Card(Square):
 		water_works 			= Square.INDEX["water_works"]
 		nearest_utility 	= nearest_to(player.position, [electric_company,
 			water_works])
-		return GameStateChange(new_position={ player : nearest_utility })
+		return GameStateChange(new_position={ player: nearest_utility })
 
 	@staticmethod
 	def _advance_to_nearest_railroad(player, state):
@@ -135,7 +135,7 @@ class Card(Square):
 
 	@staticmethod
 	def _go_back_three_spaces(player, state):
-		return GameStateChange(new_position={ player : player.position - 3 })
+		return GameStateChange(new_position={ player: player.position - 3 })
 
 
 
@@ -253,7 +253,7 @@ class Card(Square):
 	def __init__(self, card_type):
 		self._card_type = card_type
 
-	def landed(self, player, state):
+	def landed(self, player, roll, state):
 		if card_type == CHANCE_CARD:
 			result_of_action_on = CHANCE_DECK.draw()
 		else:

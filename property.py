@@ -1,6 +1,20 @@
 from square import Square
 
 class Property(Square):
+
+	# Initialize a property
+	# price: (int) 					Amount a Player must pay to buy the property
+	#
+	# rents: (int[])				Amounts a Player must pay when landing on the property,
+	#												indexed by either num of houses on it (color properties)
+	#												or num of that property group owned (non-color properties)
+	#
+	# property_group: (int)	A label from 0-9 indicating the group this property
+	#												belongs to
+	#
+	# size_of_property_group: (int)	Num of properties in the group this property
+	#																belongs to
+	# mortgaged: (boolean)	Indicates mortgage status of this property
 	def __init__(self, price, rents, property_group, size_of_property_group=3,
 							 mortgaged=False):
 		self._price = price
