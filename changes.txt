@@ -13,8 +13,6 @@ Auction sequence:
 - GS applies the changes
 - Execution of bid method is timed and used  to break ties
 
-
-NEED TO ADD:
 Property:
 - Instance variable for number of properties in the property group
 
@@ -24,15 +22,23 @@ GameState:
 - Added hotels_remaining and houses_remaining properties
 - Added are_enough_hotels method
 
-GOC:
-- Can't combine house and hotel requests on the same property into one GOC
+GSC:
+- Can't combine house and hotel requests on the same property into one GSC
 
 Engine:
 - Removed initialize() method
 - Added run() method
+- Renamed roll() to take_turn(), which processes a player's turn
+- Made static method roll() that just returns an integer roll 1-12
 
 Card:
 - Also uses GameStateChange.combine() in pay_each_player_50() and receive_50_from_each_player()
+
+HousingResolver:
+- See separate section below: "Housing"
+
+-----------------------------------------------------------------------------
+Housing
 
 Building order (auction as necessary):
 No shortage
@@ -55,15 +61,7 @@ Hotel + housing shortage
 - DEMO HOTELS
 - BUILD HOTELS
 
-Square.landed():
-- Always pass in the player's last roll
-	- Use for utilities
-	- Ignore for other properties
-
-Card.landed()
-- Check if the player was moved to another square by the card, and if so call that
-  square's landed(), combine changes, then return
-
+See design/housing-conflicts.png for explicit control flow
 
 -------------------------------------------------------------------------------------
 TODO

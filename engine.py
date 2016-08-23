@@ -8,10 +8,14 @@ class Engine(object):
 	def run(self):
 		player = self.state.players[random.randint(0,self.num_players-1)]
 		while not self.completed():
-			self.roll(player)
+			self.take_turn(player)
 
-	def roll(self, player):
-		dice = random.randint(1,6) + random.randint(1,6)
+	@staticmethod
+	def roll():
+			return random.randint(1,6) + random.randint(1,6)
+
+	def take_turn(self, player):
+		dice = Engine.roll()
 		position = (player.position + dice) % 40
 		
 		if player.position + dice >= 40:

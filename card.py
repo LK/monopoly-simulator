@@ -4,6 +4,7 @@ from gamestatechange import GameStateChange
 from gamestate import GameState
 from gotojail import GoToJail
 from sys import argv
+from engine import Engine
 
 class Card(Square):
 
@@ -17,17 +18,19 @@ class Card(Square):
 
 	# Chance and community chest functions
 	@staticmethod
-	def _advance_to_square(player, state, square_name):
-		return GameStateChange(new_position={ player: Square.INDEX[square_name] })
+	def _advance_to_square(player, square_index, roll, state):
+		state.apply(GameStateChange(new_position={ player: square_index })) # TODO: Card should not be applying changes, but the player must be moved before landed() is called in case player must make a payment
+		square = state.squares[square_index]
+		return square.landed(player, roll, state)
 
 	@staticmethod
 	def _advance_to_go(player, state):
-		return _advance_to_square(player, state, "go")
+		return _advance_to_square(player, Square.INDEX["go"], 0, state)
 
 	@staticmethod
 	def _go_to_jail(player, state):
-		return GameStateChange(new_position={ player: Square.INDEX["jail"] },
-			chance_in_jail_moves={ player : GoToJail.JAIL_MOVES })
+		go_to_jail = state.props[Square.INDEX["go_to_jail"]]
+		return jail.landed(player, 0, state)
 
 	@staticmethod
 	def _pay_building_fees(player, state, per_house_fee, per_hotel_fee):
@@ -105,7 +108,8 @@ class Card(Square):
 		water_works 			= Square.INDEX["water_works"]
 		nearest_utility 	= nearest_to(player.position, [electric_company,
 			water_works])
-		return GameStateChange(new_position={ player: nearest_utility })
+		roll = Engine.roll()
+		return _advance_to_square(player, nearest_utility, roll, state)
 
 	@staticmethod
 	def _advance_to_nearest_railroad(player, state):
@@ -115,23 +119,23 @@ class Card(Square):
 		short_line_railroad 	= Square.INDEX["short_line_railroad"]
 		nearest_railroad 			= nearest_to(player.position, [reading_railroad,
 			pennsylvania_railroad, b_and_o_railroad, short_line_railroad])
-		return GameStateChange(new_position={ player: nearest_railroad })
+		return _advance_to_square(player, nearest_railroad, 0, state)
 
 	@staticmethod
 	def _advance_to_reading_railroad(player, state):
-		return _advance_to_square(player, state, "reading_railroad")
+		return _advance_to_square(player, Square.INDEX["reading_railroad"], 0, state)
 
 	@staticmethod
 	def _advance_to_boardwalk(player, state):
-		return _advance_to_square(player, state, "boardwalk")
+		return _advance_to_square(player, Square.INDEX["boardwalk"], 0, state)
 
 	@staticmethod
 	def _advance_to_illinois_avenue(player, state):
-		return _advance_to_square(player, state, "illinois_avenue")
+		return _advance_to_square(player, Square.INDEX["illinois_avenue"], 0, state)
 
 	@staticmethod
 	def _advance_to_st_charles_place(player, state):
-		return _advance_to_square(player, state, "st_charles_place")
+		return _advance_to_square(player, Square.INDEX["st_charles_place"], 0, state)
 
 	@staticmethod
 	def _go_back_three_spaces(player, state):
