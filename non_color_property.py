@@ -7,8 +7,8 @@ class NonColorProperty(Property):
 	# Constants
 	UTILIY_MULTIPLIERS = { 1: 4, 2: 10 } # multipliers for owning 1 or 2 utilities
 
-	def __init__(self):
-		pass
+	def __init__(self, name, price, rents, property_group, size_of_property_group, mortgaged=False):
+		super(NonColorProperty, self).__init__(name, price, rents, property_group, size_of_property_group, mortgaged)
 
 	# Returns the rent on this property based on the number of properties in this
 	# group owned and the landing player's roll

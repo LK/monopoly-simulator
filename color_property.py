@@ -2,7 +2,8 @@ from property import Property
 from gamestatechange import GameStateChange
 
 class ColorProperty(Property):
-	def __init__(self, num_houses):
+	def __init__(self, name, price, rents, property_group, size_of_property_group, mortgaged=False, num_houses=0):
+		super(ColorProperty, self).__init__(name, price, rents, property_group, size_of_property_group, mortgaged)
 		self._num_houses = num_houses
 
 	def get_rent_with(self, num_houses, state):

@@ -13,8 +13,14 @@ Auction sequence:
 - GS applies the changes
 - Execution of bid method is timed and used  to break ties
 
+Square:
+- Added properties for square metadata
+
 Property:
 - Instance variable for number of properties in the property group
+
+Color Property:
+- Updated initializers to take parameters needed for property initializer
 
 GameState:
 - Method to check if a given GSC builds evenly
@@ -68,7 +74,7 @@ TODO
 
 M 	- Write the HouseResolver
 L 	- Write Engine.auction(), finish Engine
-L	- Figure out how to initialize cards (in GameState)
+L		- Figure out how to initialize cards (in GameState)
 M 	- Remove get out of jail free from the deck while a player has it
 M/L - Write the Validator
 M/L - Write the DecisionMaker

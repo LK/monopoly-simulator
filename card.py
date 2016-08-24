@@ -254,7 +254,8 @@ class Card(Square):
 
 
 	# Instance methods
-	def __init__(self, card_type):
+	def __init__(self, name, card_type):
+		super(Card, self).__init__(name)
 		self._card_type = card_type
 
 	def landed(self, player, roll, state):

@@ -12,5 +12,13 @@ class Square(object):
 		INDEX[line[:-1]] = i
 		i += 1
 
+	def __init__(self, name):
+		self._name = name
+
 	def landed(self, player, roll, state):
 		raise Exception("Subclass did not implement landed()")
+
+	@property
+	def name(self):
+		return self._name
+	

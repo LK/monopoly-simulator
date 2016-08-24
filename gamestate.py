@@ -21,18 +21,9 @@ class GameState(object):
 			players.append(Player())
 		return players
 
-	def initialize_squares():
-		squares_file = "squares.txt"
-		squares = []
-		f = open(squares_file, "r")
-		square_names = f.read().split("\n")
-		for square_name in square_names:
-			squares.append(Square(square_name)) # TODO: GameState must initialize all squares
-		return squares
-
 	def __init__(self, num_players):
 		self._players                = initialize_players(num_players)
-		self._squares                = initialize_squares()
+		self._squares                = create_squares()
 		self._houses_remaining       = NUM_HOUSES
 		self._hotels_remaining       = NUM_HOTELS
 
@@ -84,6 +75,9 @@ class GameState(object):
 			player.cash += change_in_cash
 
 		for player, new_position in changes.new_position.iteritems():
+			if new_position < player.position:
+				player.cash += 200
+			
 			player.position = new_position
 
 		for player, added_props in changes.added_props.iteritems():
