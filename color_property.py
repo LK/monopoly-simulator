@@ -2,9 +2,10 @@ from property import Property
 from gamestatechange import GameStateChange
 
 class ColorProperty(Property):
-	def __init__(self, name, price, rents, property_group, size_of_property_group, mortgaged=False, num_houses=0):
+	def __init__(self, name, price, rents, property_group, size_of_property_group, house_price, mortgaged=False, num_houses=0):
 		super(ColorProperty, self).__init__(name, price, rents, property_group, size_of_property_group, mortgaged)
 		self._num_houses = num_houses
+		self._house_price = house_price
 
 	def get_rent_with(self, num_houses, state):
 		owner = state.get_owner(self)
@@ -39,3 +40,8 @@ class ColorProperty(Property):
 	@num_houses.setter
 	def num_houses(self, num_houses):
 		self._num_houses = num_houses
+
+	@property
+	def house_price(self):
+		return self._house_price
+		

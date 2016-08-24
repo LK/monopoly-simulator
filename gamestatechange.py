@@ -1,3 +1,5 @@
+from square import Square
+
 class GameStateChange(object):
 	def __init__(self, change_in_cash={}, new_position={}, added_props={}, removed_props={}, change_in_jail_moves={}, change_in_jail_free_count={}, is_in_game={}, change_in_houses={}, is_mortgaged={}):
 		self._change_in_cash            = change_in_cash
@@ -114,3 +116,69 @@ class GameStateChange(object):
 
 	def total_houses_built(self):
 		return sum(self.change_in_houses.values())
+
+		# -------------
+
+	@staticmethod
+	def transfer_money(player_from, player_to, amount):
+		return GameStateChange(change_in_cash={player_from: -amount, player_to: +amount})
+
+	@staticmethod
+	def change_position(player, new_position):
+		return GameStateChange(new_position={player: new_position})
+
+	@staticmethod
+	def buy_property(player, prop, bank, mortgaged=False):
+		return GameStateChange(added_props={player: [prop]}, change_in_cash={player: -prop.price, bank: prop.price})
+
+	@staticmethod
+	def transfer_property(player_from, player_to, prop):
+		return GameStateChange(removed_props={player_from: [prop]}, added_props={player_to: [prop]})
+
+	@staticmethod
+	def mortgage(prop, bank):
+		return GameStateChange(is_mortgaged={prop: True}, change_in_cash={player: prop.price/2, bank: -prop.price/2})
+	
+	@staticmethod
+	def unmortgage(prop, bank):
+		return GameStateChange(is_mortgaged={prop: False}, change_in_cash={player: -prop.price/2 * 1.1, bank: prop.price/2 * 1.1})
+	
+	@staticmethod
+	def build_house(prop, bank):
+		return GameStateChange(change_in_houses={prop: 1}, change_in_cash={player: -prop.house_price, bank: prop.house_price})
+	
+	@staticmethod
+	def build_hotel(property):
+		return GameStateChange(change_in_houses={prop: 1}, change_in_cash={player: -prop.house_price, bank: prop.house_price})
+
+	@staticmethod
+	def demolish_house(property):
+		return GameStateChange(change_in_houses={prop: -1}, change_in_cash={player: prop.house_price/2, bank: -prop.house_price/2})
+
+	@staticmethod
+	def demolish_hotel(property):
+		return GameStateChange(change_in_houses={prop: -1}, change_in_cash={player: prop.house_price/2, bank: -prop.house_price/2})
+
+	@staticmethod
+	def send_to_jail(player):
+		return GameStateChange(new_position={player: Square.INDEX['jail']}, change_in_jail_moves={player: 3})
+
+	@staticmethod
+	def decrement_in_jail_moves(player):
+		return GameStateChange(change_in_jail_moves={player: -1})
+
+	@staticmethod
+	def leave_jail(player):
+		return GameStateChange(change_in_jail_moves={player: -player.jail_moves})
+
+	@staticmethod
+	def increment_jail_card_count(player):
+		return GameStateChange(change_in_jail_free_count={player: 1})
+
+	@staticmethod
+	def decrement_jail_card_count(player):
+		return GameStateChange(change_in_jail_free_count={player: -1})
+
+	@staticmethod
+	def eliminate(player_eliminated, player_eliminator):
+		return GameStateChange(is_in_game={player_eliminated: False}, change_in_cash={player_eliminated: -player_eliminated.cash, player_eliminator: player_eliminated.cash}, removed_props={player_eliminated: player_eliminated.props}, added_props={player_eliminator: player_eliminated.props})

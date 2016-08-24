@@ -5,14 +5,14 @@ class Engine(object):
 		self.num_players = num_players
 		self.state = GameState(num_players)
 
+	@staticmethod
+	def roll():
+		return random.randint(1,6) + random.randint(1,6)
+
 	def run(self):
 		player = self.state.players[random.randint(0,self.num_players-1)]
 		while not self.completed():
 			self.take_turn(player)
-
-	@staticmethod
-	def roll():
-			return random.randint(1,6) + random.randint(1,6)
 
 	def take_turn(self, player):
 		dice = Engine.roll()
@@ -28,17 +28,12 @@ class Engine(object):
 			changes.append(goc)
 			self.state.apply(goc.other_changes)
 
-		
-
 		if self.state.are_enough_houses(total_houses):
 			for change in changes:
 				self.state.apply(goc.building_changes)
 		else:
 			for i in range(self.state.houses_remaining):
 				self.auction()
-
-	def auction(self):
-		
 
 	def completed(self):
 		remaining = 0
@@ -49,7 +44,7 @@ class Engine(object):
 
 def main():
 	engine = Engine()
-	while not engine.completed(state):
+	engine.run()
 
 
 if __name__ == '__main__':

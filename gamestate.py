@@ -26,6 +26,7 @@ class GameState(object):
 		self._squares                = create_squares()
 		self._houses_remaining       = NUM_HOUSES
 		self._hotels_remaining       = NUM_HOTELS
+		self._bank									 = Player(cash=0)
 
 	# Private
 	def _copy(self):
@@ -56,6 +57,11 @@ class GameState(object):
 	def total_hotels(self):
 		return self._total_hotels
 	
+	@property
+	def bank(self):
+		return self._bank
+	
+
 	def get_owner(self, prop):
 		for player in self._players:
 			for p in player.props:

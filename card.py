@@ -3,7 +3,6 @@ from deck import Deck
 from gamestatechange import GameStateChange
 from gamestate import GameState
 from gotojail import GoToJail
-from sys import argv
 from engine import Engine
 
 class Card(Square):
@@ -19,7 +18,7 @@ class Card(Square):
 	# Chance and community chest functions
 	@staticmethod
 	def _advance_to_square(player, square_index, roll, state):
-		state.apply(GameStateChange(new_position={ player: square_index })) # TODO: Card should not be applying changes, but the player must be moved before landed() is called in case player must make a payment
+	state.apply(GameStateChange.change_position(player, square_index)) # TODO: Card should not be applying changes, but the player must be moved before landed() is called in case player must make a payment
 		square = state.squares[square_index]
 		return square.landed(player, roll, state)
 
@@ -47,14 +46,12 @@ class Card(Square):
 
 	@staticmethod
 	def _collect(player, state, amount):
-		return GameStateChange(change_in_cash={ player: amount })
+		return GameStateChange.transfer_money(player, GameState.BANK, amount)
 
 	@staticmethod
 	# TODO: Need to remove "get out of jail free" from the deck while a player has it
 	def _get_out_of_jail_free(player, state):
-		return GameStateChange(change_in_jail_free_count={ player: +1 })
-
-
+		return GameStateChange.increment_jail_card_count(player)
 
 	# Chance-only functions
 	@staticmethod
@@ -109,7 +106,7 @@ class Card(Square):
 		nearest_utility 	= nearest_to(player.position, [electric_company,
 			water_works])
 		roll = Engine.roll()
-		return _advance_to_square(player, nearest_utility, roll, state)
+		return _advance_to_square(player, nearest_utility, roll, state)  # TODO: Always make rent roll x 10
 
 	@staticmethod
 	def _advance_to_nearest_railroad(player, state):
@@ -274,5 +271,5 @@ def main():
 	water_works = 28
 	print Card._nearest_to(position, [electric_company, water_works])
 
-if (argv[0] == "card.py"):
+if __name__ == '__main__':
 	main()

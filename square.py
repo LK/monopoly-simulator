@@ -2,7 +2,6 @@ class Square(object):
 	
 	# Constants
 	INDEX = { }			# dictionary maps names to indices
-	BANK = None			# represents the bank
 
 	# Import square names
 	SQUARE_NAMES_FILE = "squares.txt"
