@@ -124,8 +124,11 @@ class GameStateChange(object):
 		return GameStateChange(change_in_cash={player_from: -amount, player_to: +amount})
 
 	@staticmethod
-	def change_position(player, new_position):
-		return GameStateChange(new_position={player: new_position})
+	def change_position(player, new_position, bank):
+		if player.position >= (Square.INDEX['go']-12) % 40 and new_position < (Square.INDEX['go']-12) % 40:
+			return GameStateChange(new_position={player: new_position}, change_in_cash:{player: 200, bank: -200})
+		else:
+			return GameStateChange(new_position={player: new_position})
 
 	@staticmethod
 	def buy_property(player, prop, bank, mortgaged=False):

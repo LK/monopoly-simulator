@@ -17,7 +17,7 @@ class Engine(object):
 	def take_turn(self, player):
 		dice = Engine.roll()
 		position = (player.position + dice) % 40
-		self.state.apply(GameStateChange(new_position={player: position}))
+		self.state.apply(GroupOfChanges([GameStateChange.change_position(player, position)]))
 		self.state.apply(self.state.squares[position].landed(player, self.state))
 		self.notify_all()
 

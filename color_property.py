@@ -1,5 +1,5 @@
 from property import Property
-from gamestatechange import GameStateChange
+from groupofchanges import GroupOfChanges
 
 class ColorProperty(Property):
 	# Constants
@@ -22,7 +22,7 @@ class ColorProperty(Property):
 	def landed(self, player, roll, state):
 		owner = state.get_owner(self)
 		if owner == player:
-			return GameStateChange()
+			return GroupOfChanges()
 
 		rent = self.get_rent_with(self.num_houses, state)
 		return player.pay(owner, rent, state)

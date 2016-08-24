@@ -1,5 +1,6 @@
 from property import Property
 from gamestatechange import GameStateChange
+from groupofchanges import GroupOfChanges
 from square import Square
 
 class NonColorProperty(Property):
@@ -24,7 +25,7 @@ class NonColorProperty(Property):
 	def landed(self, player, roll, state):
 		owner = state.get_owner(self)
 		if owner == player:
-			return GameStateChange()
+			return GroupOfChanges()
 
 		num_owned = owner.property_group_count[self.property_group]
 		rent = get_rent(num_owned, roll, state)
