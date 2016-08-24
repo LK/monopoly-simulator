@@ -18,7 +18,7 @@ class Card(Square):
 	# Chance and community chest functions
 	@staticmethod
 	def _advance_to_square(player, square_index, roll, state):
-	state.apply(GameStateChange.change_position(player, square_index)) # TODO: Card should not be applying changes, but the player must be moved before landed() is called in case player must make a payment
+		state.apply(GameStateChange.change_position(player, square_index))
 		square = state.squares[square_index]
 		return square.landed(player, roll, state)
 
@@ -42,11 +42,11 @@ class Card(Square):
 				else:
 					total_houses += prop.num_houses()
 		fee = (total_houses * per_house_fee) + (total_hotels * per_hotel_fee)
-		return player.pay(Square.BANK, fee, state)
+		return player.pay(state.bank, fee, state)
 
 	@staticmethod
 	def _collect(player, state, amount):
-		return GameStateChange.transfer_money(player, GameState.BANK, amount)
+		return GameStateChange.transfer_money(player, state.bank, amount)
 
 	@staticmethod
 	# TODO: Need to remove "get out of jail free" from the deck while a player has it
@@ -68,7 +68,7 @@ class Card(Square):
 		for other_player in state.players:
 			if other_player != player:
 				changes_paying_players.append(player.pay(other_player, 50, state))
-		all_payments = GameStateChange.combine(changes_paying_players)
+		all_payments = GroupOfChanges.combine(changes_paying_players)
 		return all_payments
 
 	@staticmethod
@@ -136,7 +136,7 @@ class Card(Square):
 
 	@staticmethod
 	def _go_back_three_spaces(player, state):
-		return GameStateChange(new_position={ player: player.position - 3 })
+		return GameStateChange.change_position(player, player.position - 3)
 
 
 
@@ -172,20 +172,20 @@ class Card(Square):
 		for other_player in state.players:
 			if other_player != player:
 				changes_from_other_players.append(other_player.pay(player, 50, state))
-		all_payments = GameStateChange.combine(changes_from_other_players)
+		all_payments = GroupOfChanges.combine(changes_from_other_players)
 		return all_payments
 
 	@staticmethod
 	def _pay_50(player, state):
-		return player.pay(Square.BANK, 50, state)
+		return player.pay(state.bank, 50, state)
 
 	@staticmethod
 	def _pay_100(player, state):
-		return player.pay(Square.BANK, 100, state)
+		return player.pay(state.bank, 100, state)
 
 	@staticmethod
 	def _pay_150(player, state):
-		return player.pay(Square.BANK, 150, state)
+		return player.pay(state.bank, 150, state)
 
 	@staticmethod
 	def _pay_building_fees_community_chest(player, state):

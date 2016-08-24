@@ -9,5 +9,4 @@ class GoToJail(Square):
 		super(GoToJail, self).__init__(name)
 
 	def landed(self, player, roll, state):
-		return GameStateChange(new_position={ player: Square.INDEX["jail"] },
-			change_in_jail_moves={ player: JAIL_MOVES })
+		return GameStateChange.send_to_jail(player)
