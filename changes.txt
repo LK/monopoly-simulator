@@ -129,11 +129,11 @@ See design/housing-conflicts.png for a diagram of control flow
 -------------------------------------------------------------------------------------
 TODO
 
-M 	- Write the HouseResolver
-L 	- Write Engine.auction(), finish Engine
-L		- Figure out how to initialize cards (in GameState)
-M 	- Remove get out of jail free from the deck while a player has it
-M/L - Write the Validator
-M/L - Write the DecisionMaker
-M 	- Add player's roll as an argument to Square.landed() everywhere, use it to
-	  determine the rent on utilities
+M	- Finish HousingResolver
+		- Including mechanism for asking a player if they want to go through with new housing conditions after they've been changed (see HousingResolver)
+M	- Write BuildingRequests
+L	- Write NotificationChanges
+L	- Finish Engine
+M/L	- Write DecisionMaker
+M/L	- Validation?
+M	- Remove get out of jail free from the deck while a player has it
