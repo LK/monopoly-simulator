@@ -36,8 +36,8 @@ class GameState(object):
 			copy._players[i] = self._players[i].copy()
 		for square in self._squares:
 			copy._squares.append(square.copy())		# TODO: Implement Square.copy() for all subclasses
-		copy._total_houses = self._total_houses
-		copy._total_hotels = self._total_hotels
+		copy._houses_remaining = self._houses_remaining
+		copy._hotels_remaining = self._hotels_remaining
 		return copy
 
 	# Getters
@@ -50,12 +50,12 @@ class GameState(object):
 		return self._players
 
 	@property
-	def total_houses(self):
-		return self._total_houses
+	def houses_remaining(self):
+		return self._houses_remaining
 	
 	@property
-	def total_hotels(self):
-		return self._total_hotels
+	def hotels_remaining(self):
+		return self._hotels_remaining
 	
 	@property
 	def bank(self):
@@ -76,32 +76,32 @@ class GameState(object):
 	def are_enough_hotels(self, qty):
 		return self._hotels_remaining - qty >= 0
 
-	def apply(self, changes):
-		for player, change_in_cash in changes.change_in_cash.iteritems():
+	# Applies a single GameStateChange
+	def _apply_single_change(self, change):
+		for player, change_in_cash in change.change_in_cash.iteritems():
 			player.cash += change_in_cash
 
-		for player, new_position in changes.new_position.iteritems():
+		for player, new_position in change.new_position.iteritems():
+			player.position = new_position
 			if new_position < player.position:
 				player.cash += 200
-			
-			player.position = new_position
 
-		for player, added_props in changes.added_props.iteritems():
+		for player, added_props in change.added_props.iteritems():
 			player.add_properties(added_props)
 
-		for player, removed_props in changes.removed_props.iteritems():
+		for player, removed_props in change.removed_props.iteritems():
 			player.remove_properties(removed_props)
 
-		for player, change_in_jail_moves in changes.change_in_jail_moves.iteritems():
+		for player, change_in_jail_moves in change.change_in_jail_moves.iteritems():
 			player.jail_moves += change_in_jail_moves
 
-		for player, change_in_jail_free_count in changes.change_in_jail_free_count.iteritems():
+		for player, change_in_jail_free_count in change.change_in_jail_free_count.iteritems():
 			player.jail_free_count += change_in_jail_free_count
 
-		for player, is_in_game in changes.is_in_game.iteritems():
+		for player, is_in_game in change.is_in_game.iteritems():
 			player.is_in_game = is_in_game
 
-		for prop, change_in_houses in changes.change_in_houses.iteritems():
+		for prop, change_in_houses in change.change_in_houses.iteritems():
 			if change_in_houses == 0:
 				continue
 			
@@ -113,5 +113,11 @@ class GameState(object):
 			else:
 				self._houses_remaining -= change_in_houses
 
-		for prop, is_mortgaged in changes.is_mortgaged.iteritems():
-			prop.is_mortgaged = is_mortgaged     
+		for prop, is_mortgaged in change.is_mortgaged.iteritems():
+			prop.is_mortgaged = is_mortgaged  
+
+
+	# Applies a GroupOfChanges
+	def apply(self, changes):
+		for change in changes:
+			_apply_single_change(change)   
