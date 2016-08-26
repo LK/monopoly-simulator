@@ -1,0 +1,244 @@
+How housing conflicts are resolved
+------------------------------------------
+
+---CONTENTS---
+	Search for these phrases preceded and followed by three dashes ("---phrase---")
+	to find the sections:
+		- "CONTENTS":				you are here
+		- "HOUSING RESOLVER":	 	overview of what the object does
+		- "THE RULES IN DETAIL":	full explanation of the rules used by the object
+		- "SUMMARY OF THE RULES": 	a summary
+		- "CONTROL FLOW":			a control flow representation of the summary
+
+
+---HOUSING RESOLVER---
+	The HousingResolver takes in a set of housing conditions, and uses a set of
+	rules to determine when houses/hotels are built, auctioned, and denied to
+	players.
+
+	HousingResolver is passed:
+	- Dictionary: Players -> BuildingRequests
+	- GameState
+
+	The following conditions are required by the HousingResolver to make these
+	decisions:
+	- total houses left on the market
+	- total houses requested to be built
+	- total houses requested to be demolished
+	- total hotels left on the market
+	- total hotels requested to be built
+	- total hotels requested to be demolished
+
+	These conditions collectively determine the state of the housing market. The
+	HousingResolver gathers the build/demo conditions from the BuildingRequests
+	passed to it and the "left on the market" conditions from the GameState.
+
+	When it analyzes the housing conditions, it will ultimately arrive at some
+	order in which to apply the changes (e.g. build the houses first, then
+	build the hotels, then demo the hotels, etc.). If there are no shortages,
+	this will work just fine - the HousingResolver will simply extract from its the
+	dictionary the GroupOfChanges it intends to make, and then apply them.
+		(Note that the HousingResolver applies changes to the GameState
+		directly, rather than creating a GroupOfChanges to return back to the
+		Engine. The reason for this will become clear later.)
+
+	However, when there is a shortage, the HousingResolver needs to call auctions
+	among all the players for all the remaining houses. The result of this auction
+	procedure will ultimately be a GroupOfChanges that builds the houses for the
+	winners of each auction. The HousingResolver then applies this GroupOfChanges.
+	There is an analogous procedure for auctions of hotels, and for auctions of
+	groups of 4 houses between players requesting hotel demolitions.
+		(This is why the HousingResolver must apply changes directly: auctions 
+		require that players know the state of the game in realtime, including 
+		any housing changes that may have been made just before the auction.)
+
+	There is only one special case that makes this procedure not so straight-forward:
+	If a player wishes to demolish N hotels, but there are fewer than 4N houses
+	available, he would be forced to demolish not only his N hotels, but also however
+	many houses are necessary so that he is left only with the few houses remaining
+	on the market. In this case, the HousingResolver must ask this player if he
+	would still like to demolish, and if so, how many houses he will take. The
+	player returns a GroupOfChanges in this process, which specifies the hotels he
+	will demo, houses he will build, and corresponding modifications to his funds.
+	Furthermore, if multiple players are in this situation, they will have to auction
+	for those remaining houses, and the auction procedure above will apply.
+
+	Generally, this does not happen often, as the players will take this fact into
+	account when constructing their BuildingRequests in the first place.
+
+	However, it does come up when the HousingResolver decides to build houses before
+	demolishing hotels, as after houses have been built, the conditions for hotel
+	demolitions may have changed. For instance, when a player requested a hotel demo,
+	there may have been 4 houses available, but after houses were built there may be
+	only 3. Thus, the HousingResolver must ask this player what he wants to do (or,
+	if there are multiple players, start an auction), and apply the resulting
+	GroupOfChanges described above.
+
+	At the end of this process, the HousingResolver will have applied all the
+	building changes to the GameState, and it will return.
+
+
+
+---THE RULES IN DETAIL---
+	There are four possible housing conflicts that can arise in a game of Monopoly:
+		- House shortage (only)
+		- Hotel shortage (only)
+		- House shortage AND hotel shortage
+		- No shortage
+
+	Thus, we are required to define what constitutes a "shortage":
+		1) Shortage: qty requested > qty available
+
+	However, this can quickly get complicated, as the "qty available" will change
+	throughout the building/demolishing process. So, we have multiple definitions
+	of "shortage" for houses and hotels depending on what has been built/demolished.
+	We use the following abbreviations to save space:
+		- g = house
+		- r = hotel
+		- b = requested for building
+		- d = requested for demolition
+		- l = left/available on the market
+
+	Definitions of shortages:
+		2) House shortage:
+			a) Before house demolitions; before hotel builds; before hotel demolitions
+				gb > gl + gd + (4 * rb) - (4 * rd)
+			b) After house demolitions;  before hotel builds; before hotel demolitions
+				gb > gl 	 + (4 * rb) - (4 * rd)
+			c) After house demolitions;  after hotel builds;  before hotel demolitions
+				gb > gl 	 			- (4 * rd)
+			d) Before house demolitions; after hotel builds;  before hotel demolitions
+				gb > gl + gd 			- (4 * rd)
+			e) Before house demolitions; after hotel builds;  after hotel demolitions
+				gb > gl + gd
+			f) Before house demolitions; before hotel builds; after hotel demolitions
+				gb > gl + gd + (4 * rb)
+			g) After house demolitions;  before hotel builds; after hotel demolitions
+				gb > gl 	+ (4 * rb)
+			h) After house demolitions;  after hotel builds;  after hotel demolitions
+				gb > gl
+		3) Hotel shortage:
+			a) before hotel demolitions
+				rb > rl + rd
+			b) after hotel demolitions
+				rb > rl
+
+	Clearly, house shortages are substantially more complex that hotel shortages
+	because houses are added/removed from the market via many more avenues.
+
+	After thoughtful consideration of each of these scenarios, we were unable to
+	arrive at a set of rules that always gives every player equal opportunity for
+	building, as there are contradicting rules at play. (See section "STORY TIME"
+	for an example of such contradicting rules.)
+
+	This type of contradiction led us to adopt a convention:
+		House builds get priority over hotel demolitions
+
+	Why?
+
+	Well, it's basically just putting the burden of responsibiliy on the hotel
+	owner. When a player chooses to upgrade to a hotel, he must understand that he
+	sacrifices his control over the 4 houses he had before. Thus, he relinquishes
+	them to the market and allows others to build with them if they so desire. If,
+	after building the hotel, he decides he wants the houses back, it is his
+	responsibility to grab the houses before anyone can or wants to build them.
+	Otherwise, tough luck.
+
+	Thus, we avoid the situation described above, as we would just declare that
+	Player 1 is not allowed to demolish his hotel, and Player 1 automatically gets
+	to build the house he wants.
+
+	With this convention in place, we were able to come up with a relatively
+	straight-forward procedure for determining what to do:
+
+	---SUMMARY OF THE RULES---
+		No shortage
+		- Demo hotels
+		- Build houses
+		- Build hotels
+
+		Hotel shortage (3a)
+		- Build houses
+		- Demo hotels
+		- Build hotels
+
+		Housing shortage (2g)**
+		- Build hotels
+		- Build houses
+		- Demo hotels
+			**Note that although hotel demolitions haven't happened yet, we
+			  treat them as if they have because our convention says that
+			  hotel demolitions CANNOT come before house builds in a conflict.
+
+		Hotel shortage (3a) + housing shortage (2g)
+		- Build houses
+		- Demo hotels
+		- Build hotels
+
+	This summary does not mention where auctions are held, but there's a simple rule
+	behind that: In (nearly) any case of building, if at that moment, there are more
+	houses/hotels requested than there are available, call an auction. (Of course,
+	if there are no shortages, there is no reason to even consider an auction.)
+
+	Since the procedure for hotel shortage and both shortages turned out to be the
+	same, we arrived at the following control flow:
+
+	---CONTROL FLOW---
+		1) 	Demolish houses
+
+		2) 	Test for hotel shortage (3a). If there is one:
+
+				- Build houses
+				- Demo hotels
+				- Build hotels
+
+			If not:
+
+				a) 	Test for house shortage (2g)*. If there is one:
+
+						- Build hotels
+						- Build houses
+						- Demo hotels
+
+					If not:
+
+						(No shortages, so any order goes. Here's one:)
+						- Demo hotels
+						- Build houses
+						- Build hotels
+
+	See design/housing-conflicts.png for a diagram of control flow.
+
+-------------------------------------------------------------------------------------
+
+---STORY TIME---
+	(Example of contradictory rules that make building conflicts inherently unfair)
+
+	For instance, say there 4 houses available on the market, Player 1 wishes to
+	demolish a hotel (thus taking the 4 houses all at once), and Player 2 wishes to
+	build 1 house (thus taking only 1 and leaving the remaining 3). Certainly they
+	would have to auction for the houses they want.
+
+	But what happens if Player 1 wins the auction? Does he win all 4 houses, despite
+	the fact that he was fighting Player 2, who only bid for 1 house? That doesn't
+	seem fair.
+
+	So, Player 1 should only get 1 house. But he can't do anything with that unless
+	he takes down all of his hotels and reduces to the 1 house level. Well why in
+	hell would he do that when he could try to get the remaining 3 houses and, with
+	his total of 4, just take down 1 hotel?
+
+	Now Player 1 must return to the auction to get the other 3 houses. But now he is
+	required to fight Player 2 a total of four times to achieve a roughly analogous
+	result to what Player 2 is trying to achieve (Player 1 wants 1 demolition, while
+	Player 2 wants 1 build). Thus, he must dish out at least four times the money
+	just to accomplish an analogous result. Well, that doesn't seem fair either.
+
+	So, the game is stuck. Everyone hates Player 1 for causing problems by trying to
+	hog the houses. Arguments go back and forth for hours over how the auction
+	should work and what's fair. Ultimately, Player 1 or Player 2 will just give up
+	and cede the houses to the other player.
+
+	Or, if both Players 1 and 2 are super stubborn, which is the more likely
+	scenario in our games, one of them will eventually get so annoyed that he flips
+	the board and the game just ends.
