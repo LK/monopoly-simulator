@@ -120,4 +120,4 @@ class GameState(object):
 	# Applies a GroupOfChanges
 	def apply(self, changes):
 		for change in changes:
-			_apply_single_change(change)   
+			_apply_single_change(change)
