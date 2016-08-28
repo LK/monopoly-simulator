@@ -67,9 +67,9 @@ def create_squares():
 	COMMUNITY_CHEST_2 		= Card(Square.COMMUNITY_CHEST_2, Card.COMMUNITY_CHEST_CARD)
 	COMMUNITY_CHEST_3 		= Card(Square.COMMUNITY_CHEST_3, Card.COMMUNITY_CHEST_CARD)
 
-	CHANCE_1 							= Card(Square.CHANCE_1, Card.CHANCE)
-	CHANCE_2 							= Card(Square.CHANCE_2, Card.CHANCE)
-	CHANCE_3 							= Card(Square.CHANCE_3, Card.CHANCE)
+	CHANCE_1 							= Card(Square.CHANCE_1, Card.CHANCE_CARD)
+	CHANCE_2 							= Card(Square.CHANCE_2, Card.CHANCE_CARD)
+	CHANCE_3 							= Card(Square.CHANCE_3, Card.CHANCE_CARD)
 
 	INCOME_TAX 						= Tax(Square.INCOME_TAX, 200)
 	LUXURY_TAX 						= Tax(Square.LUXURY_TAX, 100)
