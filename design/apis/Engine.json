@@ -1,0 +1,92 @@
+{
+	"Engine": {
+	
+		"Description": "The Engine is the root driving force of the game. It maintains the state of the game, handles all the logistics that move the game along, and facilitates interactions between players.",
+
+		"Constants": {
+	
+			
+	
+		},
+	
+		"Instance Variables": {
+	
+			"_state": {
+				"Type": "GameState",
+				"Description": "The state of this game"
+			}
+	
+		},
+	
+		"Methods": {
+	
+			"Getters": {
+	
+				
+	
+			},
+	
+			"Setters": {
+	
+				
+	
+			},
+	
+			"Static": {
+	
+	
+	
+			},
+
+			"Private": {
+
+				"_take_turn()": {
+					"Arguments": {
+						"player": "Player",
+						"roll": "int"
+					},
+					"Returns": "void",
+					"Access": "Private",
+					"Description": "Simulates the given Player's turn"
+				},
+
+				"_notify_all()": {
+					"Arguments": { },
+					"Returns": "void",
+					"Access": "Private",
+					"Description": "Notifies all Players of the current GameState. Applies their responses to the GameState"
+				},
+
+				"_completed()": {
+					"Arguments": { },
+					"Returns": "boolean",
+					"Access": "Private",
+					"Description": "Returns True if the game is over, False if not"
+				}
+
+			},
+	
+			"Other": {
+	
+				"__init__()": {
+					"Arguments": {
+						"num_players": "int"
+					},
+					"Returns": "Engine",
+					"Access": "Public",
+					"Description": "Initializes an Engine"
+				},
+
+				"run()": {
+					"Arguments": { },
+					"Returns": "void",
+					"Access": "Public",
+					"Description": "Simulates the game"
+				}
+	
+			}
+	
+		}
+	
+	}
+}

@@ -10,7 +10,7 @@ Description:
 		- House Demolitions
 		- Hotel Demolitions
 	BuildingRequests are kept separate from other changes a player wishes to make
-	to the game so that the HousingResolver can make settle building conflicts before
+	to the game so that the HousingResolver can settle building conflicts before
 	applying them.
 '''
 

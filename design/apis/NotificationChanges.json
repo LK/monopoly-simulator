@@ -1,0 +1,67 @@
+{
+	"NotificationChanges": {
+	
+		"Description": "Notifications are broadcasted to Players by the Engine to make them aware of the current GameState. Players are able to submit changes they wish to make upon seeing the current GameState. The NotificationChanges object is a container for all the changes/requests submitted by a Player in response to one of these notifications.",
+	
+		"Constants": {
+	
+			
+	
+		},
+	
+		"Instance Variables": {
+	
+			"_non_building_changes": {
+				"Type": "GroupOfChanges[]",
+				"Description": "A list of GroupOfChanges objects containing all of the responding Player's desired changes not involving building. A list is submitted to allow each GroupOfChanges to be its own logical unit"
+			},
+
+			"_building_requests": {
+				"Type": "BuildingRequests",
+				"Description": "The BuildingRequests desired by the responding Player"
+			}
+	
+		},
+	
+		"Methods": {
+	
+			"Getters": {
+	
+				"non_building_changes()": {
+					"Arguments": { },
+					"Returns": "GroupOfChanges[]",
+					"Access": "Public",
+					"Description": "Returns this instance's non_building_changes list"
+				},
+
+				"building_requests()": {
+					"Arguments": { },
+					"Returns": "BuildingRequests",
+					"Access": "Public",
+					"Description": "Returns this instance's BuildingRequests"
+				}
+	
+			},
+	
+			"Setters": {
+	
+				
+	
+			},
+	
+			"Static": {
+	
+				
+	
+			},
+	
+			"Other": {
+	
+				
+	
+			}
+	
+		}
+	
+	}
+}

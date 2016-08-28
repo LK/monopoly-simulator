@@ -1,0 +1,71 @@
+{
+	"GroupOfChanges": {
+
+		"Description": "A GroupOfChanges is an ordered set of GameStateChanges that, legally (i.e. according to the rules of Monopoly), can happen independently, but, for the sake of clean state transitions, must happen as one unit. It essentially represents a sequence of GameStateChanges that logically should be grouped together (e.g. When several houses are built, a GroupOfChanges would contain the ordered set of GameStateChanges that each build one house at a time).",
+	
+		"Constants": {
+	
+			
+	
+		},
+	
+		"Instance Variables": {
+	
+			"changes": {
+				"Type": "GameStateChange[]",
+				"Description": "An ordered list of GameStateChanges. We call it 'ordered' because the GameStateChanges can only be retrieved in the order of the list, for they are to be applied in that order"
+			}
+	
+		},
+	
+		"Methods": {
+	
+			"Getters": {
+	
+				
+	
+			},
+	
+			"Setters": {
+	
+				
+	
+			},
+	
+			"Static": {
+	
+				"combine()": {
+					"Arguments": {
+						"groups_of_changes": "GroupOfChanges[]"
+					},
+					"Returns": "GroupOfChanges",
+					"Access": "Public",
+					"Description": "Returns the GroupOfChanges that results from appending each item in the given list onto one long list of GameStateChanges. The list given is considered ordered, in that each GroupOfChanges will be appended in the order provided in the list"
+				}
+	
+			},
+	
+			"Other": {
+	
+				"__init__()": {
+					"Arguments": {
+						"changes": "GameStateChange[]"
+					},
+					"Returns": "GroupOfChanges",
+					"Access": "Public",
+					"Description": "Initializes a GroupOfChanges from the given ordered list of GameStateChanges"
+				},
+
+				"__iter__()": {
+					"Arguments": { },
+					"Returns": "Iterator",
+					"Access": "Public",
+					"Description": "Returns an Iterator that iterates over the internal list of GameStateChanges in the order of the list"
+				}
+	
+			}
+	
+		}
+	
+	}
+}

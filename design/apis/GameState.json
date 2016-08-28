@@ -1,0 +1,174 @@
+{
+
+	"GameState": {
+
+		"Description": "The GameState, at any instant, represents a legal state of the Monopoly game - namely, one that can be obtained by following the rules of Monopoly. It is a container for everything that makes up the game, and supports operations for modifying the state of the game.",
+	
+		"Constants": {
+	
+			"NUM_HOUSES": {
+				"Type": "int",
+				"Description": "The total number of houses available on the market"
+			},
+
+			"NUM_HOTELS": {
+				"Type": "int",
+				"Description": "The total number of hotels available on the market"
+			},
+
+			"NUM_SQUARES": {
+				"Type": "int",
+				"Description": "The number of Squares on the board"
+			}
+	
+		},
+	
+		"Instance Variables": {
+	
+			"_players": {
+				"Type": "Player[]",
+				"Description": "List of Players in this game"
+			},
+
+			"_squares": {
+				"Type": "Square[]",
+				"Description": "List of Squares that make up the board"
+			},
+
+			"_houses_remaining": {
+				"Type": "int",
+				"Description": "The number of houses currently available on the market"
+			},
+
+			"_hotels_remaining": {
+				"Type": "int",
+				"Description": "The number of hotels currently available on the market"
+			},
+
+			"_bank": {
+				"Type": "Player",
+				"Description": "This Player represents the bank. It keeps track of the cash added to and removed from circulation. Since it is a Player object, other Players can pay it and receive money from it, just as they would with any other Player"
+			}
+	
+		},
+	
+		"Methods": {
+	
+			"Getters": {
+	
+				"players()": {
+					"Arguments": { },
+					"Returns": "Player[]",
+					"Access": "Public",
+					"Description": "Returns this instance's players"
+				},
+
+				"squares()": {
+					"Arguments": { },
+					"Returns": "Square[]",
+					"Access": "Public",
+					"Description": "Returns this instance's squares"
+				},
+
+				"houses_remaining()": {
+					"Arguments": { },
+					"Returns": "int",
+					"Access": "Public",
+					"Description": "Returns this instance's houses_remaining"
+				},
+
+				"hotels_remaining()": {
+					"Arguments": { },
+					"Returns": "int",
+					"Access": "Public",
+					"Description": "Returns this instance's hotels_remaining"
+				},
+
+				"bank()": {
+					"Arguments": { },
+					"Returns": "Player",
+					"Access": "Public",
+					"Description": "Returns this instance's bank"
+				}
+	
+			},
+	
+			"Setters": {
+	
+				
+	
+			},
+	
+			"Static": {
+	
+				
+	
+			},
+	
+			"Other": {
+	
+				"__init__()": {
+					"Arguments": {
+						"num_players": "int"
+					},
+					"Returns": "GameState",
+					"Access": "Public",
+					"Description": "Initializes a GameState with the given number of players in the game"
+				},
+
+				"get_owner()": {
+					"Arguments": {
+						"prop": "Property"
+					},
+					"Returns": "Player",
+					"Access": "Public",
+					"Description": "Returns the owner of the given Property if there is one. Returns None if there is not"
+				},
+
+				"are_enough_houses()": {
+					"Arguments": {
+						"qty": "int"
+					},
+					"Returns": "boolean",
+					"Access": "Public",
+					"Description": "Returns True if there are at least the given quantity of houses available on the market"
+				},
+
+				"are_enough_hotels()": {
+					"Arguments": {
+						"qty": "int"
+					},
+					"Returns": "boolean",
+					"Access": "Public",
+					"Description": "Returns True if there are at least the given quantity of hotels available on the market"
+				},
+
+				"_apply_single_change()": {
+					"Arguments": {
+						"change": "GameStateChange"
+					},
+					"Returns": "void",
+					"Access": "Private",
+					"Description": "Modifies this GameState by applying the changes specified in the given GameStateChange object"
+				},
+
+				"apply()": {
+					"Arguments": {
+						"changes": "GroupOfChanges",
+						"name": {
+							"Type": "int",
+							"Description": "description"
+						}
+					},
+					"Returns": "void",
+					"Access": "Public",
+					"Description": "Modifies this GameState by applying all of the changes in the GroupOfChanges container, in the order specified upon initializing the GroupOfChanges"
+				}
+	
+			}
+	
+		}
+	
+	}
+
+}

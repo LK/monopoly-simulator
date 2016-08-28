@@ -20,21 +20,21 @@ from colorproperty import ColorProperty
 class HousingResolver(object):
 
 	# Constants
-	BEFORE 	= False
-	AFTER		= not BEFORE
-	BEFORE_HOUSE_BUILDS				= BEFORE
-	BEFORE_HOTEL_BUILDS				= BEFORE
-	BEFORE_HOUSE_DEMOLITIONS	= BEFORE
-	BEFORE_HOTEL_DEMOLITIONS 	= BEFORE
-	AFTER_HOUSE_BUILDS				= AFTER
-	AFTER_HOTEL_BUILDS				= AFTER
-	AFTER_HOUSE_DEMOLITIONS		= AFTER
-	AFTER_HOTEL_DEMOLITIONS		= AFTER
+	_BEFORE 	= False
+	_AFTER		= not _BEFORE
+	_BEFORE_HOUSE_BUILDS				= _BEFORE
+	_BEFORE_HOTEL_BUILDS				= _BEFORE
+	_BEFORE_HOUSE_DEMOLITIONS		= _BEFORE
+	_BEFORE_HOTEL_DEMOLITIONS 	= _BEFORE
+	_AFTER_HOUSE_BUILDS					= _AFTER
+	_AFTER_HOTEL_BUILDS					= _AFTER
+	_AFTER_HOUSE_DEMOLITIONS		= _AFTER
+	_AFTER_HOTEL_DEMOLITIONS		= _AFTER
 
 	# These are used to override conditions that determine a shortage, in order to
 	# enforce our Convention
-	OVERRIDE_TRUE 	= True
-	OVERRIDE_FALSE	= False
+	_OVERRIDE_TRUE 	= True
+	_OVERRIDE_FALSE	= False
 
 	# Takes in a dictionary mapping Players to their BuildingRequests and the
 	# current GameState
@@ -166,7 +166,7 @@ class HousingResolver(object):
 			return num_houses_needed <= self._state.houses_remaining + self._houses_built
 
 	# Settles the case when players want to demolish hotels, but there are fewer
-	# than 4 houses available. Returns a GroupOfChanges that demolishes hotels and
+	# than 4 houses available. Applies the changes that demolish hotels and
 	# builds houses appropriately according to the players' desires
 	def _settle_hotel_demolitions(self, were_houses_built):
 		if _are_enough_houses_for_hotel_demolitions(were_houses_built):
@@ -179,16 +179,14 @@ class HousingResolver(object):
 				if len(players_demolishing_hotels) > 1:
 					result_of_auction = _auction_hotel_demolitions(self._state.houses_remaining, players_demolishing_hotels, self._state)
 					self._state.apply(result_of_auction)
-				else:
+				elif len(players_demolishing_hotels) == 1:
 					# Ask the 1 player if he wants to reduce past the 4 house level
 					player = players_demolishing_hotels[0]
-					his_hotel_demolitions = player_building_requests[player].hotel_demolitions
-					if player.will_demolish_to(self._state.houses_remaining, his_hotel_demolitions, self._state): # TODO: Implement Player.will_demolish_to()
-						# TODO: Get the player's new hotel_demolitions and return them
-						return GroupOfChanges([])
-					else:
-						# No demolitions happen
-						return GroupOfChanges([])
+					original_hotel_demolitions	= player_building_requests[player].hotel_demolitions
+					revised_hotel_demolitions 	= player.revise_hotel_demolitions(original_hotel_demolitions, self._state)
+					self._state.apply(revised_hotel_demolitions) # TODO: Validate that these hotel demolitions are actually legal
+				else:
+					return self._state.apply(GroupOfChanges())
 
 
 	# Main resolution procedure
@@ -199,9 +197,9 @@ class HousingResolver(object):
 		# 1: Demolish houses
 		_demolish_houses()
 
-		if _is_hotel_shortage(BEFORE_HOTEL_DEMOLITIONS):
+		if _is_hotel_shortage(_BEFORE_HOTEL_DEMOLITIONS):
 			# 2: Build houses
-			if not _is_house_shortage(AFTER_HOUSE_DEMOLITIONS, OVERRIDE_TRUE):
+			if not _is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _OVERRIDE_TRUE):
 				_build_houses()
 			else:
 				# Auction houses
@@ -209,19 +207,19 @@ class HousingResolver(object):
 				self._state.apply(result_of_auction)
 
 			# 3: Demolish hotels
-			_settle_hotel_demolitions(AFTER_HOUSE_BUILDS) # special case dealt with separately
+			_settle_hotel_demolitions(_AFTER_HOUSE_BUILDS) # special case dealt with separately
 
 			# 4: Build hotels
-			if not _is_hotel_shortage(AFTER_HOTEL_DEMOLITIONS):
+			if not _is_hotel_shortage(_AFTER_HOTEL_DEMOLITIONS):
 				_build_hotels()
 			else:
 				# Auction the remaining hotels
 				result_of_auction = _auction_hotel_builds(self._state.hotels_remaining, _get_players_building_hotels(), self._state)
 				self._state.apply(result_of_auction)
 				
-		elif _is_house_shortage(AFTER_HOUSE_DEMOLITIONS, BEFORE_HOTEL_BUILDS):
+		elif _is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _BEFORE_HOTEL_BUILDS):
 			# 2: Build hotels
-			if not _is_hotel_shortage(OVERRIDE_TRUE):
+			if not _is_hotel_shortage(_OVERRIDE_TRUE):
 				_build_hotels()
 			else:
 				# Auction for the remaining hotels
@@ -229,7 +227,7 @@ class HousingResolver(object):
 				self._state.apply(result_of_auction)
 
 			# 3: Build houses
-			if not _is_house_shortage(AFTER_HOUSE_DEMOLITIONS, AFTER_HOTEL_BUILDS):
+			if not _is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _AFTER_HOTEL_BUILDS):
 				_build_houses()
 			else:
 				# Auction for the remaining houses
@@ -237,7 +235,7 @@ class HousingResolver(object):
 				self._state.apply(result_of_auction)
 
 			# 4: Demolish hotels
-			_settle_hotel_demolitions(AFTER_HOUSE_BUILDS) # special case dealt with separately
+			_settle_hotel_demolitions(_AFTER_HOUSE_BUILDS) # special case dealt with separately
 
 		else:	# no shortage, so order doesn't matter
 			_build_and_demolish_all()

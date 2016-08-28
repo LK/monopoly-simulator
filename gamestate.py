@@ -1,4 +1,4 @@
-'''
+app'''
 Author:   Michael Friedman
 Created:  6/29/16
 
@@ -8,6 +8,10 @@ state: players, squares, chance/community chest cards, etc. Any changes to the s
 of the game should go through this object via the state-changing methods.
 '''
 
+from color_property import ColorProperty
+from create_squares import create_squares
+from property import Property
+
 class GameState(object):
 	# Constants
 	NUM_HOUSES = 32
@@ -15,18 +19,27 @@ class GameState(object):
 	NUM_SQUARES = 40
 
 	# Initialization
-	def initialize_players(num_players):
+	def _initialize_players(num_players):
 		players = []
 		for i in range(0, num_players):
 			players.append(Player())
 		return players
 
+	def _initialize_bank(all_squares):
+		all_props = []
+		for square in all_squares:
+			if isinstance(square, Property):
+				prop = square
+				all_props += prop
+		return Player(cash=0, props=all_props)
+
 	def __init__(self, num_players):
-		self._players                = initialize_players(num_players)
+		self._players                = _initialize_players(num_players)
 		self._squares                = create_squares()
 		self._houses_remaining       = NUM_HOUSES
 		self._hotels_remaining       = NUM_HOTELS
-		self._bank									 = Player(cash=0)
+		self._bank 									 = _initialize_bank(self._squares)
+		
 
 	# Private
 	def _copy(self):
@@ -41,13 +54,14 @@ class GameState(object):
 		return copy
 
 	# Getters
-	@property
-	def squares(self):
-		return self._squares
 
 	@property
 	def players(self):
 		return self._players
+
+	@property
+	def squares(self):
+		return self._squares
 
 	@property
 	def houses_remaining(self):
@@ -60,8 +74,9 @@ class GameState(object):
 	@property
 	def bank(self):
 		return self._bank
-	
 
+
+	# Other
 	def get_owner(self, prop):
 		for player in self._players:
 			for p in player.props:
@@ -69,7 +84,6 @@ class GameState(object):
 					return player
 		return None
 
-	# Other
 	def are_enough_houses(self, qty):
 		return self._houses_remaining - qty >= 0
 
@@ -102,16 +116,16 @@ class GameState(object):
 			player.is_in_game = is_in_game
 
 		for prop, change_in_houses in change.change_in_houses.iteritems():
+			# TODO: Add a mechanism to validate that Players did not try to build/demolish houses AND hotels in the same GroupOfChanges. This must be done by two separate GroupOfChanges objects
 			if change_in_houses == 0:
 				continue
-			
-			prev = prop.num_houses
-			prop.num_houses += change_in_houses
-			if prop.num_houses == 5:
-				self._houses_remaining += prev
-				self._hotels_remaining -= 1
+			elif change_in_houses > 0:
+				prop.build(change_in_houses)
 			else:
-				self._houses_remaining -= change_in_houses
+				prop.demolish(change_in_houses)
+
+		self._houses_remaining += change.change_in_houses_remaining
+		self._hotels_remaining += change.change_in_hotels_remaining
 
 		for prop, is_mortgaged in change.is_mortgaged.iteritems():
 			prop.is_mortgaged = is_mortgaged  

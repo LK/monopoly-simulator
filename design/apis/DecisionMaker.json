@@ -1,0 +1,122 @@
+{
+	"DecisionMaker": {
+
+		"Description": "The DecisionMaker represents the 'brain' of the Player. Whenever the Player must take action on some event, it outsources its decision-making process to its DecisionMaker, which then returns the action it 'thinks' is in the Player's best interests. It is designed as an interface, which defines a method for each of the possible decisions a Player must make in the game. We designed the decision-making process this way to enable different Players to have different 'strategies', which are defined by their respective DecisionMakers. An instance of DecisionMaker must implement all of the methods defined in this API.",
+	
+		"Constants": {
+	
+			
+	
+		},
+	
+		"Instance Variables": {
+	
+			
+	
+		},
+	
+		"Methods": {
+	
+			"Getters": {
+	
+				
+	
+			},
+	
+			"Setters": {
+	
+				
+	
+			},
+	
+			"Static": {
+	
+				
+	
+			},
+	
+			"Other": {
+
+				"__init__()": {
+					"Arguments": { },
+					"Returns": "DecisionMaker",
+					"Access": "Public",
+					"Description": "Initializes a DecisionMaker"
+				},
+	
+				"buy_or_deny()": {
+					"Arguments": {
+						"player": "Player",
+						"property": "Property",
+						"state": "GameState"
+					},
+					"Returns": "GroupOfChanges",
+					"Access": "Public",
+					"Description": "Determines whether or not the given Property is worth buying for the given Player, and returns a GroupOfChanges that either buys it or does nothing"
+				},
+
+				"pay()": {
+					"Arguments": {
+						"player_from": "Player",
+						"player_to": "Player",
+						"amount": "int",
+						"state": "GameState"
+					},
+					"Returns": "GroupOfChanges",
+					"Access": "Public",
+					"Description": "Determines how the first Player should break down the payment of the given amount to the second Player. Returns a GroupOfChanges that pays the second Player that amount, making the corresponding adjustments to the first Player's hand"
+				},
+
+				"bid()": {
+					"Arguments": {
+						"player": "Player",
+						"highest_bid": "int",
+						"props_to_build_on": {
+							"Type": "Property[]",
+							"Description": "Contains the Property objects the given Player requested to build on when submitting its last BuildingRequests. Specifically, they are the list that corresponds to the type of construction Players are currently auctioning for (i.e. for a house-build auction, these are the Property objects on which the given Player wished to build houses; likewise for a hotel-build auction or a hotel-demolition auction)"
+						},
+						"state": "GameState"
+					},
+					"Returns": "GroupOfChanges",
+					"Access": "Public",
+					"Description": "Determines how much the given Player should be willing to bid to build on any one of the Property objects provided, in response to the highest bid. Returns that amount"
+				},
+
+				"will_trade()": {
+					"Arguments": {
+						"player": "Player",
+						"proposal": "GroupOfChanges",
+						"state": "GameState"
+					},
+					"Returns": "boolean",
+					"Access": "Public",
+					"Description": "Determines whether or not the given Player should be willing to accept the given GroupOfChanges to the GameState. Returns True if the Player should, False if not"
+				},
+
+				"respond_to_state()": {
+					"Arguments": {
+						"player": "Player",
+						"new_state": "GameState"
+					},
+					"Returns": "NotificationChanges",
+					"Access": "Public",
+					"Description": "Returns the NotificationChanges the given Player should make in response to the new GameState"
+				},
+
+				"revise_hotel_demolitions()": {
+					"Arguments": {
+						"player": "Player",
+						"original_hotel_demolitions": "GroupOfChanges",
+						"state": "GameState"
+					},
+					"Returns": "GroupOfChanges",
+					"Access": "Public",
+					"Description": "Determines whether or not the given Player should revise his hotel demolitions in the event that the GameState has changed since he first submitted them (i.e. when the HousingResolver has allowed houses to be taken off the market before hotels were demolished). Returns the GroupOfChanges that either makes new hotel demolitions or does nothing"
+				}
+	
+			}
+	
+		}
+	
+	}
+}

@@ -1,0 +1,76 @@
+{
+	"Deck": {
+
+		"Description": "Maintains a deck of items. Supports various operations for drawing items from and inserting items into the deck.",
+
+		"Instance Variables": {
+			"_items": {
+				"Type": "Item[]",
+				"Description": "A list containing the ordered contents of the Deck"
+			},
+			"_next_index": {
+				"Type": "int",
+				"Description": "The index of the next card to be drawn/peeked"
+			}
+		},
+
+		"Methods": {
+			"__init__()": {
+				"Arguments": {
+					"items": "Item[]"
+				},
+				"Returns": "Deck",
+				"Access": "Public",
+				"Description": "Initializes and shuffles a Deck given a list of Items to put in it"
+			},
+
+			"draw()": {
+				"Arguments": {},
+				"Returns": "Item",
+				"Access": "Public",
+				"Description": "Returns the next Item on the top of the Deck and places it on the bottom"
+			},
+
+			"peek()": {
+				"Arguments": {},
+				"Returns": "Item",
+				"Access": "Public",
+				"Description": "Returns the next Item on the top of the Deck and replaces it back on the top"
+			},
+
+			"draw_and_remove()": {
+				"Arguments": {},
+				"Returns": "Item",
+				"Access": "Public",
+				"Description": "Returns the next Item on the top of the Deck and removes it from the Deck"
+			},
+
+			"insert_on_bottom()": {
+				"Arguments": {
+					"item": "Item"
+				},
+				"Return Type": "void",
+				"Access": "Public",
+				"Description": "Inserts the given Item on the bottom of the Deck"
+			},
+
+			"insert_on_top()": {
+				"Arguments": {
+					"item": "void"
+				},
+				"Return Type": "Item",
+				"Access": "Public",
+				"Description": "Inserts the given Item on the top of the Deck"
+			},
+
+			"insert_randomly()": {
+				"Arguments": {
+					"item": "Item"
+				},
+				"Return Type": "void",
+				"Access": "Public",
+				"Description": "Inserts the given Item somewhere in the Deck randomly"
+			}
+		}
+	}
+}

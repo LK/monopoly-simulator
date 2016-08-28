@@ -6,5 +6,9 @@ class Tax(Square):
 		super(Tax, self).__init__(name)
 		self._tax = tax
 
+	@property
+	def tax(self):
+		return self._tax
+	
 	def landed(self, player, roll, state):
-		return player.pay(Square.BANK, self._tax, state)
+		return player.pay(state.bank, self._tax, state)

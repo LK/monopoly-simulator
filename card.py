@@ -24,11 +24,11 @@ class Card(Square):
 
 	@staticmethod
 	def _advance_to_go(player, state):
-		return _advance_to_square(player, Square.INDEX["go"], 0, state)
+		return _advance_to_square(player, Square.INDEX[Square.GO], 0, state)
 
 	@staticmethod
 	def _go_to_jail(player, state):
-		go_to_jail = state.props[Square.INDEX["go_to_jail"]]
+		go_to_jail = state.props[Square.INDEX[Square.GO_TO_JAIL]]
 		return jail.landed(player, 0, state)
 
 	@staticmethod
@@ -37,7 +37,7 @@ class Card(Square):
 		total_hotels = 0
 		for prop in player.props:
 			if isinstance(prop, ColorProperty):
-				if prop.has_hotel():	# TODO: ColorProperty needs to implement has_hotel()
+				if prop.has_hotel():
 					total_hotels += 1
 				else:
 					total_houses += prop.num_houses()
@@ -101,8 +101,8 @@ class Card(Square):
 
 	@staticmethod
 	def _advance_to_nearest_utility(player, state):
-		electric_company 	= Square.INDEX["electric_company"]
-		water_works 			= Square.INDEX["water_works"]
+		electric_company 	= Square.INDEX[Square.ELECTRIC_COMAPNY]
+		water_works 			= Square.INDEX[Square.WATER_WORKS]
 		nearest_utility 	= nearest_to(player.position, [electric_company,
 			water_works])
 		roll = Engine.roll()
@@ -110,29 +110,29 @@ class Card(Square):
 
 	@staticmethod
 	def _advance_to_nearest_railroad(player, state):
-		reading_railroad 			= Square.INDEX["reading_railroad"]
-		pennsylvania_railroad	= Square.INDEX["pennsylvania_railroad"]
-		b_and_o_railroad 			= Square.INDEX["b_and_o_railroad"]
-		short_line_railroad 	= Square.INDEX["short_line_railroad"]
+		reading_railroad 			= Square.INDEX[Square.READING_RAILROAD]
+		pennsylvania_railroad	= Square.INDEX[Square.PENNSYLVANIA_RAILROAD]
+		b_and_o_railroad 			= Square.INDEX[Square.B_AND_O_RAILROAD]
+		short_line_railroad 	= Square.INDEX[Square.SHORT_LINE_RAILROAD]
 		nearest_railroad 			= nearest_to(player.position, [reading_railroad,
 			pennsylvania_railroad, b_and_o_railroad, short_line_railroad])
 		return _advance_to_square(player, nearest_railroad, 0, state)
 
 	@staticmethod
 	def _advance_to_reading_railroad(player, state):
-		return _advance_to_square(player, Square.INDEX["reading_railroad"], 0, state)
+		return _advance_to_square(player, Square.INDEX[Square.READING_RAILROAD], 0, state)
 
 	@staticmethod
 	def _advance_to_boardwalk(player, state):
-		return _advance_to_square(player, Square.INDEX["boardwalk"], 0, state)
+		return _advance_to_square(player, Square.INDEX[Square.BOARDWALK], 0, state)
 
 	@staticmethod
 	def _advance_to_illinois_avenue(player, state):
-		return _advance_to_square(player, Square.INDEX["illinois_avenue"], 0, state)
+		return _advance_to_square(player, Square.INDEX[Square.ILLINOIS_AVENUE], 0, state)
 
 	@staticmethod
 	def _advance_to_st_charles_place(player, state):
-		return _advance_to_square(player, Square.INDEX["st_charles_place"], 0, state)
+		return _advance_to_square(player, Square.INDEX[Square.ST_CHARLES_PLACE], 0, state)
 
 	@staticmethod
 	def _go_back_three_spaces(player, state):
@@ -245,8 +245,8 @@ class Card(Square):
 
 
 	# Static decks of cards
-	CHANCE_DECK = Deck(_make_chance_functions.__func__())
-	COMMUNITY_CHEST_DECK = Deck(_make_community_chest_functions.__func__())
+	_CHANCE_DECK = Deck(_make_chance_functions.__func__())
+	_COMMUNITY_CHEST_DECK = Deck(_make_community_chest_functions.__func__())
 
 
 
@@ -257,9 +257,9 @@ class Card(Square):
 
 	def landed(self, player, roll, state):
 		if card_type == CHANCE_CARD:
-			result_of_action_on = CHANCE_DECK.draw()
+			result_of_action_on = _CHANCE_DECK.draw()
 		else:
-			result_of_action_on = COMMUNITY_CHEST_DECK.draw()
+			result_of_action_on = _COMMUNITY_CHEST_DECK.draw()
 		return result_of_action_on(player, state)
 
 

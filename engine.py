@@ -1,43 +1,65 @@
 import random
 
+class Roll(object):
+
+		def __init__(self):
+			die1 = random.randint(1, 6)
+			die2 = random.randint(1, 6)
+			self._value = die1 + die2
+			self._is_doubles = (die1 == die2)
+
+		@property
+		def value(self):
+			return self._value
+		
+		@property
+		def is_doubles(self):
+			return self._is_doubles
+
+
 class Engine(object):
 	def __init__(self, num_players):
-		self.num_players = num_players
-		self.state = GameState(num_players)
-
-	@staticmethod
-	def roll():
-		return random.randint(1,6) + random.randint(1,6)
+		self._state = GameState(num_players)
 
 	def run(self):
-		player = self.state.players[random.randint(0,self.num_players-1)]
-		while not self.completed():
-			self.take_turn(player)
+		max_rolls = 2
+		num_players = len(self._state.players)
+		player = self._state.players[random.randint(0,num_players-1)]
+		while not self._completed():
+			roll = Roll()
+			num_rolls = 0
+			while roll.is_doubles:
+				num_rolls += 1
+				if num_rolls > max_rolls:
+					self._state.apply(GroupOfChanges([GameStateChange.send_to_jail(player)]))
+					break
+				self._take_turn(player, roll.value)
+				roll = Roll()
 
-	def take_turn(self, player):
-		dice = Engine.roll()
-		position = (player.position + dice) % 40
-		self.state.apply(GroupOfChanges([GameStateChange.change_position(player, position)]))
-		self.state.apply(self.state.squares[position].landed(player, self.state))
-		self.notify_all()
 
-	def notify_all(self):
+	def _take_turn(self, player, roll):
+		position = (player.position + roll) % 40
+		self._state.apply(GroupOfChanges([GameStateChange.change_position(player, position)]))
+		self._state.apply(self._state.squares[position].landed(player, roll, self._state))
+		self._notify_all()
+
+	def _notify_all(self): # TODO: Update notification process for HousingResolver and BuildingRequests
 		changes = []
-		for player in self.state.players:
-			goc = player.notify(self.state)
+		for player in self._state.players:
+			goc = player.respond_to_state(self._state)
 			changes.append(goc)
-			self.state.apply(goc.other_changes)
+			self._state.apply(goc.other_changes)
 
-		if self.state.are_enough_houses(total_houses):
+		if self._state.are_enough_houses(total_houses):
 			for change in changes:
-				self.state.apply(goc.building_changes)
+				self._state.apply(goc.building_changes)
 		else:
-			for i in range(self.state.houses_remaining):
+			for i in range(self._state.houses_remaining):
 				self.auction()
 
-	def completed(self):
+	def _completed(self):
 		remaining = 0
-		for player in self.state.players:
+		for player in self._state.players:
 			remaining += 1 if player.is_in_game
 
 		return remaining <= 1

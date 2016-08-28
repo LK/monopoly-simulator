@@ -14,7 +14,6 @@ class GroupOfChanges(object):
 	def __init__(self, changes=[]):
 		self._changes = changes
 
-
 	# Returns an iterator so this object becomes iterable
 	def __iter__(self):
 		return iter(self._changes)

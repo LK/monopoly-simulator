@@ -1,0 +1,90 @@
+{
+	"HousingResolver": {
+	
+		"Description": "The HousingResolver takes in a set of housing conditions, and uses a set of rules to determine when houses/hotels are built, auctioned, and denied to players. The rules are fully documented in design/housing-resolver.txt",
+	
+		"Constants": {
+	
+			
+	
+		},
+	
+		"Instance Variables": {
+	
+			"_player_building_requests": {
+				"Type": "{ Player: BuildingRequests }",
+				"Description": "A Dictionary mapping Players to their BuildingRequests"
+			},
+
+			"_state": {
+				"Type": "GameState",
+				"Description": "The current GameState"
+			},
+
+			"_houses_built": {
+				"Type": "int",
+				"Description": "The total number of houses requested to be built by all Players"
+			},
+
+			"_hotels_built": {
+				"Type": "int",
+				"Description": "The total number of hotels requested to be built by all Players"
+			},
+
+			"_houses_demolished": {
+				"Type": "int",
+				"Description": "The total number of houses requested to be demolished by all Players"
+			},
+
+			"_hotels_demolished": {
+				"Type": "int",
+				"Description": "The total number of hotels requested to be demolished by all Players"
+			}
+	
+		},
+	
+		"Methods": {
+	
+			"Getters": {
+	
+				
+	
+			},
+	
+			"Setters": {
+	
+				
+	
+			},
+	
+			"Static": {
+	
+				
+	
+			},
+	
+			"Other": {
+
+				"__init__()": {
+					"Arguments": {
+						"player_building_requests": "{ Player: BuildingRequests }",
+						"state": "GameState"
+					},
+					"Returns": "HousingResolver",
+					"Access": "Public",
+					"Description": "Initializes a HousingResolver and resolves all housing conflicts by applying them directly to the GameState provided"
+				},
+	
+				"_resolve()": {
+					"Arguments": { },
+					"Returns": "void",
+					"Access": "Private",
+					"Description": "The main resolution procedure. Resolves all the building changes according to the set of rules and applies them to the GameState directly"
+				}
+	
+			}
+	
+		}
+	
+	}
+}
