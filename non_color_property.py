@@ -19,7 +19,7 @@ class NonColorProperty(Property):
 			return player.buy_or_deny(self, state)
 		else:
 			num_owned = owner.property_group_count[self.property_group]
-			rent = get_rent(num_owned, roll, state)
+			rent = self.get_rent(num_owned, roll, state)
 			return player.pay(owner, rent, state)
 
 	# Returns the rent on this property based on the number of properties in this

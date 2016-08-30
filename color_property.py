@@ -54,5 +54,5 @@ class ColorProperty(Property):
 		self.num_houses -= qty
 
 	def has_hotel(self):
-		return self.num_houses == NUM_HOUSES_BEFORE_HOTEL + 1
+		return self.num_houses == self.NUM_HOUSES_BEFORE_HOTEL + 1
 		

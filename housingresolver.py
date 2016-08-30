@@ -16,6 +16,7 @@ Description:
 from groupofchanges import GroupOfChanges
 from gamestatechange import GameStateChange
 from colorproperty import ColorProperty
+import datetime
 
 class HousingResolver(object):
 
@@ -116,12 +117,74 @@ class HousingResolver(object):
 					players_building_houses.append(player)
 		return players_building_houses
 
+	def _auction(num_houses, players, lambda_bid, lambda_extract_bid):
+		players_in_auction = dict(zip(players, [True] * len(players)))
+		properties_to_build_houses_on = self._properties_to_build_houses_on()
+		all_changes = []
+		for i in range(num_houses):
+			highest_bid = 0
+			highest_changes = None
+			while True:
+				highest_bid_for_round = highest_bid
+				highest_changes_for_round = dict()
+				for player in players:
+					if not players_in_auction[player]:
+						continue
+
+					goc = lambda_bid(player, highest_bid, properties_to_build_houses_on[player], self._state)
+					bid = 0
+					for change in goc:
+						if len(change.change_in_houses) > 0:
+							bid = lambda_extract_bid(change, state)
+
+					if bid < highest_bid:
+						players_in_auction[player] = False
+					elif bid > highest_bid_for_round:
+						highest_bid_for_round = bid
+						highest_changes_for_round = {player: goc}
+					elif bid == highest_bid_for_round:
+						highest_changes_for_round[player] = goc
+
+				if len(highest_changes_for_round) > 1:
+					fastest_time = 10000
+					fastest_player = None
+					fastest_goc = None
+					for player, goc in highest_changes_for_round.iteritems():
+						# TODO: Don't use datetime, better timing solution (timeit doesn't work bc lambda params are out of scope)
+						times = []
+						for i in range(3):
+							start = datetime.datetime.now()
+							lambda_bid(player, highest_changes_for_round, properties_to_build_houses_on[player], self._state)
+							end = datetime.datetime.now()
+
+							times.append((end - start).total_seconds())
+
+						avg_time = sum(times)/len(times)
+						if avg_time < fastest_time:
+							fastest_time = avg_time
+							fastest_player = player
+							fastest_goc = goc
+
+					highest_changes_for_round = {fastest_player: fastest_goc}
+
+				if highest_bid_for_round > highest_bid:
+					highest_bid = highest_bid_for_round
+					highest_changes = highest_changes_for_round[highest_changes_for_round.keys()[0]]
+
+				if len(highest_changes_for_round) == 0 or players_in_auction.values().count(True) <= 1:
+					break
+
+			all_changes.append(highest_changes)
+
+		return GroupOfChanges.combine(all_changes)
+
 	# Auctions the number of houses among the list of players provided. Returns
 	# a GroupOfChanges building the houses for the winners of each auction on
 	# their desired properties
-	@staticmethod
-	def _auction_house_builds(num_houses, players, state):
-		pass # TODO: Implement auction for house builds
+	def _auction_house_builds(num_houses, players):
+		lambda bid(player, highest_bid, props, state): player.bid_house_builds(highest_bid, props, state)
+		lambda extract_bid(change, state): change.change_in_cash[state.bank] - change.changes_in_houses.keys()[0].house_price
+		_auction(num_houses, players, bid, extract_bid)
 
 	# Returns a list of players who requested hotel builds
 	def _get_players_building_hotels(self):
@@ -134,9 +197,10 @@ class HousingResolver(object):
 	# Auctions the number of hotels among the list of players provided. Returns
 	# a GroupOfChanges building the hotels for the winners of each auction on
 	# their desired properties
-	@staticmethod
-	def _auction_hotel_builds(num_hotels, players, state):
-		pass # TODO: Implement auction for hotel builds
+	def _auction_hotel_builds(num_hotels, players):
+		lambda bid(player, highest_bid, props, state): player.bid_hotel_builds(highest_bid, props, state)
+		lambda extract_bid(change, state): change.change_in_cash[state.bank] - change.changes_in_houses.keys()[0].house_price
+		_auction(num_houses, players, bid, extract_bid)
 
 	# Returns a list of players who requested hotel demolitions
 	def _get_players_demolishing_hotels(self):
@@ -149,9 +213,10 @@ class HousingResolver(object):
 	# Auctions the number of houses (for hotel demolitions) among the list of
 	# players provided. Returns a GroupOfChanges building the houses for the
 	# winners of each auction on their desired properties
-	@staticmethod
-	def _auction_hotel_demolitions(num_houses, players, state):
-		pass # TODO: Implement acution for hotel demolitions
+	def _auction_hotel_demolitions(num_houses, players):
+		lambda bid(player, highest_bid, props, state): player.bid_hotel_demolitions(highest_bid, props, state)
+		lambda extract_bid(change, state): change.change_in_cash[state.bank] + change.changes_in_houses.keys()[0].house_price/2
+		_auction(int(num_houses/ColorProperty.NUM_HOUSES_BEFORE_HOTEL), players, bid, extract_bid)
 
 
 	# Special case procedure for hotel demolitions
@@ -239,3 +304,27 @@ class HousingResolver(object):
 
 		else:	# no shortage, so order doesn't matter
 			_build_and_demolish_all()
+
+
+	# Convenience Methods
+
+	# Returns a dict mapping players to a list of properties on which they indent to build houses on
+	def _properties_to_build_houses_on(self):
+		retval = dict()
+		for (player, building_request) in self._player_building_requests.iteritems():
+			properties = []
+			for change in building_request.house_builds:
+				properties.append(change.change_in_houses.keys()[0])
+
+			retval[player] = properties
+		return retval
+
+	def _properties_to_build_hotels_on(self):
+		retval = dict()
+		for (player, building_request) in self._player_building_requests.iteritems():
+			properties = []
+			for change in building_request.hotel_builds:
+				properties.append(change.change_in_houses.keys()[0])
+
+			retval[player] = properties
+		return retval

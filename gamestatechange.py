@@ -221,6 +221,7 @@ class GameStateChange(object):
 	@staticmethod
 	def eliminate(player_eliminated, player_eliminator):
 		# Eliminated player's properties get completely demolished
+		# TODO: Add money from taking down houses
 		demolitions = { }
 		for prop in player_eliminated.props:
 			if isinstance(prop, ColorProperty):

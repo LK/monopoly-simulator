@@ -129,8 +129,14 @@ class Player(object):
 	def pay(self, player, amount, state):
 		return self.decision_maker.pay(self, player, amount, state)
 
-	def bid(self, highest_bid, props_to_build_on, state):
-		return self.decision_maker.bid(self, highest_bid, state)
+	def bid_house_builds(self, highest_bid, props_to_build_on, state):
+		return self.decision_maker.bid_house_builds(self, highest_bid, props_to_build_on, state)
+
+	def bid_hotel_builds(self, highest_bid, props_to_build_on, state):
+		return self.decision_maker.bid_hotel_builds(self, highest_bid, props_to_build_on, state)
+
+	def bid_hotel_demolitions(self, highest_bid, props_to_demolish_on, state):
+		return self.decision_maker.bid_hotel_demolitions(self, highest_bid, props_to_demolish_on, state)
 
 	def will_trade(self, proposal, state):
 		return self.decision_maker.will_trade(self, proposal, state)
