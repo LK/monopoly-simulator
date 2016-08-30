@@ -1,0 +1,90 @@
+{
+	"name": "GoToJail",
+
+	"description": "Represents the single 'Go To Jail' square.",
+
+	"constants": [
+
+		{
+			"name": "JAIL_MOVES",
+			"type": "int",
+			"description": "The number of 'in-jail moves' given to a Player when landing on this Square"
+		}
+
+	],
+
+	"instanceVariables": [],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "name",
+							"type": "String"
+						}
+					],
+					"returnType": "GoToJail",
+					"access": "Public",
+					"description": "Initializes a GoToJail object"
+				}
+
+			]
+		},
+
+		{
+			"category": "Getters",
+			"methods": []
+		},
+
+		{
+			"category": "Setters",
+			"methods": []
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "Other",
+			"methods": [
+
+				{
+					"name": "landed()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
+							"name": "roll",
+							"type": "int"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"overrides": "Square.landed()",
+					"description": "Returns the GroupOfChanges sending the given Player to jail"
+				}
+
+			]
+		}
+
+	],
+
+	"subclasses": []
+
+}

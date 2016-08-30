@@ -1,0 +1,20 @@
+[
+	"BuildingRequests",
+	"Card",
+	"ColorProperty",
+	"DecisionMaker",
+	"Deck",
+	"Engine",
+	"FreeSpace",
+	"GameState",
+	"GameStateChange",
+	"GoToJail",
+	"GroupOfChanges",
+	"HousingResolver",
+	"NonColorProperty",
+	"NotificationChanges",
+	"Player",
+	"Property",
+	"Square",
+	"Tax"
+]

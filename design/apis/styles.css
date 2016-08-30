@@ -1,0 +1,62 @@
+body {
+	background-color: #2f2f2f;
+	color: #dadada;
+	font-family: "Source Sans Pro", sans-serif;
+	font-size: 16px;
+}
+
+a:link, a:visited, a:hover, a:focus {
+	text-decoration: none;
+	color: #9ab87c;
+}
+
+ul {
+	list-style-type: none;
+}
+
+code {
+	font-family: "Droid Sans Mono", monospace;
+}
+
+.description {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.default {
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+
+/********** Large Devices (lg) **********/
+@media (min-width: 1200px) {
+  #container {
+		padding-left: 20%;
+		padding-right: 20%;
+	}
+}
+
+/********** Medium Devices (md) **********/
+@media (min-width: 992px) and (max-width: 1199px) {
+	#container {
+		padding-left: 15%;
+		padding-right: 15%;
+	}
+}
+
+/********** Small Devices (sm) **********/
+@media (min-width: 768px) and (max-width: 991px) {
+  #container {
+		padding-left: 10%;
+		padding-right: 10%;
+	}
+}
+
+/********** Extra Small Devices (xs) **********/
+@media (max-width: 767px) {
+  #container {
+		padding-left: 10%;
+		padding-right: 10%;
+	}
+}

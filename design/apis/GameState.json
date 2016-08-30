@@ -1,174 +1,218 @@
 {
 
-	"GameState": {
+	"name": "GameState",
 
-		"Description": "The GameState, at any instant, represents a legal state of the Monopoly game - namely, one that can be obtained by following the rules of Monopoly. It is a container for everything that makes up the game, and supports operations for modifying the state of the game.",
-	
-		"Constants": {
-	
-			"NUM_HOUSES": {
-				"Type": "int",
-				"Description": "The total number of houses available on the market"
-			},
+	"description": "The GameState, at any instant, represents a legal state of the Monopoly game - namely, one that can be obtained by following the rules of Monopoly. It is a container for everything that makes up the game, and supports operations for modifying the state of the game.",
 
-			"NUM_HOTELS": {
-				"Type": "int",
-				"Description": "The total number of hotels available on the market"
-			},
+	"constants": [
 
-			"NUM_SQUARES": {
-				"Type": "int",
-				"Description": "The number of Squares on the board"
-			}
-	
+		{
+			"name": "NUM_HOUSES",
+			"type": "int",
+			"description": "The total number of houses available on the market"
 		},
-	
-		"Instance Variables": {
-	
-			"_players": {
-				"Type": "Player[]",
-				"Description": "List of Players in this game"
-			},
 
-			"_squares": {
-				"Type": "Square[]",
-				"Description": "List of Squares that make up the board"
-			},
-
-			"_houses_remaining": {
-				"Type": "int",
-				"Description": "The number of houses currently available on the market"
-			},
-
-			"_hotels_remaining": {
-				"Type": "int",
-				"Description": "The number of hotels currently available on the market"
-			},
-
-			"_bank": {
-				"Type": "Player",
-				"Description": "This Player represents the bank. It keeps track of the cash added to and removed from circulation. Since it is a Player object, other Players can pay it and receive money from it, just as they would with any other Player"
-			}
-	
+		{
+			"name": "NUM_HOTELS",
+			"type": "int",
+			"description": "The total number of hotels available on the market"
 		},
-	
-		"Methods": {
-	
-			"Getters": {
-	
-				"players()": {
-					"Arguments": { },
-					"Returns": "Player[]",
-					"Access": "Public",
-					"Description": "Returns this instance's players"
-				},
 
-				"squares()": {
-					"Arguments": { },
-					"Returns": "Square[]",
-					"Access": "Public",
-					"Description": "Returns this instance's squares"
-				},
-
-				"houses_remaining()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's houses_remaining"
-				},
-
-				"hotels_remaining()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's hotels_remaining"
-				},
-
-				"bank()": {
-					"Arguments": { },
-					"Returns": "Player",
-					"Access": "Public",
-					"Description": "Returns this instance's bank"
-				}
-	
-			},
-	
-			"Setters": {
-	
-				
-	
-			},
-	
-			"Static": {
-	
-				
-	
-			},
-	
-			"Other": {
-	
-				"__init__()": {
-					"Arguments": {
-						"num_players": "int"
-					},
-					"Returns": "GameState",
-					"Access": "Public",
-					"Description": "Initializes a GameState with the given number of players in the game"
-				},
-
-				"get_owner()": {
-					"Arguments": {
-						"prop": "Property"
-					},
-					"Returns": "Player",
-					"Access": "Public",
-					"Description": "Returns the owner of the given Property if there is one. Returns None if there is not"
-				},
-
-				"are_enough_houses()": {
-					"Arguments": {
-						"qty": "int"
-					},
-					"Returns": "boolean",
-					"Access": "Public",
-					"Description": "Returns True if there are at least the given quantity of houses available on the market"
-				},
-
-				"are_enough_hotels()": {
-					"Arguments": {
-						"qty": "int"
-					},
-					"Returns": "boolean",
-					"Access": "Public",
-					"Description": "Returns True if there are at least the given quantity of hotels available on the market"
-				},
-
-				"_apply_single_change()": {
-					"Arguments": {
-						"change": "GameStateChange"
-					},
-					"Returns": "void",
-					"Access": "Private",
-					"Description": "Modifies this GameState by applying the changes specified in the given GameStateChange object"
-				},
-
-				"apply()": {
-					"Arguments": {
-						"changes": "GroupOfChanges",
-						"name": {
-							"Type": "int",
-							"Description": "description"
-						}
-					},
-					"Returns": "void",
-					"Access": "Public",
-					"Description": "Modifies this GameState by applying all of the changes in the GroupOfChanges container, in the order specified upon initializing the GroupOfChanges"
-				}
-	
-			}
-	
+		{
+			"name": "NUM_SQUARES",
+			"type": "int",
+			"description": "The number of Squares on the board"
 		}
-	
-	}
+
+	],
+
+	"instanceVariables": [
+
+		{
+			"name": "_players",
+			"type": "Player[]",
+			"description": "List of Players in this game"
+		},
+
+		{
+			"name": "_squares",
+			"type": "Square[]",
+			"description": "List of Squares that make up the board"
+		},
+
+		{
+			"name": "_houses_remaining",
+			"type": "int",
+			"description": "The number of houses currently available on the market"
+		},
+
+		{
+			"name": "_hotels_remaining",
+			"type": "int",
+			"description": "The number of hotels currently available on the market"
+		},
+
+		{
+			"name": "_bank",
+			"type": "Player",
+			"description": "This Player represents the bank. It keeps track of the cash added to and removed from circulation. Since it is a Player object, other Players can pay it and receive money from it, just as they would with any other Player"
+		}
+
+	],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "num_players",
+							"type": "int"
+						}
+					],
+					"returnType": "GameState",
+					"access": "Public",
+					"description": "Initializes a GameState with the given number of players in the game"
+				}
+
+			]
+		},
+
+		{
+			"category": "Getters",
+			"methods": [
+
+				{
+					"name": "players()",
+					"arguments": [],
+					"returnType": "Player[]",
+					"access": "Public",
+					"description": "Returns this instance's players"
+				},
+
+				{
+					"name": "squares()",
+					"arguments": [],
+					"returnType": "Square[]",
+					"access": "Public",
+					"description": "Returns this instance's squares"
+				},
+
+				{
+					"name": "houses_remaining()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's houses_remaining"
+				},
+
+				{
+					"name": "hotels_remaining()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's hotels_remaining"
+				},
+
+				{
+					"name": "bank()",
+					"arguments": [],
+					"returnType": "Player",
+					"access": "Public",
+					"description": "Returns this instance's bank"
+				}
+
+			]
+		},
+
+		{
+			"category": "Setters",
+			"methods": []
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "Other",
+			"methods": [
+
+				{
+					"name": "get_owner()",
+					"arguments": [
+						{
+							"name": "prop",
+							"type": "Property"
+						}
+					],
+					"returnType": "Player",
+					"access": "Public",
+					"description": "Returns the owner of the given Property if there is one. Returns None if there is not"
+				},
+
+				{
+					"name": "are_enough_houses()",
+					"arguments": [
+						{
+							"name": "qty",
+							"type": "int"
+						}
+					],
+					"returnType": "boolean",
+					"access": "Public",
+					"description": "Returns True if there are at least the given quantity of houses available on the market"
+				},
+
+				{
+					"name": "are_enough_hotels()",
+					"arguments": [
+						{
+							"name": "qty",
+							"type": "int"
+						}
+					],
+					"returnType": "boolean",
+					"access": "Public",
+					"description": "Returns True if there are at least the given quantity of hotels available on the market"
+				},
+
+				{
+					"name": "_apply_single_change()",
+					"arguments": [
+						{
+							"name": "change",
+							"type": "GameStateChange"
+						}
+					],
+					"returnType": "void",
+					"access": "Private",
+					"description": "Modifies this GameState by applying the changes specified in the given GameStateChange object"
+				},
+
+				{
+					"name": "apply()",
+					"arguments": [
+						{
+							"name": "changes",
+							"type": "GroupOfChanges"
+						}
+					],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Modifies this GameState by applying all of the changes in the GroupOfChanges container, in the order specified upon initializing the GroupOfChanges"
+				}
+
+			]
+		}
+
+	],
+
+	"subclasses": []
 
 }

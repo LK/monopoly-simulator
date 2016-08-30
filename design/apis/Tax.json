@@ -1,0 +1,85 @@
+{
+	"name": "Tax",
+
+	"description": "Represents a square on which players pay a tax. These are the Income Tax and Luxury Tax squares.",
+
+	"constants": [],
+
+	"instanceVariables": [
+
+		{
+			"name": "_tax",
+			"type": "int",
+			"description": "The amount a Player must pay when landing on this Tax"
+		}
+
+	],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": []
+		},
+
+		{
+			"category": "Getters",
+			"methods": [
+
+				{
+					"name": "tax()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's tax"
+				}
+
+			]
+		},
+
+		{
+			"category": "Setters",
+			"methods": []
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "Other",
+			"methods": [
+
+				{
+					"name": "landed()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
+							"name": "roll",
+							"type": "int"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"overrides": "Square.landed()",
+					"description": "Returns the GroupOfChanges resulting from a Player's payment of the tax"
+				}
+
+			]
+		}
+
+	],
+
+	"subclasses": []
+
+}

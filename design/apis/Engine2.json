@@ -4,7 +4,21 @@
 
 	"description": "The Engine is the root driving force of the game. It maintains the state of the game, handles all the logistics that move the game along, and facilitates interactions between players.",
 
-	"constants": [],
+	"constants": [
+
+		{
+			"name": "CONSTANT1",
+			"type": "int",
+			"description": "This is is the description for CONSTANT1"
+		},
+
+		{
+			"name": "CONSTANT2",
+			"type": "int",
+			"description": "This is is the description for CONSTANT2"
+		}
+
+	],
 
 	"instanceVariables": [
 
@@ -113,6 +127,12 @@
 
 	],
 
-	"subclasses": []
+	"subclasses": [
+
+		{ "name": "Subclass1" },
+		{ "name": "Subclass2" },
+		{ "name": "Subclass3" }
+
+	]
 
 }

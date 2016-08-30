@@ -1,0 +1,226 @@
+{
+	"name": "ColorProperty",
+
+	"description": "Represents a color property on the Monopoly board, which is the improvable type of property.",
+
+	"constants": [
+
+		{
+			"name": "NUM_HOUSES_BEFORE_HOTEL",
+			"type": "int",
+			"description": "The number of houses a Player must build before upgrading to a hotel"
+		}
+
+	],
+
+	"instanceVariables": [
+
+		{
+			"name": "_house_price",
+			"type": "int",
+			"description": "The amount a Player must pay to build a house or hotel on this ColorProperty"
+		},
+
+		{
+			"name": "_num_houses",
+			"type": "int",
+			"description": "The number of houses currently on this ColorProperty. We adopt the convention that when this equals NUM_HOUSES_BEFORE_HOTEL + 1, there is a hotel on this ColorProperty"
+		}
+
+	],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "name",
+							"type": "String"
+						},
+
+						{
+							"name": "price",
+							"type": "int"
+						},
+
+						{
+							"name": "rents",
+							"type": "int[]"
+						},
+
+						{
+							"name": "property_group",
+							"type": "int"
+						},
+
+						{
+							"name": "size_of_property_group",
+							"type": "int"
+						},
+
+						{
+							"name": "mortgaged",
+							"type": "boolean",
+							"default": "False"
+						},
+
+						{
+							"name": "house_price",
+							"type": "int"
+						},
+
+						{
+							"name": "num_houses",
+							"type": "int",
+							"default": "0"
+						}
+					],
+					"returnType": "ColorProperty",
+					"access": "Public",
+					"description": "Initializes a ColorProperty object with the given number of houses"
+				}
+
+			]
+		},
+
+		{
+			"category": "Getters",
+			"methods": [
+
+				{
+					"name": "house_price()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's house_price"
+				},
+
+				{
+					"name": "num_houses()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's num_houses"
+				}
+
+			]
+		},
+
+		{
+			"category": "Setters",
+			"methods": [
+
+				{
+					"name": "num_houses()",
+					"arguments": [
+						{
+							"name": "num_houses",
+							"type": "int"
+						}
+					],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Sets this instance's num_houses"
+				}
+
+			]
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "Other",
+			"methods": [
+
+				{
+					"name": "landed()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
+							"name": "roll",
+							"type": "int"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"overrides": "Property.landed()",
+					"description": "Returns the GroupOfChanges resulting from the Player's landing on this ColorProperty"
+				},
+
+				{
+					"name": "get_rent_with()",
+					"arguments": [
+						{
+							"name": "num_houses",
+							"type": "int"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns the amount a Player must pay on this ColorProperty with the given number of houses on it"
+				},
+
+				{
+					"name": "build()",
+					"arguments": [
+						{
+							"name": "qty",
+							"type": "int"
+						}
+					],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Builds the given quantity of houses on this ColorProperty"
+				},
+
+				{
+					"name": "demolish()",
+					"arguments": [
+						{
+							"name": "qty",
+							"type": "int"
+						}
+					],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Demolishes the given quantity of houses on this ColorProperty"
+				},
+
+				{
+					"name": "has_hotel()",
+					"arguments": [],
+					"returnType": "boolean",
+					"access": "Public",
+					"description": "Returns True if this ColorProperty has a hotel on it, False if not"
+				}
+
+			]
+		}
+
+	],
+
+	"subclasses": []
+		
+}

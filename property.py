@@ -15,7 +15,7 @@ class Property(Square):
 	# size_of_property_group: (int)	Num of properties in the group this property
 	#																belongs to
 	# mortgaged: (boolean)	Indicates mortgage status of this property
-	def __init__(self, name, price, rents, property_group, size_of_property_group=3,
+	def __init__(self, name, price, rents, property_group, size_of_property_group,
 							 mortgaged=False):
 		super(Property, self).__init__(name)
 		

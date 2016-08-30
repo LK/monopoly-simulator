@@ -1,0 +1,202 @@
+{
+	"name": "Property",
+
+	"description": "Represents a property on the Monopoly board. This is further broken down into two subclasses of Property: one for color properties, which are improvable, and one for non-color properties, which are not.",
+
+	"constants": [],
+
+	"instanceVariables": [
+
+		{
+			"name": "_price",
+			"type": "int",
+			"description": "Amount a Player must pay to buy this Property"
+		},
+
+		{
+			"name": "_rents",
+			"type": "int[]",
+			"description": "Amounts a Player must pay when landing on this Property, indexed by either number of houses on it (for color properties) or number of properties in property group owned (for non-color properties)"
+		},
+
+		{
+			"name": "_property_group",
+			"type": "int",
+			"description": "A label from 0-9 indicating the property group this Property belongs to"
+		},
+
+		{
+			"name": "_size_of_property_group",
+			"type": "int",
+			"description": "Number of properties in the group to which this Property belongs"
+		},
+
+		{
+			"name": "_mortgaged",
+			"type": "boolean",
+			"description": "Indicates the mortgage status of this Property"
+		}
+
+	],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "name",
+							"type": "String"
+						},
+
+						{
+							"name": "price",
+							"type": "int"
+						},
+
+						{
+							"name": "rents",
+							"type": "int[]"
+						},
+
+						{
+							"name": "property_group",
+							"type": "int"
+						},
+
+						{
+							"name": "size_of_property_group",
+							"type": "int"
+						},
+
+						{
+							"name": "mortgaged",
+							"type": "boolean",
+							"default": "False"
+						}
+					],
+					"returnType": "Property",
+					"access": "Public",
+					"description": "Initializes a Property object. Note that a Property should never be initialized directly from Property.__init__(). It should be initialized from one of Property's subclasses"
+				}
+
+			]
+		},
+
+		{
+			"category": "Getters",
+			"methods": [
+
+				{
+					"name": "price()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's price"
+				},
+
+				{
+					"name": "rents()",
+					"arguments": [],
+					"returnType": "int[]",
+					"access": "Public",
+					"description": "Returns this instance's rents"
+				},
+
+				{
+					"name": "property_group()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's property_group"
+				},
+
+				{
+					"name": "size_of_property_group()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns the size_of_property_group for this Property"
+				},
+
+				{
+					"name": "mortgaged()",
+					"arguments": [],
+					"returnType": "boolean",
+					"access": "Public",
+					"description": "Returns this instance's mortgaged status"
+				}
+
+			]
+		},
+
+		{
+			"category": "Setters",
+			"methods": [
+
+				{
+					"name": "mortgaged()",
+					"arguments": [
+						{
+							"name": "mortgaged",
+							"type": "boolean"
+						}
+					],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Sets this instance's mortgaged status"
+				}
+
+			]
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "Other",
+			"methods": [
+
+				{
+					"name": "landed()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
+							"name": "roll",
+							"type": "int"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"overrides": "Square.landed()",
+					"description": "Returns the GroupOfChanges resulting from the Player's landing on this Property. Note that this should never be called by a direct instance of Property; it should only be called by an instance of one of its subclasses"
+				}
+
+			]
+		}
+
+	],
+
+	"subclasses": [
+		{ "name": "ColorProperty" },
+		{ "name": "NonColorProperty" }
+	]
+
+		
+	
+}
