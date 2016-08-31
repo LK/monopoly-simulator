@@ -316,7 +316,7 @@
 				},
 
 				{
-					"name": "bid()",
+					"name": "bid_house_builds()",
 					"arguments": [
 						{
 							"name": "highest_bid",
@@ -326,7 +326,7 @@
 						{
 							"name": "props_to_build_on",
 							"type": "Property[]",
-							"description": "Contains the Property objects this Player requested to build on when submitting its last BuildingRequests. Specifically, they are the list that corresponds to the type of construction Players are currently auctioning for (i.e. for a house-build auction, these are the Property objects on which this Player wished to build houses; likewise for a hotel-build auction or a hotel-demolition auction)"
+							"description": "Contains the Property objects on which this Player requested to build houses when submitting his last BuildingRequests"
 						},
 
 						{
@@ -334,9 +334,57 @@
 							"type": "GameState"
 						}
 					],
-					"returnType": "int",
+					"returnType": "GroupOfChanges",
 					"access": "Public",
-					"description": "Returns the amount this Player is willing to pay in an auction to build on one of the Property objects provided"
+					"description": "Returns the GroupOfChanges in which this Player buys and builds the house he is auctioning for at the price he is willing to bid. (Note that this GroupOfChanges is only applied if the Player wins the auction.)"
+				},
+
+				{
+					"name": "bid_hotel_builds()",
+					"arguments": [
+						{
+							"name": "highest_bid",
+							"type": "int"
+						},
+
+						{
+							"name": "props_to_build_on",
+							"type": "Property[]",
+							"description": "Contains the Property objects on which this Player requested to build hotels when submitting his last BuildingRequests"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns the GroupOfChanges in which this Player buys and builds the hotel he is auctioning for at the price he is willing to bid. (Note that this GroupOfChanges is only applied if the Player wins the auction.)"
+				},
+
+				{
+					"name": "bid_hotel_demolitions()",
+					"arguments": [
+						{
+							"name": "highest_bid",
+							"type": "int"
+						},
+
+						{
+							"name": "props_to_demolish_on",
+							"type": "Property[]",
+							"description": "Contains the Property objects on which this Player requested to demolish hotels when submitting his last BuildingRequests"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns the GroupOfChanges in which this Player buys and demolishes a hotel at the price he is willing to bid for the 4 houses he subsequently takes off the market. (Note that this GroupOfChanges is only applied if the Player wins the auction.)"
 				},
 
 				{
