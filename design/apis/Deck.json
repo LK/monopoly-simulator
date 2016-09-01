@@ -37,7 +37,7 @@
 					],
 					"returnType": "Deck",
 					"access": "Public",
-					"description": "Initializes and shuffles a Deck given a list of Items to put in it"
+					"description": "Initializes a Deck given a list of Items to put in it. The items are placed in the Deck in the same order as in the given list"
 				}		
 
 			]
@@ -61,6 +61,22 @@
 		{
 			"category": "Other",
 			"methods": [
+
+				{
+					"name": "size()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns the number of items currently in the Deck"
+				},
+
+				{
+					"name": "shuffle()",
+					"arguments": [],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Shuffles the Deck"
+				},
 
 				{
 					"name": "draw()",

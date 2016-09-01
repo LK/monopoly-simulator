@@ -38,7 +38,12 @@ Engine:
 - Made static method roll() that just returns an integer roll 1-12
 
 Card:
-- Also uses GameStateChange.combine() in pay_each_player_50() and receive_50_from_each_player()
+- No longer maintains the Deck's of card lambdas. The GameState holds these decks,
+and changes to them are made by GameStateChange. When a Player lands on a Card,
+the Card creates a GameStateChanges that draws the next card lambda, and then takes
+corresponding card's action by executing that lambda. The GameStatechange also
+automatically manages the removal and replacement of the "Get out of jail free" card
+in this mechanism.
 
 HousingResolver:
 - See design/housing-resolver.txt

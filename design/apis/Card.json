@@ -39,6 +39,12 @@
 			"name": "COMMUNITY_CHEST_PER_HOTEL_FEE",
 			"type": "int",
 			"description": "Fee charged by the community chest building card per hotel built"
+		},
+
+		{
+			"name": "LMBDA_GET_OUT_OF_JAIL_FREE",
+			"type": "lambda",
+			"description": "The lambda executed upon drawing the 'Get out of jail free' card'"
 		}
 
 	],

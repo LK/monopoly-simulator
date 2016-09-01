@@ -11,12 +11,16 @@ of the game should go through this object via the state-changing methods.
 from color_property import ColorProperty
 from create_squares import create_squares
 from property import Property
+from card import Card
 
 class GameState(object):
 	# Constants
 	NUM_HOUSES = 32
 	NUM_HOTELS = 12
 	NUM_SQUARES = 40
+
+	# Static decks of cards
+	DECKS = { Card.CHANCE_CARD: Deck(Card.make_chance_functions).shuffle(), Card.COMMUNITY_CHEST_CARD: Deck(Card.make_community_chest_functions).shuffle() }
 
 	# Initialization
 	def _initialize_players(num_players):
@@ -106,11 +110,17 @@ class GameState(object):
 		for player, removed_props in change.removed_props.iteritems():
 			player.remove_properties(removed_props)
 
-		for player, change_in_jail_moves in change.change_in_jail_moves.iteritems():
-			player.jail_moves += change_in_jail_moves
+		for card_type, card_drawn in change.card_drawn.iteritems():
+			DECKS[card_type].draw_and_remove()
+
+		for card_type, card_replaced in change.card_replaced.iteritems():
+			DECKS[card_type].insert_on_bottom(card_replaced)
 
 		for player, change_in_jail_free_count in change.change_in_jail_free_count.iteritems():
 			player.jail_free_count += change_in_jail_free_count
+
+		for player, change_in_jail_moves in change.change_in_jail_moves.iteritems():
+			player.jail_moves += change_in_jail_moves
 
 		for player, is_in_game in change.is_in_game.iteritems():
 			player.is_in_game = is_in_game

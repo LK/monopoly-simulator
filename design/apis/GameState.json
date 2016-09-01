@@ -22,6 +22,12 @@
 			"name": "NUM_SQUARES",
 			"type": "int",
 			"description": "The number of Squares on the board"
+		},
+
+		{
+			"name": "DECKS",
+			"type": "{ boolean: Deck }",
+			"description": "Dictionary mapping a card type (Chance or Community Chest) to the corresponding card's Deck. Each is a Deck of lambda functions that correspond to the actions taken when a Player lands on a card"
 		}
 
 	],

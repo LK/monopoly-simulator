@@ -33,6 +33,18 @@
 		},
 
 		{
+			"name": "_card_drawn",
+			"type": "{ boolean: lambda }",
+			"description": "Dictionary mapping the type of card, Chance or Community Chest, to the lambda function associated with the card drawn from that deck. Generally, this is used in conjunction with _card_replaced, with the exception of the 'Get out of jail free' card"
+		},
+
+		{
+			"name": "_card_replaced",
+			"type": "{ boolean: lambda }",
+			"description": "Dictionary mapping the type of card, Chance or Community Chest, to the lambda function associated with the card replaced on the bottom of that deck. Generally, this is used in conjunction with _card_drawn, with the exception of the 'Get out of jail free' card"
+		},
+
+		{
 			"name": "_change_in_jail_moves",
 			"type": "{ Player: int }",
 			"description": "Dictionary mapping Players to the change in their 'in-jail moves'"
@@ -106,6 +118,18 @@
 						{
 							"name": "removed_props",
 							"type": "{ Player: Property[] }",
+							"default": "{}"
+						},
+
+						{
+							"name": "card_drawn",
+							"type": "{ boolean: lambda }",
+							"default": "{}"
+						},
+
+						{
+							"name": "card_replaced",
+							"type": "{ boolean: lambda }",
 							"default": "{}"
 						},
 
@@ -193,6 +217,22 @@
 					"returnType": "{ Player: Property[] }",
 					"access": "Public",
 					"description": "Returns this instance's removed_props dictionary"
+				},
+
+				{
+					"name": "card_drawn()",
+					"arguments": [],
+					"returnType": "{ boolean: lambda }",
+					"access": "Public",
+					"description": "Returns this instance's card_drawn dictionary"
+				},
+
+				{
+					"name": "card_replaced()",
+					"arguments": [],
+					"returnType": "{ boolean: lambda }",
+					"access": "Public",
+					"description": "Returns this instance's card_replaced dictionary"
 				},
 
 				{
@@ -428,6 +468,37 @@
 				},
 
 				{
+					"name": "draw_card()",
+					"arguments": [
+						{
+							"name": "card_type",
+							"type": "boolean"
+						},
+
+						{
+							"name": "player",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Returns a GameStateChange that draws a card from the top of the card_type's deck, and replaces it if it is not the 'Get out of jail free' card. If it is, it does not replace it, but rather increments the given Player's count of 'Get out of jail free' cards"
+				},
+
+				{
+					"name": "decrement_jail_card_count()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Removes one 'Get out of jail free' card from the given Player's hand and replaces the card on either the Chance or Community Chest deck, as appropriate"
+				},
+
+				{
 					"name": "send_to_jail()",
 					"arguments": [
 						{
@@ -464,32 +535,6 @@
 					"returnType": "GameStateChange",
 					"access": "Public",
 					"description": "Immediately lets the given Player out of jail (often a result of rolling doubles, paying the fee, or using a 'Get out of jail free' card"
-				},
-
-				{
-					"name": "increment_jail_card_count()",
-					"arguments": [
-						{
-							"name": "player",
-							"type": "Player"
-						}
-					],
-					"returnType": "GameStateChange",
-					"access": "Public",
-					"description": "Adds one 'Get out of jail free' card to the given Player's hand"
-				},
-
-				{
-					"name": "decrement_jail_card_count()",
-					"arguments": [
-						{
-							"name": "player",
-							"type": "Player"
-						}
-					],
-					"returnType": "GameStateChange",
-					"access": "Public",
-					"description": "Removes one 'Get out of jail free' card from the given Player's hand"
 				},
 
 				{
