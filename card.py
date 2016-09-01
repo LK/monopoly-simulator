@@ -20,7 +20,7 @@ class Card(Square):
 
 	# Chance and community chest functions
 	@staticmethod
-	def _advance_to_square(player, square_index, roll, state):
+	def _advance_to_square(player, square_indaex, roll, state):
 		state.apply(GameStateChange.change_position(player, square_index))
 		square = state.squares[square_index]
 		return square.landed(player, roll, state)
@@ -49,7 +49,8 @@ class Card(Square):
 
 	@staticmethod
 	def _collect(player, amount, state):
-		return GameStateChange.transfer_money(state.bank, player, amount)
+		transfer_money = GameStateChange.transfer_money(state.bank, player, amount)
+		return GroupOfChanges([transfer_money])
 
 	@staticmethod
 	def _pay(player_from, player_to, amount, state):
@@ -57,7 +58,7 @@ class Card(Square):
 
 	@staticmethod
 	def _get_out_of_jail_free(player, state):
-		pass # player's 'jail free count' is handled by GameStateChange.draw_card()
+		return GroupOfChanges() # 'jail free' card is handled by GameStateChange.draw_card()
 
 
 
@@ -145,7 +146,8 @@ class Card(Square):
 
 	@staticmethod
 	def _go_back_three_spaces(player, state):
-		return GameStateChange.change_position(player, player.position - 3)
+		change_position = GameStateChange.change_position(player, player.position - 3)
+		return GroupOfChanges([change_position])
 
 
 
@@ -262,8 +264,9 @@ class Card(Square):
 		self._card_type = card_type
 
 	def landed(self, player, roll, state):
-		draw_card = GameStateChange.draw_card(self._card_type, player)
-		card_lmbda = draw_card.card_drawn[self._card_type]
+		deck = state.decks[self._card_type]
+		draw_card = GameStateChange.draw_card(deck, player)
+		card_lmbda = draw_card.card_drawn[deck]
 		result_of_card = card_lmbda(player, state)
 		return GroupOfChanges.combine([GroupOfChanges([draw_card]), result_of_card])
 

@@ -210,22 +210,18 @@ class GameStateChange(object):
 			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=+1)
 
 	@staticmethod
-	def draw_card(card_type, player):
-		next_card = GameState.DECKS[card_type].peek()
+	def draw_card(deck, player):
+		next_card = deck.peek()
 		if next_card == Card.LMBDA_GET_OUT_OF_JAIL_FREE:
 			# Do not replace the "Get out of jail free" card
-			return GameStateChange(card_drawn={ card_type: next_card }, change_in_jail_free_count={ player: +1 })
+			return GameStateChange(card_drawn={ deck: next_card }, change_in_jail_free_count={ player: +1 })
 		else:
-			return GameStateChange(card_drawn={ card_type: next_card }, card_replaced={ card_type: next_card })
+			return GameStateChange(card_drawn={ deck: next_card }, card_replaced={ deck: next_card })
 
 	@staticmethod
-	def decrement_jail_card_count(player):
-		# TODO: How to decide which deck to return "Get out of jail free" to? For now, pick randomly
-		if randint(0, 1) == 0:
-			card_type = Card.CHANCE_CARD
-		else:
-			card_type = Card.COMMUNITY_CHEST_CARD
-		return GameStateChange(card_replaced={ card_type: Card.LMBDA_GET_OUT_OF_JAIL_FREE }, change_in_jail_free_count={ player: -1 })
+	def decrement_jail_card_count(player, deck):
+		# TODO: How does the caller know which deck to return "Get out of jail free" to?
+		return GameStateChange(card_replaced={ deck: Card.LMBDA_GET_OUT_OF_JAIL_FREE }, change_in_jail_free_count={ player: -1 })
 
 	@staticmethod
 	def send_to_jail(player):

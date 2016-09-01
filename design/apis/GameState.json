@@ -22,12 +22,6 @@
 			"name": "NUM_SQUARES",
 			"type": "int",
 			"description": "The number of Squares on the board"
-		},
-
-		{
-			"name": "DECKS",
-			"type": "{ boolean: Deck }",
-			"description": "Dictionary mapping a card type (Chance or Community Chest) to the corresponding card's Deck. Each is a Deck of lambda functions that correspond to the actions taken when a Player lands on a card"
 		}
 
 	],
@@ -62,6 +56,12 @@
 			"name": "_bank",
 			"type": "Player",
 			"description": "This Player represents the bank. It keeps track of the cash added to and removed from circulation. Since it is a Player object, other Players can pay it and receive money from it, just as they would with any other Player"
+		},
+
+		{
+			"name": "_decks",
+			"type": "{ boolean: Deck }",
+			"description": "Dictionary mapping a card type (Chance or Community Chest) to the corresponding card's Deck. Each is a Deck of lambda functions that correspond to the actions taken when a Player lands on a card"
 		}
 
 	],
@@ -130,6 +130,14 @@
 					"returnType": "Player",
 					"access": "Public",
 					"description": "Returns this instance's bank"
+				},
+
+				{
+					"name": "decks()",
+					"arguments": [],
+					"returnType": "{ boolean: Deck }",
+					"access": "Public",
+					"description": "Returns this instance's decks dictionary"
 				}
 
 			]
