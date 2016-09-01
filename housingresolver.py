@@ -182,8 +182,8 @@ class HousingResolver(object):
 	# a GroupOfChanges building the houses for the winners of each auction on
 	# their desired properties
 	def _auction_house_builds(num_houses, players):
-		lambda bid(player, highest_bid, props, state): player.bid_house_builds(highest_bid, props, state)
-		lambda extract_bid(change, state): change.change_in_cash[state.bank] - change.changes_in_houses.keys()[0].house_price
+		bid = lambda player, highest_bid, props, state: player.bid_house_builds(highest_bid, props, state)
+		extract_bid = lambda change, state: change.change_in_cash[state.bank] - change.changes_in_houses.keys()[0].house_price
 		_auction(num_houses, players, bid, extract_bid)
 
 	# Returns a list of players who requested hotel builds
