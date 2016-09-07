@@ -43,19 +43,15 @@ class Engine(object):
 		self._state.apply(self._state.squares[position].landed(player, roll, self._state))
 		self._notify_all()
 
-	def _notify_all(self): # TODO: Update notification process for HousingResolver and BuildingRequests
+	def _notify_all(self):
 		changes = []
 		for player in self._state.players:
-			goc = player.respond_to_state(self._state)
-			changes.append(goc)
-			self._state.apply(goc.other_changes)
+			notification_changes = player.respond_to_state(self._state)
+			changes.append(notification_changes)
+			self._state.apply(notification_changes.other_changes)
 
-		if self._state.are_enough_houses(total_houses):
-			for change in changes:
-				self._state.apply(goc.building_changes)
-		else:
-			for i in range(self._state.houses_remaining):
-				self.auction()
+		building_requests = [change.building_requests for change in changes]
+		HousingResolver(building_requests, self._state)
 
 	def _completed(self):
 		remaining = 0

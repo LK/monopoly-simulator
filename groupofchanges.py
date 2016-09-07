@@ -25,3 +25,16 @@ class GroupOfChanges(object):
 		for group_of_changes in groups_of_changes:
 			combined_group_of_changes += group_of_changes
 		return GroupOfChanges(combined_group_of_changes)
+
+	def houses_built(self):
+		houses = 0
+		for change in self._changes:
+			houses -= change.change_in_houses_remaining
+
+		return houses
+
+	def hotels_built(self):
+		hotels = 0
+		for change in self._changes:
+			hotels -= change.change_in_hotels_remaining
+		return hotels
