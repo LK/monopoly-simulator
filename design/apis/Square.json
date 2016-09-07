@@ -1,0 +1,348 @@
+{
+	"name": "Square",
+
+	"description": "Represents a square on the Monopoly board. There are several types of squares, each implemented as a separate subclass of Square.",
+
+	"constants": [		
+		{
+			"name": "MEDITERRANEAN_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Mediterranean Avenue' Square"
+		},
+
+		{
+			"name": "BALTIC_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Baltic Avenue' Square"
+		},
+
+		{
+			"name": "ORIENTAL_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Oriental Avenue' Square"
+		},
+
+		{
+			"name": "VERMONT_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Vermont Avenue' Square"
+		},
+
+		{
+			"name": "CONNECTICUT_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Connecticut Avenue' Square"
+		},
+
+		{
+			"name": "ST_CHARLES_PLACE",
+			"type": "String",
+			"description": "String representation of the 'St. Charles Place' Square"
+		},
+
+		{
+			"name": "STATES_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'State Avenue' Square"
+		},
+
+		{
+			"name": "VIRGINIA_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Virginia Avenue' Square"
+		},
+
+		{
+			"name": "ST_JAMES_PLACE",
+			"type": "String",
+			"description": "String representation of the 'St. James Place' Square"
+		},
+
+		{
+			"name": "TENNESSEE_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Tennessee Avenue' Square"
+		},
+
+		{
+			"name": "NEW_YORK_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'New York Avenue' Square"
+		},
+
+		{
+			"name": "KENTUCKY_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Kentucky Avenue' Square"
+		},
+
+		{
+			"name": "INDIANA_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Indiana Avenue' Square"
+		},
+
+		{
+			"name": "ILLINOIS_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Illinois Avenue' Square"
+		},
+
+		{
+			"name": "ATLANTIC_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Atlantic Avenue' Square"
+		},
+
+		{
+			"name": "VENTNOR_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Ventnor Avenue' Square"
+		},
+
+		{
+			"name": "MARVIN_GARDENS",
+			"type": "String",
+			"description": "String representation of the 'Marvin Gardens' Square"
+		},
+
+		{
+			"name": "PACIFIC_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Pacific Avenue' Square"
+		},
+
+		{
+			"name": "NORTH_CAROLINA_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'North Carolina Avenue' Square"
+		},
+
+		{
+			"name": "PENNSYLVANIA_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Pennsylvania Avenue' Square"
+		},
+
+		{
+			"name": "PARK_PLACE",
+			"type": "String",
+			"description": "String representation of the 'Park Place' Square"
+		},
+
+		{
+			"name": "BOARDWALK",
+			"type": "String",
+			"description": "String representation of the 'Boardwalk' Square"
+		},
+
+		{
+			"name": "READING_RAILROAD",
+			"type": "String",
+			"description": "String representation of the 'Reading Railroad' Square"
+		},
+
+		{
+			"name": "PENNSYLVANIA_RAILROAD",
+			"type": "String",
+			"description": "String representation of the 'Pennsylvania Railroad' Square"
+		},
+
+		{
+			"name": "B_AND_O_RAILROAD",
+			"type": "String",
+			"description": "String representation of the 'B. & O. Railroad' Square"
+		},
+
+		{
+			"name": "SHORT_LINE_RAILROAD",
+			"type": "String",
+			"description": "String representation of the 'Short Line Railroad' Square"
+		},
+
+		{
+			"name": "ELECTRIC_COMPANY",
+			"type": "String",
+			"description": "String representation of the 'Electric Company' Square"
+		},
+
+		{
+			"name": "WATER_WORKS",
+			"type": "String",
+			"description": "String representation of the 'Water Works' Square"
+		},
+
+		{
+			"name": "GO",
+			"type": "String",
+			"description": "String representation of the 'Go' Square"
+		},
+
+		{
+			"name": "JAIL",
+			"type": "String",
+			"description": "String representation of the 'Jail' Square"
+		},
+
+		{
+			"name": "FREE_PARKING",
+			"type": "String",
+			"description": "String representation of the 'Free Parking' Square"
+		},
+
+		{
+			"name": "GO_TO_JAIL",
+			"type": "String",
+			"description": "String representation of the 'Go To Jail' Square"
+		},
+
+		{
+			"name": "CHANCE_1",
+			"type": "String",
+			"description": "String representation of the 'Chance' Square"
+		},
+
+		{
+			"name": "CHANCE_2",
+			"type": "String",
+			"description": "String representation of the 'Chance' Square"
+		},
+
+		{
+			"name": "CHANCE_3",
+			"type": "String",
+			"description": "String representation of the 'Chance' Square"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_1",
+			"type": "String",
+			"description": "String representation of the 'Community Chest' Square"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_2",
+			"type": "String",
+			"description": "String representation of the 'Community Chest' Square"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_3",
+			"type": "String",
+			"description": "String representation of the 'Community Chest' Square"
+		},
+
+		{
+			"name": "INCOME_TAX",
+			"type": "String",
+			"description": "String representation of the 'Income Tax' Square"
+		},
+
+		{
+			"name": "LUXURY_TAX",
+			"type": "String",
+			"description": "String representation of the 'Luxury Tax' Square"
+		}
+
+	],
+
+	"instanceVariables": [
+
+		{
+			"name": "_name",
+			"type": "String",
+			"description": "The name of this Square"
+		}
+
+	],
+
+	"methodCategories": [
+		{
+			"category": "Constructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "name",
+							"type": "String"
+						}
+					],
+					"returnType": "Square",
+					"access": "Public",
+					"description": "Initializes a Square with the given name. Note that a Square should never be initialized by the Square.__init__(). It should be initialized by the __init__() of one of its subclasses"
+				}
+
+			]
+		},
+
+		{
+			"category": "Getters",
+			"methods": [
+
+				{
+					"name": "name()",
+					"arguments": [],
+					"returnType": "String",
+					"access": "Public",
+					"description": "Returns this instance's name"
+				}
+
+			]
+		},
+
+		{
+			"category": "Setters",
+			"methods": []
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "Other",
+			"methods": [
+
+				{
+					"name": "landed()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player",
+							"description": "The Player who landed on this Square"
+						},
+						
+						{
+							"name": "roll",
+							"type": "int",
+							"description": "The roll the Player made to land on this Square"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState",
+							"description": "The current GameState (just before the Player landed on this Square)"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns a GroupOfChanges corresponding to the action required when the given Player lands on this Square. Implemented in subclasses. Note that this should never be called by a direct instance of Square; it should only be called by an instance of one of its subclasses"
+				}
+
+			]
+		}
+
+	],
+
+	"subclasses": [
+		{ "name": "Card" },
+		{ "name": "FreeSpace" },
+		{ "name": "GoToJail" },
+		{ "name": "Property" },
+		{ "name": "Tax" }
+	]
+	
+}

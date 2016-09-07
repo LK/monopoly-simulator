@@ -4,6 +4,7 @@ from gamestatechange import GameStateChange
 from gamestate import GameState
 from gotojail import GoToJail
 from engine import Engine
+from groupofchanges import GroupOfChanges
 
 class Card(Square):
 
@@ -15,9 +16,11 @@ class Card(Square):
 	COMMUNITY_CHEST_PER_HOUSE_FEE = 40
 	COMMUNITY_CHEST_PER_HOTEL_FEE = 115
 
+
+
 	# Chance and community chest functions
 	@staticmethod
-	def _advance_to_square(player, square_index, roll, state):
+	def _advance_to_square(player, square_indaex, roll, state):
 		state.apply(GameStateChange.change_position(player, square_index))
 		square = state.squares[square_index]
 		return square.landed(player, roll, state)
@@ -45,22 +48,28 @@ class Card(Square):
 		return player.pay(state.bank, fee, state)
 
 	@staticmethod
-	def _collect(player, state, amount):
-		return GameStateChange.transfer_money(player, state.bank, amount)
+	def _collect(player, amount, state):
+		transfer_money = GameStateChange.transfer_money(state.bank, player, amount)
+		return GroupOfChanges([transfer_money])
 
 	@staticmethod
-	# TODO: Need to remove "get out of jail free" from the deck while a player has it
+	def _pay(player_from, player_to, amount, state):
+		return player_from.pay(player_to, amount, state)
+
+	@staticmethod
 	def _get_out_of_jail_free(player, state):
-		return GameStateChange.increment_jail_card_count(player)
+		return GroupOfChanges() # 'jail free' card is handled by GameStateChange.draw_card()
+
+
 
 	# Chance-only functions
 	@staticmethod
 	def _collect_50(player, state):
-		return _collect(player, state, 50)
+		return _collect(player, 50, state)
 
 	@staticmethod
 	def _collect_150(player, state):
-		return _collect(player, state, 150)
+		return _collect(player, 150, state)
 
 	@staticmethod
 	def _pay_each_player_50(player, state):
@@ -73,12 +82,13 @@ class Card(Square):
 
 	@staticmethod
 	def _pay_poor_tax_of_15(player, state):
-		return player.pay(player, 15, state)
+		return _pay(player, state.bank, 15, state)
 
 	@staticmethod
 	def _pay_building_fees_chance(player, state):
 		return _pay_building_fees(player, state, CHANCE_PER_HOUSE_FEE,
 			CHANCE_PER_HOTEL_FEE)
+
 
 	# Helper function for "advance to nearest __________" cards.
 	# Returns the square nearest to the given position going forward
@@ -136,7 +146,8 @@ class Card(Square):
 
 	@staticmethod
 	def _go_back_three_spaces(player, state):
-		return GameStateChange.change_position(player, player.position - 3)
+		change_position = GameStateChange.change_position(player, player.position - 3)
+		return GroupOfChanges([change_position])
 
 
 
@@ -144,27 +155,27 @@ class Card(Square):
 	# Community-chest-only functions
 	@staticmethod
 	def _collect_10(player, state):
-		return _collect(player, state, 10)
+		return _collect(player, 10, state)
 
 	@staticmethod
 	def _collect_20(player, state):
-		return _collect(player, state, 20)
+		return _collect(player, 20, state)
 
 	@staticmethod
 	def _collect_25(player, state):
-		return _collect(player, state, 25)
+		return _collect(player, 25, state)
 
 	@staticmethod
 	def _collect_45(player, state):
-		return _collect(player, state, 45)
+		return _collect(player, 45, state)
 
 	@staticmethod
 	def _collect_100(player, state): # "xmas funds", "you inherit 100", "life insurance"
-		return _collect(player, state, 100)
+		return _collect(player, 100, state)
 
 	@staticmethod
 	def _collect_200(player, state):
-		return _collect(player, state, 200)
+		return _collect(player, 200, state)
 
 	@staticmethod
 	def _collect_50_from_every_player(player, state):
@@ -177,15 +188,15 @@ class Card(Square):
 
 	@staticmethod
 	def _pay_50(player, state):
-		return player.pay(state.bank, 50, state)
+		return _pay(player, state.bank, 50, state)
 
 	@staticmethod
 	def _pay_100(player, state):
-		return player.pay(state.bank, 100, state)
+		return _pay(player, state.bank, 100, state)
 
 	@staticmethod
 	def _pay_150(player, state):
-		return player.pay(state.bank, 150, state)
+		return _pay(player, state.bank, 150, state)
 
 	@staticmethod
 	def _pay_building_fees_community_chest(player, state):
@@ -195,13 +206,15 @@ class Card(Square):
 
 
 	# These functions make lists of lambdas for the above functions
+	LMBDA_GET_OUT_OF_JAIL_FREE = lambda player, state: _get_out_of_jail_free(player, state)
+
 	@staticmethod
-	def _make_chance_functions():
+	def make_chance_functions():
 		return [
 			# Chance and community chest functions
 			lambda player, state: _advance_to_go(player, state),
 			lambda player, state: _go_to_jail(player, state),
-			lambda player, state: _get_out_of_jail_free(player, state),
+			LMBDA_GET_OUT_OF_JAIL_FREE,
 
 			# Chance-only functions
 			lambda player, state: _collect_50(player, state),
@@ -220,12 +233,12 @@ class Card(Square):
 		]
 
 	@staticmethod
-	def _make_community_chest_functions():
+	def make_community_chest_functions():
 		return [
 			# Chance and community chest functions
 			lambda player, state: _advance_to_go(player, state),
 			lambda player, state: _go_to_jail(player, state),
-			lambda player, state: _get_out_of_jail_free(player, state),
+			LMBDA_GET_OUT_OF_JAIL_FREE,
 
 			# Community-chest-only functions
 			lambda player, state: _collect_10(player, state),
@@ -244,11 +257,6 @@ class Card(Square):
 		]
 
 
-	# Static decks of cards
-	_CHANCE_DECK = Deck(_make_chance_functions.__func__())
-	_COMMUNITY_CHEST_DECK = Deck(_make_community_chest_functions.__func__())
-
-
 
 	# Instance methods
 	def __init__(self, name, card_type):
@@ -256,11 +264,11 @@ class Card(Square):
 		self._card_type = card_type
 
 	def landed(self, player, roll, state):
-		if card_type == CHANCE_CARD:
-			result_of_action_on = _CHANCE_DECK.draw()
-		else:
-			result_of_action_on = _COMMUNITY_CHEST_DECK.draw()
-		return result_of_action_on(player, state)
+		deck = state.decks[self._card_type]
+		draw_card = GameStateChange.draw_card(deck, player)
+		card_lmbda = draw_card.card_drawn[deck]
+		result_of_card = card_lmbda(player, state)
+		return GroupOfChanges.combine([GroupOfChanges([draw_card]), result_of_card])
 
 
 

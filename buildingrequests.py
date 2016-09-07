@@ -14,11 +14,13 @@ Description:
 	applying them.
 '''
 
+from groupofchanges import GroupOfChanges
+
 class BuildingRequests(object):
 
 	# Construct from four GroupOfChanges objects, one for each category of
 	# building changes
-	def __init__(self, house_builds, hotel_builds, house_demolitions, hotel_demolitions):
+	def __init__(self, house_builds=GroupOfChanges(), hotel_builds=GroupOfChanges(), house_demolitions=GroupOfChanges(), hotel_demolitions=GroupOfChanges()):
 		self._house_builds 			= house_builds
 		self._hotel_builds 			= hotel_builds
 		self._house_demolitions = house_demolitions

@@ -1,139 +1,191 @@
 {
-	"BuildingRequests": {
+	"name": "BuildingRequests",
 	
-		"Description": "A BuildingRequests object is a container for a Player's desired GroupOfChanges involving builds and demolitions. BuildingRequests are kept separate from other changes a Player wishes to make to the GameState so that the HousingResolver can settle building conflicts before applying them.",
-	
-		"Constants": {
-	
-			
-	
+	"description": "A BuildingRequests object is a container for a Player's desired GroupOfChanges objects involving builds and demolitions. BuildingRequests are kept separate from other changes a Player wishes to make to the GameState so that the HousingResolver can settle building conflicts before applying them.",
+
+	"constants": [],
+
+	"instanceVariables": [
+
+		{
+			"name": "_house_builds",
+			"type": "GroupOfChanges",
+			"description": "The GroupOfChanges containing a Player's requests for house builds"
 		},
-	
-		"Instance Variables": {
-	
-			"_house_builds": {
-				"Type": "GroupOfChanges",
-				"Description": "The GroupOfChanges containing a Player's requests for house builds"
-			},
 
-			"_hotel_builds": {
-				"Type": "GroupOfChanges",
-				"Description": "The GroupOfChanges containing a Player's requests for hotel builds"
-			},
-
-			"_house_demolitions": {
-				"Type": "GroupOfChanges",
-				"Description": "The GroupOfChanges containing a Player's requests for house demolitions"
-			},
-
-			"_hotel_demolitions": {
-				"Type": "GroupOfChanges",
-				"Description": "The GroupOfChanges containing a Player's requests for hotel demolitions"
-			},
-
-			"_houses_built": {
-				"Type": "int",
-				"Description": "The total number of houses built in these BuildingRequests"
-			},
-
-			"_hotels_built": {
-				"Type": "int",
-				"Description": "The total number of hotels built in these BuildingRequests"
-			},
-
-			"_houses_demolished": {
-				"Type": "int",
-				"Description": "The total number of houses demolished in these BuildingRequests"
-			},
-
-			"_hotels_demolished": {
-				"Type": "int",
-				"Description": "The total number of hotels demolished in these BuildingRequests"
-			}
-	
+		{
+			"name": "_hotel_builds",
+			"type": "GroupOfChanges",
+			"description": "The GroupOfChanges containing a Player's requests for hotel builds"
 		},
-	
-		"Methods": {
-	
-			"Getters": {
-	
-				"house_builds()": {
-					"Arguments": { },
-					"Returns": "GroupOfChanges",
-					"Access": "Public",
-					"Description": "Returns this instance's house_builds"
-				},
 
-				"hotel_builds()": {
-					"Arguments": { },
-					"Returns": "GroupOfChanges",
-					"Access": "Public",
-					"Description": "Returns this instance's hotel_builds"
-				},
+		{
+			"name": "_house_demolitions",
+			"type": "GroupOfChanges",
+			"description": "The GroupOfChanges containing a Player's requests for house demolitions"
+		},
 
-				"house_demolitions()": {
-					"Arguments": { },
-					"Returns": "GroupOfChanges",
-					"Access": "Public",
-					"Description": "Returns this instance's house_demolitions"
-				},
+		{
+			"name": "_hotel_demolitions",
+			"type": "GroupOfChanges",
+			"description": "The GroupOfChanges containing a Player's requests for hotel demolitions"
+		},
 
-				"hotel_demolitions()": {
-					"Arguments": { },
-					"Returns": "GroupOfChanges",
-					"Access": "Public",
-					"Description": "Returns this instance's hotel_demolitions"
-				},
+		{
+			"name": "_houses_built",
+			"type": "int",
+			"description": "The total number of houses built in these BuildingRequests"
+		},
 
-				"houses_built()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's houses_built"
-				},
+		{
+			"name": "_hotels_built",
+			"type": "int",
+			"description": "The total number of hotels built in these BuildingRequests"
+		},
 
-				"hotels_built()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's hotels_built"
-				},
+		{
+			"name": "_houses_demolished",
+			"type": "int",
+			"description": "The total number of houses demolished in these BuildingRequests"
+		},
 
-				"houses_demolished()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's houses_demolished"
-				},
-
-				"hotels_demolished()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's hotels_demolished"
-				}
-	
-			},
-	
-			"Setters": {
-	
-				
-	
-			},
-	
-			"Static": {
-	
-				
-	
-			},
-	
-			"Other": {
-	
-				
-	
-			}
-	
+		{
+			"name": "_hotels_demolished",
+			"type": "int",
+			"description": "The total number of hotels demolished in these BuildingRequests"
 		}
-	
-	}
+
+	],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "house_builds",
+							"type": "GroupOfChanges",
+							"default": "GroupOfChanges()"
+						},
+
+						{
+							"name": "hotel_builds",
+							"type": "GroupOfChanges",
+							"default": "GroupOfChanges()"
+						},
+
+						{
+							"name": "house_demolitions",
+							"type": "GroupOfChanges",
+							"default": "GroupOfChanges()"
+						},
+
+						{
+							"name": "hotel_demolitions",
+							"type": "GroupOfChanges",
+							"default": "GroupOfChanges()"
+						}
+					],
+					"returnType": "BuildingRequests",
+					"access": "Public",
+					"description": "Initializes a BuildingRequests object"
+				}
+
+			]
+
+		},
+
+		{
+			"category": "Getters",
+			"methods": [
+
+				{
+					"name": "house_builds()",
+					"arguments": [],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns this instance's house_builds"
+				},
+
+				{
+					"name": "hotel_builds()",
+					"arguments": [],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns this instance's hotel_builds"
+				},
+
+				{
+					"name": "house_demolitions()",
+					"arguments": [],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns this instance's house_demolitions"
+				},
+
+				{
+					"name": "hotel_demolitions()",
+					"arguments": [],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns this instance's hotel_demolitions"
+				},
+
+				{
+					"name": "houses_built()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's houses_built"
+				},
+
+				{
+					"name": "hotels_built()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's hotels_built"
+				},
+
+				{
+					"name": "houses_demolished()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's houses_demolished"
+				},
+
+				{
+					"name": "hotels_demolished()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's hotels_demolished"
+				}
+
+			]
+		},
+
+		{
+			"category": "Setters",
+			"methods": []
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "Other",
+			"methods": []
+		}
+
+	],
+
+	"subclasses": []
 }

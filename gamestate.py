@@ -11,6 +11,7 @@ of the game should go through this object via the state-changing methods.
 from color_property import ColorProperty
 from create_squares import create_squares
 from property import Property
+from card import Card
 
 class GameState(object):
 	# Constants
@@ -39,6 +40,7 @@ class GameState(object):
 		self._houses_remaining       = NUM_HOUSES
 		self._hotels_remaining       = NUM_HOTELS
 		self._bank 									 = _initialize_bank(self._squares)
+		self._decks									 = { Card.CHANCE_CARD: Deck(Card.make_chance_functions).shuffle(), Card.COMMUNITY_CHEST_CARD: Deck(Card.make_community_chest_functions).shuffle() }
 		
 
 	# Private
@@ -75,6 +77,11 @@ class GameState(object):
 	def bank(self):
 		return self._bank
 
+	@property
+	def decks(self):
+		return self._decks
+	
+
 
 	# Other
 	def get_owner(self, prop):
@@ -106,11 +113,17 @@ class GameState(object):
 		for player, removed_props in change.removed_props.iteritems():
 			player.remove_properties(removed_props)
 
-		for player, change_in_jail_moves in change.change_in_jail_moves.iteritems():
-			player.jail_moves += change_in_jail_moves
+		for deck, card_drawn in change.card_drawn.iteritems():
+			deck.draw_and_remove()
+
+		for deck, card_replaced in change.card_replaced.iteritems():
+			deck.insert_on_bottom(card_replaced)
 
 		for player, change_in_jail_free_count in change.change_in_jail_free_count.iteritems():
 			player.jail_free_count += change_in_jail_free_count
+
+		for player, change_in_jail_moves in change.change_in_jail_moves.iteritems():
+			player.jail_moves += change_in_jail_moves
 
 		for player, is_in_game in change.is_in_game.iteritems():
 			player.is_in_game = is_in_game

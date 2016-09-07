@@ -1,67 +1,96 @@
 {
-	"NotificationChanges": {
-	
-		"Description": "Notifications are broadcasted to Players by the Engine to make them aware of the current GameState. Players are able to submit changes they wish to make upon seeing the current GameState. The NotificationChanges object is a container for all the changes/requests submitted by a Player in response to one of these notifications.",
-	
-		"Constants": {
-	
-			
-	
-		},
-	
-		"Instance Variables": {
-	
-			"_non_building_changes": {
-				"Type": "GroupOfChanges[]",
-				"Description": "A list of GroupOfChanges objects containing all of the responding Player's desired changes not involving building. A list is submitted to allow each GroupOfChanges to be its own logical unit"
-			},
 
-			"_building_requests": {
-				"Type": "BuildingRequests",
-				"Description": "The BuildingRequests desired by the responding Player"
-			}
-	
+	"name": "NotificationChanges",
+
+	"description": "Notifications are broadcasted to Players by the Engine to make them aware of the current GameState. Players are able to submit changes they wish to make upon seeing the current GameState. The NotificationChanges object is a container for these changes/requests submitted by a Player in response to a notification.",
+
+	"constants": [],
+
+	"instanceVariables": [
+
+		{
+			"name": "_non_building_changes",
+			"type": "GroupOfChanges[]",
+			"description": "A list of GroupOfChanges objects containing all of the responding Player's desired changes not involving building. A list is submitted to allow each GroupOfChanges to be its own logical unit"
 		},
-	
-		"Methods": {
-	
-			"Getters": {
-	
-				"non_building_changes()": {
-					"Arguments": { },
-					"Returns": "GroupOfChanges[]",
-					"Access": "Public",
-					"Description": "Returns this instance's non_building_changes list"
+
+		{
+			"name": "_building_requests",
+			"type": "BuildingRequests",
+			"description": "The BuildingRequests desired by the responding Player"
+		}
+
+	],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "non_building_changes",
+							"type": "GroupOfChanges[]",
+							"default": "[]"
+						},
+
+						{
+							"name": "building_requests",
+							"type": "BuildingRequests",
+							"default": "[]"
+						}
+					],
+					"returnType": "Engine",
+					"access": "Public",
+					"description": "Initializes an Engine"
+				}
+
+			]
+		},
+
+		{
+			"category": "Getters",
+			"methods": [
+
+				{
+					"name": "non_building_changes()",
+					"arguments": [],
+					"returnType": "GroupOfChanges[]",
+					"access": "Public",
+					"description": "Returns this instance's non_building_changes list"
 				},
 
-				"building_requests()": {
-					"Arguments": { },
-					"Returns": "BuildingRequests",
-					"Access": "Public",
-					"Description": "Returns this instance's BuildingRequests"
+				{
+					"name": "building_requests()",
+					"arguments": [],
+					"returnType": "BuildingRequests",
+					"access": "Public",
+					"description": "Returns this instance's BuildingRequests"
 				}
-	
-			},
-	
-			"Setters": {
-	
-				
-	
-			},
-	
-			"Static": {
-	
-				
-	
-			},
-	
-			"Other": {
-	
-				
-	
-			}
-	
+
+			]
+		},
+
+		{
+			"category": "Setters",
+			"methods": []
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "Other",
+			"methods": []
 		}
-	
-	}
+
+	],
+
+	"subclasses": []
+
 }

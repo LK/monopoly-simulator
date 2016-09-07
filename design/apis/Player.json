@@ -1,313 +1,508 @@
 {
-	"Player": {
+	"name": "Player",
 
-		"Description": "Represents a player in the game. Maintains a player's hand - his position, cash, properties, and 'Get out of jail free cards' - and returns all of the player's decisions from his DecisionMaker.",
-	
-		"Constants": {
-	
-			
-	
+	"description": "Represents a player in the game. Maintains a player's hand - his position, cash, properties, and 'Get out of jail free cards' - and returns all of the player's decisions from his DecisionMaker.",
+
+	"constants": [],
+
+	"instanceVariables": [
+
+		{
+			"name": "_position",
+			"type": "int",
+			"description": "The index of the Square this Player is currently on"
 		},
-	
-		"Instance Variables": {
-	
-			"_position": {
-				"Type": "int",
-				"Default": "0",
-				"Description": "The index of the Square this Player is currently on"
-			},
 
-			"_cash": {
-				"Type": "int",
-				"Default": "1500",
-				"Description": "The amount of cash this Player currently has"
-			},
-
-			"_props": {
-				"Type": "Property[]",
-				"Default": "[]",
-				"Description": "The list of Property objects this Player currently owns"
-			},
-
-			"_property_group_counts": {
-				"Type": "{ int: int }",
-				"Default": "{}",
-				"Description": "Dictionary mapping property groups (represented by their integer index) to the amount of Property objects in those property groups owned by this Player"
-			},
-
-			"_decision_maker": {
-				"Type": "DecisionMaker",
-				"Default": "None",
-				"Description": "The Player's DecisionMaker (brain)"
-			},
-
-			"_jail_free_count": {
-				"Type": "int",
-				"Default": "0",
-				"Description": "The number of 'Get out of jail free' cards this Player currently has"
-			},
-
-			"_jail_moves": {
-				"Type": "int",
-				"Default": "0",
-				"Description": "The number of turns for which this Player will remain in jail. A value of 0 indicates that this Player is free to move"
-			},
-
-			"_is_in_game": {
-				"Type": "boolean",
-				"Default": "True",
-				"Description": "The in-game status of this Player. True if this Player is still in the game, False if he went bankrupt"
-			}
-	
+		{
+			"name": "_cash",
+			"type": "int",
+			"description": "The amount of cash this Player currently has"
 		},
-	
-		"Methods": {
-	
-			"Getters": {
-	
-				"position()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's position"
-				},
 
-				"cash()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's cash"
-				},
+		{
+			"name": "_props",
+			"type": "Property[]",
+			"description": "The list of Property objects this Player currently owns"
+		},
 
-				"props()": {
-					"Arguments": { },
-					"Returns": "Property[]",
-					"Access": "Public",
-					"Description": "Returns this instance's Property list"
-				},
+		{
+			"name": "_property_group_counts",
+			"type": "{ int: int }",
+			"description": "Dictionary mapping property groups (represented by their integer index) to the amount of Property objects in those property groups owned by this Player"
+		},
 
-				"property_group_counts()": {
-					"Arguments": { },
-					"Returns": "{ int: int }",
-					"Access": "Public",
-					"Description": "Returns this instance's property_group_counts dictionary"
-				},
+		{
+			"name": "_decision_maker",
+			"type": "DecisionMaker",
+			"description": "The Player's DecisionMaker (brain)"
+		},
 
-				"decision_maker()": {
-					"Arguments": { },
-					"Returns": "DecisionMaker",
-					"Access": "Public",
-					"Description": "Returns this instance's DecisionMaker"
-				},
+		{
+			"name": "_jail_free_count",
+			"type": "int",
+			"description": "The number of 'Get out of jail free' cards this Player currently has"
+		},
 
-				"jail_free_count()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's jail_free_count"
-				},
+		{
+			"name": "_jail_moves",
+			"type": "int",
+			"description": "The number of turns for which this Player will remain in jail. A value of 0 indicates that this Player is free to move"
+		},
 
-				"jail_moves()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's jail_moves"
-				},
-
-				"is_in_game()": {
-					"Arguments": { },
-					"Returns": "boolean",
-					"Access": "Public",
-					"Description": "Returns this instance's is-game status"
-				}
-
-			},
-	
-			"Setters": {
-	
-				"position()": {
-					"Arguments": {
-						"position": "int"
-					},
-					"Returns": "void",
-					"Access": "Public",
-					"Description": "Sets this instance's position"
-				},
-
-				"cash()": {
-					"Arguments": {
-						"cash": "int"
-					},
-					"Returns": "void",
-					"Access": "Public",
-					"Description": "Sets this instance's cash"
-				},
-
-				"jail_free_count()": {
-					"Arguments": {
-						"jail_free_count": "int"
-					},
-					"Returns": "void",
-					"Access": "Public",
-					"Description": "Sets this instance's jail_free_count"
-				},
-
-				"jail_moves()": {
-					"Arguments": {
-						"jail_moves": "int"
-					},
-					"Returns": "void",
-					"Access": "Public",
-					"Description": "Sets this instance's jail_moves"
-				},
-
-				"is_in_game()": {
-					"Arguments": {
-						"is_in_game": "boolean"
-					},
-					"Returns": "void",
-					"Access": "Public",
-					"Description": "Sets this instance's in-game status"
-				}
-	
-			},
-	
-			"Static": {
-	
-				
-	
-			},
-
-			"DecisionMaker Interactions": {
-
-				"buy_or_deny()": {
-					"Arguments": {
-						"prop": "Property",
-						"state": "GameState"
-					},
-					"Returns": "GroupOfChanges",
-					"Access": "Public",
-					"Description": "Returns a GroupOfChanges in which this Player either buys the given Property or does nothing"
-				},
-
-				"pay()": {
-					"Arguments": {
-						"player": "Player",
-						"amount": "int",
-						"state": "GameState"
-					},
-					"Returns": "GroupOfChanges",
-					"Access": "Public",
-					"Description": "Returns a GroupOfChanges in which this Player pays the given Player the amount specified"
-				},
-
-				"bid()": {
-					"Arguments": {
-						"highest_bid": "int",
-						"props_to_build_on": {
-							"Type": "Property[]",
-							"Description": "Contains the Property objects this Player requested to build on when submitting its last BuildingRequests. Specifically, they are the list that corresponds to the type of construction Players are currently auctioning for (i.e. for a house-build auction, these are the Property objects on which this Player wished to build houses; likewise for a hotel-build auction or a hotel-demolition auction)"
-						},
-						"state": "GameState"
-					},
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns the amount this Player is willing to pay in an auction to build on one of the Property objects provided"
-				},
-
-				"will_trade()": {
-					"Arguments": {
-						"proposal": "GroupOfChanges",
-						"state": "GameState"
-					},
-					"Returns": "boolean",
-					"Access": "Public",
-					"Description": "Returns True if this Player is willing to accept the given GroupOfChanges to the GameState, false if not"
-				},
-
-				"respond_to_state()": {
-					"Arguments": {
-						"new_state": "GameState"
-					},
-					"Returns": "NotificationChanges",
-					"Access": "Public",
-					"Description": "Returns NotificationChanges that this Player wishes to make in response to seeing the updated GameState provided"
-				},
-
-				"revise_hotel_demolitions()": {
-					"Arguments": {
-						"original_hotel_demolitions": "GroupOfChanges",
-						"state": "GameState"
-					},
-					"Returns": "GroupOfChanges",
-					"Access": "Public",
-					"Description": "Offers the Player a chance to revise his hotel demolition request in the event that the GameState has changed since he first submitted them (i.e. when the HousingResolver has allowed houses to be taken off the market before hotels were demolished). Returns the GroupOfChanges that either makes new hotel demolitions or does nothing"
-				}
-
-			},
-	
-			"Other": {
-
-				"__init__()": {
-					"Arguments": {
-						"position": "int",
-						"cash": "int",
-						"props": "Property[]",
-						"property_group_counts": "{ int: int }",
-						"decision_maker": "DecisionMaker",
-						"jail_free_count": "int",
-						"jail_moves": "int",
-						"is_in_game": "boolean"
-					},
-					"Returns": "Player",
-					"Access": "Public",
-					"Description": "Initialize a Player with the given parameters"
-				},
-				
-				"is_property_group_complete()": {
-					"Arguments": {
-						"property_group": "int"
-					},
-					"Returns": "boolean",
-					"Access": "Public",
-					"Description": "Returns True if this Player owns all of the Property objects in the given property group, False if not"
-				},
-
-				"is_in_jail()": {
-					"Arguments": { },
-					"Returns": "boolean",
-					"Access": "Public",
-					"Description": "Returns True if this Player is currently in jail, False if not"
-				},
-
-				"add_properties()": {
-					"Arguments": {
-						"added_properties": "Property[]"
-					},
-					"Returns": "void",
-					"Access": "Public",
-					"Description": "Adds the given Property objects to this Player's list"
-				},
-
-				"remove_properties()": {
-					"Arguments": {
-						"removed_properties": "Property[]"
-					},
-					"Returns": "void",
-					"Access": "Public",
-					"Description": "Removes the given Property objects from this Player's list"
-				},
-
-				"eliminate()": {
-					"Arguments": { },
-					"Returns": "void",
-					"Access": "Public",
-					"Description": "Communicates to this Player that he is no longer in the game. Does not take any further action; namely, no other objects in the game are aware of this Player's elimination after calling this method. They must check through the GameState"
-				}
-	
-			}
-	
+		{
+			"name": "_is_in_game",
+			"type": "boolean",
+			"description": "The in-game status of this Player. True if this Player is still in the game, False if he went bankrupt"
 		}
-	
-	}
+
+	],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "position",
+							"type": "int",
+							"default": "0"
+						},
+
+						{
+							"name": "cash",
+							"type": "int",
+							"default": "1500"
+						},
+
+						{
+							"name": "props",
+							"type": "Property[]",
+							"default": "[]"
+						},
+
+						{
+							"name": "property_group_counts",
+							"type": "{ int: int }",
+							"default": "{}"
+						},
+
+						{
+							"name": "decision_maker",
+							"type": "DecisionMaker",
+							"default": "None"
+						},
+
+						{
+							"name": "jail_free_count",
+							"type": "int",
+							"default": "0"
+						},
+
+						{
+							"name": "jail_moves",
+							"type": "int",
+							"default": "0"
+						},
+
+						{
+							"name": "is_in_game",
+							"type": "boolean",
+							"default": "True"
+						}
+					],
+					"returnType": "Player",
+					"access": "Public",
+					"description": "Initialize a Player with the given parameters"
+				}
+
+			]
+		},
+
+		{
+			"category": "Getters",
+			"methods": [
+
+				{
+					"name": "position()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's position"
+				},
+
+				{
+					"name": "cash()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's cash"
+				},
+
+				{
+					"name": "props()",
+					"arguments": [],
+					"returnType": "Property[]",
+					"access": "Public",
+					"description": "Returns this instance's Property list"
+				},
+
+				{
+					"name": "property_group_counts()",
+					"arguments": [],
+					"returnType": "{ int: int }",
+					"access": "Public",
+					"description": "Returns this instance's property_group_counts dictionary"
+				},
+
+				{
+					"name": "decision_maker()",
+					"arguments": [],
+					"returnType": "DecisionMaker",
+					"access": "Public",
+					"description": "Returns this instance's DecisionMaker"
+				},
+
+				{
+					"name": "jail_free_count()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's jail_free_count"
+				},
+
+				{
+					"name": "jail_moves()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's jail_moves"
+				},
+
+				{
+					"name": "is_in_game()",
+					"arguments": [],
+					"returnType": "boolean",
+					"access": "Public",
+					"description": "Returns this instance's is-game status"
+				}
+
+			]
+		},
+
+		{
+			"category": "Setters",
+			"methods": [
+
+				{
+					"name": "position()",
+					"arguments": [
+						{
+							"name": "position",
+							"type": "int"
+						}
+					],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Sets this instance's position"
+				},
+
+				{
+					"name": "cash()",
+					"arguments": [
+						{
+							"name": "cash",
+							"type": "int"
+						}
+					],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Sets this instance's cash"
+				},
+
+				{
+					"name": "jail_free_count()",
+					"arguments": [
+						{
+							"name": "jail_free_count",
+							"type": "int"
+						}
+					],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Sets this instance's jail_free_count"
+				},
+
+				{
+					"name": "jail_moves()",
+					"arguments": [
+						{
+							"name": "jail_moves",
+							"type": "int"
+						}
+					],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Sets this instance's jail_moves"
+				},
+
+				{
+					"name": "is_in_game()",
+					"arguments": [
+						{
+							"name": "is_in_game",
+							"type": "boolean"
+						}
+					],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Sets this instance's in-game status"
+				}
+
+			]
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "DecisionMaker Interactions",
+			"methods": [
+
+				{
+					"name": "buy_or_deny()",
+					"arguments": [
+						{
+							"name": "prop",
+							"type": "Property"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns a GroupOfChanges in which this Player either buys the given Property or does nothing"
+				},
+
+				{
+					"name": "pay()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
+							"name": "amount",
+							"type": "int"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns a GroupOfChanges in which this Player pays the given Player the amount specified"
+				},
+
+				{
+					"name": "bid_house_builds()",
+					"arguments": [
+						{
+							"name": "highest_bid",
+							"type": "int"
+						},
+
+						{
+							"name": "props_to_build_on",
+							"type": "Property[]",
+							"description": "Contains the Property objects on which this Player requested to build houses when submitting his last BuildingRequests"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns the GroupOfChanges in which this Player buys and builds the house he is auctioning for at the price he is willing to bid. (Note that this GroupOfChanges is only applied if the Player wins the auction.)"
+				},
+
+				{
+					"name": "bid_hotel_builds()",
+					"arguments": [
+						{
+							"name": "highest_bid",
+							"type": "int"
+						},
+
+						{
+							"name": "props_to_build_on",
+							"type": "Property[]",
+							"description": "Contains the Property objects on which this Player requested to build hotels when submitting his last BuildingRequests"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns the GroupOfChanges in which this Player buys and builds the hotel he is auctioning for at the price he is willing to bid. (Note that this GroupOfChanges is only applied if the Player wins the auction.)"
+				},
+
+				{
+					"name": "bid_hotel_demolitions()",
+					"arguments": [
+						{
+							"name": "highest_bid",
+							"type": "int"
+						},
+
+						{
+							"name": "props_to_demolish_on",
+							"type": "Property[]",
+							"description": "Contains the Property objects on which this Player requested to demolish hotels when submitting his last BuildingRequests"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Returns the GroupOfChanges in which this Player buys and demolishes a hotel at the price he is willing to bid for the 4 houses he subsequently takes off the market. (Note that this GroupOfChanges is only applied if the Player wins the auction.)"
+				},
+
+				{
+					"name": "will_trade()",
+					"arguments": [
+						{
+							"name": "proposal",
+							"type": "GroupOfChanges"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "boolean",
+					"access": "Public",
+					"description": "Returns True if this Player is willing to accept the given GroupOfChanges to the GameState, false if not"
+				},
+
+				{
+					"name": "respond_to_state()",
+					"arguments": [
+						{
+							"name": "new_state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "NotificationChanges",
+					"access": "Public",
+					"description": "Returns NotificationChanges that this Player wishes to make in response to seeing the updated GameState provided"
+				},
+
+				{
+					"name": "revise_hotel_demolitions()",
+					"arguments": [
+						{
+							"name": "original_hotel_demolitions",
+							"type": "GroupOfChanges"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"description": "Offers the Player a chance to revise his hotel demolition request in the event that the GameState has changed since he first submitted them (i.e. when the HousingResolver has allowed houses to be taken off the market before hotels were demolished). Returns the GroupOfChanges that either makes new hotel demolitions or does nothing"
+				}
+
+			]
+		},
+
+		{
+			"category": "Other",
+			"methods": [
+
+				{
+					"name": "is_property_group_complete()",
+					"arguments": [
+						{
+							"name": "property_group",
+							"type": "int"
+						}
+					],
+					"returnType": "boolean",
+					"access": "Public",
+					"description": "Returns True if this Player owns all of the Property objects in the given property group, False if not"
+				},
+
+				{
+					"name": "is_in_jail()",
+					"arguments": [],
+					"returnType": "boolean",
+					"access": "Public",
+					"description": "Returns True if this Player is currently in jail, False if not"
+				},
+
+				{
+					"name": "add_properties()",
+					"arguments": [
+						{
+							"name": "added_properties",
+							"type": "Property[]"
+						}
+					],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Adds the given Property objects to this Player's list"
+				},
+
+				{
+					"name": "remove_properties()",
+					"arguments": [
+						{
+							"name": "removed_properties",
+							"type": "Property[]"
+						}
+					],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Removes the given Property objects from this Player's list"
+				},
+
+				{
+					"name": "eliminate()",
+					"arguments": [],
+					"returnType": "void",
+					"access": "Public",
+					"description": "Communicates to this Player that he is no longer in the game. Does not take any further action; namely, no other objects in the game are aware of this Player's elimination after calling this method. They must check through the GameState"
+				}
+
+			]
+		}
+
+	],
+
+	"subclasses": []
+
 }

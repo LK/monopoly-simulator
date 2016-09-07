@@ -1,0 +1,133 @@
+{
+	"name": "NonColorProperty",
+
+	"description": "Represents a non-color property on the board, which is not improvable. Namely, these are the railroads and utilities.",
+
+	"constants": [],
+
+	"instanceVariables": [],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "name",
+							"type": "String"
+						},
+
+						{
+							"name": "price",
+							"type": "int"
+						},
+
+						{
+							"name": "rents",
+							"type": "int[]"
+						},
+
+						{
+							"name": "property_group",
+							"type": "int"
+						},
+
+						{
+							"name": "size_of_property_group",
+							"type": "int"
+						},
+
+						{
+							"name": "mortgaged",
+							"type": "boolean",
+							"default": "False"
+						}
+					],
+					"returnType": "Property",
+					"access": "Public",
+					"description": "Initializes a NonColorProperty object"
+				}
+
+			]
+		},
+
+		{
+			"category": "Getters",
+			"methods": []
+		},
+
+		{
+			"category": "Setters",
+			"methods": []
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "Other",
+			"methods": [
+
+				{
+					"name": "landed()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
+							"name": "roll",
+							"type": "int"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"overrides": "Property.landed()",
+					"description": "Returns the GroupOfChanges resulting from the Player's landing on this NonColorProperty"
+				},
+
+				{
+					"name": "get_rent()",
+					"arguments": [
+						{
+							"name": "num_owned",
+							"type": "int",
+							"description": "The number of properties in this NonColorProperty's property group owned by the owner of this NonColorProperty"
+						},
+
+						{
+							"name": "roll",
+							"type": "int",
+							"description": "The roll the Player made to land on this NonColorProperty. This is used only for utilities to determine the rent. It is irrelevant for railroads"
+						},
+						
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns the amount a Player must pay when landing on this NonColorProperty given the number of properties in the group that the owner owns, the landing Player's roll, and the current GameState"
+				}
+
+			]
+		}
+
+	],
+
+	"subclasses": []
+		
+}

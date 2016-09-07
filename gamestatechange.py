@@ -13,13 +13,16 @@ from square import Square
 from gamestate import GameState
 from gotojail import GoToJail
 from color_property import ColorProperty
+from card import Card
 
 class GameStateChange(object):
-	def __init__(self, change_in_cash={}, new_position={}, added_props={}, removed_props={}, change_in_jail_moves={}, change_in_jail_free_count={}, is_in_game={}, change_in_houses={}, change_in_houses_remaining=0, change_in_hotels_remaining=0, is_mortgaged={}):
+	def __init__(self, change_in_cash={}, new_position={}, added_props={}, removed_props={}, card_drawn={}, card_replaced={}, change_in_jail_moves={}, change_in_jail_free_count={}, is_in_game={}, change_in_houses={}, change_in_houses_remaining=0, change_in_hotels_remaining=0, is_mortgaged={}):
 		self._change_in_cash            	= change_in_cash
 		self._new_position              	= new_position
 		self._added_props          				= added_props
 		self._removed_props        				= removed_props
+		self._card_drawn									= card_drawn
+		self._card_replaced								= card_replaced
 		self._change_in_jail_moves				= change_in_jail_moves
 		self._change_in_jail_free_count		= change_in_jail_free_count
 		self._is_in_game									= is_in_game
@@ -43,6 +46,14 @@ class GameStateChange(object):
 	@property
 	def removed_props(self):
 		return self._removed_props
+
+	@property
+	def card_drawn(self):
+		return self._card_drawn
+	
+	@property
+	def card_replaced(self):
+		return self._card_replaced
 	
 	@property
 	def change_in_jail_moves(self):
@@ -199,6 +210,20 @@ class GameStateChange(object):
 			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=+1)
 
 	@staticmethod
+	def draw_card(deck, player):
+		next_card = deck.peek()
+		if next_card == Card.LMBDA_GET_OUT_OF_JAIL_FREE:
+			# Do not replace the "Get out of jail free" card
+			return GameStateChange(card_drawn={ deck: next_card }, change_in_jail_free_count={ player: +1 })
+		else:
+			return GameStateChange(card_drawn={ deck: next_card }, card_replaced={ deck: next_card })
+
+	@staticmethod
+	def decrement_jail_card_count(player, deck):
+		# TODO: How does the caller know which deck to return "Get out of jail free" to?
+		return GameStateChange(card_replaced={ deck: Card.LMBDA_GET_OUT_OF_JAIL_FREE }, change_in_jail_free_count={ player: -1 })
+
+	@staticmethod
 	def send_to_jail(player):
 		return GameStateChange(new_position={ player: Square.INDEX[Square.JAIL] }, change_in_jail_moves={ player: +GoToJail.JAIL_MOVES })
 
@@ -209,14 +234,6 @@ class GameStateChange(object):
 	@staticmethod
 	def leave_jail(player):
 		return GameStateChange(change_in_jail_moves={ player: -player.jail_moves })
-
-	@staticmethod
-	def increment_jail_card_count(player):
-		return GameStateChange(change_in_jail_free_count={ player: +1 })
-
-	@staticmethod
-	def decrement_jail_card_count(player):
-		return GameStateChange(change_in_jail_free_count={ player: -1 })
 
 	@staticmethod
 	def eliminate(player_eliminated, player_eliminator):

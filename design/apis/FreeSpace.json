@@ -1,0 +1,81 @@
+{
+	"name": "FreeSpace",
+
+	"description": "Represents a square which has no special function in that players do not have to take action on these squares. They are Free Parking, Jail (just visiting), and Go.",
+
+	"constants": [],
+
+	"instanceVariables": [],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "name",
+							"type": "String"
+						}
+					],
+					"returnType": "FreeSpace",
+					"access": "Public",
+					"description": "Initializes a FreeSpace object"
+				}
+
+			]
+		},
+
+		{
+			"category": "Getters",
+			"methods": []
+		},
+
+		{
+			"category": "Setters",
+			"methods": []
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "Other",
+			"methods": [
+
+				{
+					"name": "landed()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
+							"name": "roll",
+							"type": "int"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"overrides": "Square.landed()",
+					"description": "Returns the GroupOfChanges doing absolutely nothing"
+				}
+
+			]
+		}
+
+	],
+
+	"subclasses": []
+}

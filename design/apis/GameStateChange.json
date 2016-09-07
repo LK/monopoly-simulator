@@ -1,337 +1,575 @@
 {
-	"GameStateChange": {
 
-		"Description": "A GameStateChange represents the smallest, 'atomic' set of changes that must be made to transition from one legal GameState to another legal GameState. It is a container for all the components of a state transition, and is the the root mechanism through which the GameState can be changed.",
-	
-		"Constants": {
-	
-			
-	
+	"name": "GameStateChange",
+
+	"description": "A GameStateChange represents the smallest, 'atomic' set of changes that must be made to transition from one legal GameState to another legal GameState. It is a container for all the components of a state transition, and is the the root mechanism through which the GameState can be changed.",
+
+	"constants": [],
+
+	"instanceVariables": [
+
+		{
+			"name": "_change_in_cash",
+			"type": "{ Player: int }",
+			"description": "Dictionary mapping Players to their change in cash"
 		},
-	
-		"Instance Variables": {
-	
-			"_change_in_cash": {
-				"Type": "{ Player: int }",
-				"Default": "{ }",
-				"Description": "Dictionary mapping Players to their change in cash"
-			},
 
-			"_new_position": {
-				"Type": "{ Player: int }",
-				"Default": "{ }",
-				"Description": "Dictionary mapping Players to their new position on the board (represented as an int index)"
-			},
-
-			"_added_props": {
-				"Type": "{ Player: Property[] }",
-				"Default": "{ }",
-				"Description": "Dictionary mapping Players to a list of Property objects they receive"
-			},
-
-			"_removed_props": {
-				"Type": "{ Player: Property[] }",
-				"Default": "{ }",
-				"Description": "Dictionary mapping Players to a list of Property objects they give away/lose"
-			},
-
-			"_change_in_jail_moves": {
-				"Type": "{ Player: int }",
-				"Default": "{ }",
-				"Description": "Dictionary mapping Players to the change in their 'in-jail moves'"
-			},
-
-			"_change_in_jail_free_count": {
-				"Type": "{ Player: int }",
-				"Default": "{ }",
-				"Description": "Dictionary mapping Players to the change in the number of 'Get out of jail free' cards they have"
-			},
-
-			"_is_in_game": {
-				"Type": "{ Player: boolean }",
-				"Default": "{ }",
-				"Description": "Dictionary mapping Players to their new in-game status (if it changed) - True if a Player is still in the game, False if he went bankrupt"
-			},
-
-			"_change_in_houses": {
-				"Type": "{ ColorProperty: int }",
-				"Default": "{ }",
-				"Description": "Dictionary mapping ColorProperty objects to the change in houses present on them"
-			},
-
-			"_change_in_houses_remaining": {
-				"Type": "int",
-				"Description": "The amount by which the number of houses available on the market increases or decreases"
-			},
-
-			"_change_in_hotels_remaining": {
-				"Type": "int",
-				"Description": "The amount by which the number of hotels available on the market increases or decreases"
-			},
-
-			"_is_mortgaged": {
-				"Type": "{ Property: boolean }",
-				"Default": "{ }",
-				"Description": "Dictionary mapping Property objects to their mortgage status (if it changed) - True if mortgaged, False if not"
-			}
-	
+		{
+			"name": "_new_position",
+			"type": "{ Player: int }",
+			"description": "Dictionary mapping Players to their new position on the board (represented as an int index)"
 		},
-	
-		"Methods": {
-	
-			"Getters": {
-	
-				"change_in_cash()": {
-					"Arguments": { },
-					"Returns": "{ Player: int }",
-					"Access": "Public",
-					"Description": "Returns this instance's change_in_cash dictionary"
-				},
 
-				"new_position()": {
-					"Arguments": { },
-					"Returns": "{ Player: int }",
-					"Access": "Public",
-					"Description": "Returns this instance's new_position dictionary"
-				},
+		{
+			"name": "_added_props",
+			"type": "{ Player: Property[] }",
+			"description": "Dictionary mapping Players to a list of Property objects they receive"
+		},
 
-				"added_props()": {
-					"Arguments": { },
-					"Returns": "{ Player: Property[] }",
-					"Access": "Public",
-					"Description": "Returns this instance's added_props dictionary"
-				},
+		{
+			"name": "_removed_props",
+			"type": "{ Player: Property[] }",
+			"description": "Dictionary mapping Players to a list of Property objects they give away/lose"
+		},
 
-				"removed_props()": {
-					"Arguments": { },
-					"Returns": "{ Player: Property[] }",
-					"Access": "Public",
-					"Description": "Returns this instance's removed_props dictionary"
-				},
+		{
+			"name": "_card_drawn",
+			"type": "{ Deck: lambda }",
+			"description": "Dictionary mapping a Deck, Chance or Community Chest, to the lambda function associated with the card drawn from that Deck. Generally, this is used in conjunction with _card_replaced, with the exception of the 'Get out of jail free' card"
+		},
 
-				"change_in_jail_moves()": {
-					"Arguments": { },
-					"Returns": "{ Player: int }",
-					"Access": "Public",
-					"Description": "Returns this instance's change_in_jail_moves dictionary"
-				},
+		{
+			"name": "_card_replaced",
+			"type": "{ Deck: lambda }",
+			"description": "Dictionary mapping a Deck, Chance or Community Chest, to the lambda function associated with the card replaced on the bottom of that Deck. Generally, this is used in conjunction with _card_drawn, with the exception of the 'Get out of jail free' card"
+		},
 
-				"change_in_jail_free_count()": {
-					"Arguments": { },
-					"Returns": "{ Player: int }",
-					"Access": "Public",
-					"Description": "Returns this instance's change_in_jail_free_count dictionary"
-				},
+		{
+			"name": "_change_in_jail_moves",
+			"type": "{ Player: int }",
+			"description": "Dictionary mapping Players to the change in their 'in-jail moves'"
+		},
 
-				"is_in_game()": {
-					"Arguments": { },
-					"Returns": "{ Player: boolean }",
-					"Access": "Public",
-					
-					"Description": "Returns this instance's is_in_game dictionary"
-				},
+		{
+			"name": "_change_in_jail_free_count",
+			"type": "{ Player: int }",
+			"description": "Dictionary mapping Players to the change in the number of 'Get out of jail free' cards they have"
+		},
 
-				"change_in_houses()": {
-					"Arguments": { },
-					"Returns": "{ ColorProperty: int }",
-					"Access": "Public",
-					"Description": "Returns this instance's change_in_houses dictionary"
-				},
+		{
+			"name": "_is_in_game",
+			"type": "{ Player: boolean }",
+			"description": "Dictionary mapping Players to their new in-game status (if it changed) - True if a Player is still in the game, False if he went bankrupt"
+		},
 
-				"change_in_houses_remaining()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's change_in_houses_remaining"
-				},
+		{
+			"name": "_change_in_houses",
+			"type": "{ ColorProperty: int }",
+			"description": "Dictionary mapping ColorProperty objects to the change in houses present on them"
+		},
 
-				"change_in_hotels_remaining()": {
-					"Arguments": { },
-					"Returns": "int",
-					"Access": "Public",
-					"Description": "Returns this instance's change_in_hotels_remaining"
-				},
+		{
+			"name": "_change_in_houses_remaining",
+			"type": "int",
+			"description": "The amount by which the number of houses available on the market increases or decreases"
+		},
 
-				"is_mortgaged()": {
-					"Arguments": { },
-					"Returns": "{ Property: boolean }",
-					"Access": "Public",
-					"Description": "Returns this instance's is_mortgaged dictionary"
-				}
-	
-			},
-	
-			"Setters": {
-	
-				
-	
-			},
-	
-			"Static": {
-	
-				"transfer_money()": {
-					"Arguments": {
-						"player_from": "Player",
-						"player_to": "Player",
-						"amount": "int"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Returns a GameStateChange that transfers the given amount of money from one Player to another"
-				},
+		{
+			"name": "_change_in_hotels_remaining",
+			"type": "int",
+			"description": "The amount by which the number of hotels available on the market increases or decreases"
+		},
 
-				"transfer_property()": {
-					"Arguments": {
-						"player_from": "Player",
-						"player_to": "Player",
-						"prop": "Property"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Returns a GameStateChange that transfers the given Property from one Player to another"
-				},
-
-				"buy_property()": {
-					"Arguments": {
-						"player": "Player",
-						"prop": "Property",
-						"bank": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Returns a GameStateChange that purchases the given Property for the given Player"
-				},
-
-				"change_position()": {
-					"Arguments": {
-						"player": "Player",
-						"new_position": "int",
-						"bank": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Returns a GameStateChange that moves the given Player to the given position (index on the board). Uses the bank to pay the Player money if they pass Go"
-				},
-
-				"mortgage()": {
-					"Arguments": {
-						"prop": "Property",
-						"bank": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Returns a GameStateChange that mortgages the given property. Uses the bank to give the owner mortgage money"
-				},
-
-				"unmortgage()": {
-					"Arguments": {
-						"prop": "Property",
-						"bank": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Returns a GameStateChange that unmortgages the given property. Uses the bank so the Player can repay the mortgage money"
-				},
-
-				"build()": {
-					"Arguments": {
-						"prop": "ColorProperty",
-						"bank": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Returns a GameStateChange that builds one house/hotel on the given ColorProperty"
-				},
-
-				"demolish()": {
-					"Arguments": {
-						"prop": "ColorProperty",
-						"bank": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Returns a GameStateChange that demolishes one house/hotel on the given ColorProperty"
-				},
-
-				"send_to_jail()": {
-					"Arguments": {
-						"player": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Sends the given Player to jail and keeps them there for 3 moves (unless they later get out by rolling doubles, paying the fee, or using a 'Get out of jail free' card"
-				},
-
-				"decrement_in_jail_moves()": {
-					"Arguments": {
-						"player": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "If the given Player is in jail, decrements the number of moves the Player still has before he can leave jail"
-				},
-
-				"leave_jail()": {
-					"Arguments": {
-						"player": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Immediately lets the given Player out of jail (often a result of rolling doubles, paying the fee, or using a 'Get out of jail free' card"
-				},
-
-				"increment_jail_card_count()": {
-					"Arguments": {
-						"player": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Adds one 'Get out of jail free' card to the given Player's hand"
-				},
-
-				"decrement_jail_card_count()": {
-					"Arguments": {
-						"player": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Removes one 'Get out of jail free' card from the given Player's hand"
-				},
-
-				"eliminate()": {
-					"Arguments": {
-						"player_eliminated": "Player",
-						"player_eliminator": "Player"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Eliminates the given Player from the game, demolishing all houses on his color properties and transferring all of his belongings to the eliminator Player"
-				}
-	
-			},
-	
-			"Other": {
-	
-				"__init__()": {
-					"Arguments": {
-						"change_in_cash": "{ Player: int }",
-						"new_position": "{ Player: int }",
-						"added_props": "{ Player: Property[] }",
-						"removed_props": "{ Player: Property[] }",
-						"change_in_jail_moves": "{ Player: int }",
-						"change_in_jail_free_count": "{ Player: int }",
-						"is_in_game": "{ Player: boolean }",
-						"change_in_houses": "{ ColorProperty: int }",
-						"is_mortgaged": "{ Property: boolean }"
-					},
-					"Returns": "GameStateChange",
-					"Access": "Public",
-					"Description": "Initializes this GameStateChange from the dictionaries provided. Note that a client should never initialize a GameStateChange from its __init__(). It should use one of the provided static methods, as they are the only legal GameStateChanges"
-				}
-	
-			}
-	
+		{
+			"name": "_is_mortgaged",
+			"type": "{ Property: boolean }",
+			"description": "Dictionary mapping Property objects to their mortgage status (if it changed) - True if mortgaged, False if not"
 		}
-	
-	}
+
+	],
+
+	"methodCategories": [
+
+		{
+			"category": "Costructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "change_in_cash",
+							"type": "{ Player: int }",
+							"default": "{}"
+						},
+
+						{
+							"name": "new_position",
+							"type": "{ Player: int }",
+							"default": "{}"
+						},
+
+						{
+							"name": "added_props",
+							"type": "{ Player: Property[] }",
+							"default": "{}"
+						},
+
+						{
+							"name": "removed_props",
+							"type": "{ Player: Property[] }",
+							"default": "{}"
+						},
+
+						{
+							"name": "card_drawn",
+							"type": "{ Deck: lambda }",
+							"default": "{}"
+						},
+
+						{
+							"name": "card_replaced",
+							"type": "{ Deck: lambda }",
+							"default": "{}"
+						},
+
+						{
+							"name": "change_in_jail_moves",
+							"type": "{ Player: int }",
+							"default": "{}"
+						},
+
+						{
+							"name": "change_in_jail_free_count",
+							"type": "{ Player: int }",
+							"default": "{}"
+						},
+
+						{
+							"name": "is_in_game",
+							"type": "{ Player: boolean }",
+							"default": "{}"
+						},
+
+						{
+							"name": "change_in_houses",
+							"type": "{ ColorProperty: int }",
+							"default": "{}"
+						},
+
+						{
+							"name": "change_in_houses_remaining",
+							"type": "int",
+							"deafult": "0"
+						},
+
+						{
+							"name": "change_in_hotels_remaining",
+							"type": "int",
+							"deafult": "0"
+						},
+
+						{
+							"name": "is_mortgaged",
+							"type": "{ Property: boolean }",
+							"default": "{}"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Initializes this GameStateChange from the dictionaries provided. Note that a client should never initialize a GameStateChange from its __init__(). It should use one of the provided static methods, as they are the only legal GameStateChanges"
+				}
+
+			]
+		},
+
+		{
+			"category": "Getters",
+			"methods": [
+
+				{
+					"name": "change_in_cash()",
+					"arguments": [],
+					"returnType": "{ Player: int }",
+					"access": "Public",
+					"description": "Returns this instance's change_in_cash dictionary"
+				},
+
+				{
+					"name": "new_position()",
+					"arguments": [],
+					"returnType": "{ Player: int }",
+					"access": "Public",
+					"description": "Returns this instance's new_position dictionary"
+				},
+
+				{
+					"name": "added_props()",
+					"arguments": [],
+					"returnType": "{ Player: Property[] }",
+					"access": "Public",
+					"description": "Returns this instance's added_props dictionary"
+				},
+
+				{
+					"name": "removed_props()",
+					"arguments": [],
+					"returnType": "{ Player: Property[] }",
+					"access": "Public",
+					"description": "Returns this instance's removed_props dictionary"
+				},
+
+				{
+					"name": "card_drawn()",
+					"arguments": [],
+					"returnType": "{ Deck: lambda }",
+					"access": "Public",
+					"description": "Returns this instance's card_drawn dictionary"
+				},
+
+				{
+					"name": "card_replaced()",
+					"arguments": [],
+					"returnType": "{ Deck: lambda }",
+					"access": "Public",
+					"description": "Returns this instance's card_replaced dictionary"
+				},
+
+				{
+					"name": "change_in_jail_moves()",
+					"arguments": [],
+					"returnType": "{ Player: int }",
+					"access": "Public",
+					"description": "Returns this instance's change_in_jail_moves dictionary"
+				},
+
+				{
+					"name": "change_in_jail_free_count()",
+					"arguments": [],
+					"returnType": "{ Player: int }",
+					"access": "Public",
+					"description": "Returns this instance's change_in_jail_free_count dictionary"
+				},
+
+				{
+					"name": "is_in_game()",
+					"arguments": [],
+					"returnType": "{ Player: boolean }",
+					"access": "Public",
+					"description": "Returns this instance's is_in_game dictionary"
+				},
+
+				{
+					"name": "change_in_houses()",
+					"arguments": [],
+					"returnType": "{ ColorProperty: int }",
+					"access": "Public",
+					"description": "Returns this instance's change_in_houses dictionary"
+				},
+
+				{
+					"name": "change_in_houses_remaining()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's change_in_houses_remaining"
+				},
+
+				{
+					"name": "change_in_hotels_remaining()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns this instance's change_in_hotels_remaining"
+				},
+
+				{
+					"name": "is_mortgaged()",
+					"arguments": [],
+					"returnType": "{ Property: boolean }",
+					"access": "Public",
+					"description": "Returns this instance's is_mortgaged dictionary"
+				}
+
+			]
+		},
+
+		{
+			"category": "Setters",
+			"methods": []
+		},
+
+		{
+			"category": "Static",
+			"methods": [
+
+				{
+					"name": "transfer_money()",
+					"arguments": [
+						{
+							"name": "player_from",
+							"type": "Player"
+						},
+
+						{
+							"name": "player_to",
+							"type": "Player"
+						},
+
+						{
+							"name": "amount",
+							"type": "int"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Returns a GameStateChange that transfers the given amount of money from one Player to another"
+				},
+
+				{
+					"name": "transfer_property()",
+					"arguments": [
+						{
+							"name": "player_from",
+							"type": "Player"
+						},
+
+						{
+							"name": "player_to",
+							"type": "Player"
+						},
+
+						{
+							"name": "prop",
+							"type": "Property"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Returns a GameStateChange that transfers the given Property from one Player to another"
+				},
+
+				{
+					"name": "buy_property()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
+							"name": "prop",
+							"type": "Property"
+						},
+
+						{
+							"name": "bank",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Returns a GameStateChange that purchases the given Property for the given Player"
+				},
+
+				{
+					"name": "change_position()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
+							"name": "new_position",
+							"type": "int"
+						},
+
+						{
+							"name": "bank",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Returns a GameStateChange that moves the given Player to the given position (index on the board). Uses the bank to pay the Player money if they pass Go"
+				},
+
+				{
+					"name": "mortgage()",
+					"arguments": [
+						{
+							"name": "prop",
+							"type": "Property"
+						},
+
+						{
+							"name": "bank",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Returns a GameStateChange that mortgages the given property. Uses the bank to give the owner mortgage money"
+				},
+
+				{
+					"name": "unmortgage()",
+					"arguments": [
+						{
+							"name": "prop",
+							"type": "Property"
+						},
+
+						{
+							"name": "bank",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Returns a GameStateChange that unmortgages the given property. Uses the bank so the Player can repay the mortgage money"
+				},
+
+				{
+					"name": "build()",
+					"arguments": [
+						{
+							"name": "prop",
+							"type": "ColorProperty"
+						},
+
+						{
+							"name": "bank",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Returns a GameStateChange that builds one house/hotel on the given ColorProperty"
+				},
+
+				{
+					"name": "demolish()",
+					"arguments": [
+						{
+							"name": "prop",
+							"type": "ColorProperty"
+						},
+
+						{
+							"name": "bank",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Returns a GameStateChange that demolishes one house/hotel on the given ColorProperty"
+				},
+
+				{
+					"name": "draw_card()",
+					"arguments": [
+						{
+							"name": "deck",
+							"type": "Deck"
+						},
+
+						{
+							"name": "player",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Returns a GameStateChange that draws a card from the top of the given Deck, and replaces it if it is not the 'Get out of jail free' card. If it is, it does not replace it, but rather increments the given Player's count of 'Get out of jail free' cards"
+				},
+
+				{
+					"name": "decrement_jail_card_count()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
+							"name": "deck",
+							"type": "Deck"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Removes one 'Get out of jail free' card from the given Player's hand and replaces the card on the given Deck"
+				},
+
+				{
+					"name": "send_to_jail()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Sends the given Player to jail and keeps them there for 3 moves (unless they later get out by rolling doubles, paying the fee, or using a 'Get out of jail free' card"
+				},
+
+				{
+					"name": "decrement_in_jail_moves()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "If the given Player is in jail, decrements the number of moves the Player still has before he can leave jail"
+				},
+
+				{
+					"name": "leave_jail()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Immediately lets the given Player out of jail (often a result of rolling doubles, paying the fee, or using a 'Get out of jail free' card"
+				},
+
+				{
+					"name": "eliminate()",
+					"arguments": [
+						{
+							"name": "player_eliminated",
+							"type": "Player"
+						},
+
+						{
+							"name": "player_eliminator",
+							"type": "Player"
+						}
+					],
+					"returnType": "GameStateChange",
+					"access": "Public",
+					"description": "Eliminates the given Player from the game, demolishing all houses on his color properties and transferring all of his belongings to the eliminator Player"
+				}
+
+			]
+		},
+
+		{
+			"category": "Other",
+			"methods": []
+		}
+
+	],
+
+	"subclasses": []
+
 }

@@ -1,0 +1,139 @@
+{
+	"name": "Card",
+
+	"description": "Represents a square on which players draw cards. A Card can represent Chance square or Community Chest square.",
+
+	"constants": [
+
+		{
+			"name": "CHANCE_CARD",
+			"type": "boolean",
+			"description": "Boolean choice 0 represents a chance card"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_CARD",
+			"type": "boolean",
+			"description": "Boolean choice 1 represents a community chest card"
+		},
+
+		{
+			"name": "CHANCE_PER_HOUSE_FEE",
+			"type": "int",
+			"description": "Fee charged by the chance building card per house built"
+		},
+
+		{
+			"name": "CHANCE_PER_HOTEL_FEE",
+			"type": "int",
+			"description": "Fee charged by the chance building card per hotel built"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_PER_HOUSE_FEE",
+			"type": "int",
+			"description": "Fee charged by the community chest building card per house built"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_PER_HOTEL_FEE",
+			"type": "int",
+			"description": "Fee charged by the community chest building card per hotel built"
+		},
+
+		{
+			"name": "LMBDA_GET_OUT_OF_JAIL_FREE",
+			"type": "lambda",
+			"description": "The lambda executed upon drawing the 'Get out of jail free' card'"
+		}
+
+	],
+
+	"instanceVariables": [
+
+		{
+			"name": "_card_type",
+			"type": "boolean",
+			"description": "Denotes whether this card is a chance card or a community chest card"
+		}
+
+	],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": [
+
+				{
+					"name": "__init__()",
+					"arguments": [
+						{
+							"name": "name",
+							"type": "String"
+						},
+
+						{
+							"name": "card_type",
+							"type": "boolean"
+						}
+					],
+					"returnType": "Card",
+					"access": "Public",
+					"description": "Initializes a card of the given type, where the constants CHANCE_CARD and COMMUNITY_CHEST_CARD can be used to denote the type"
+				}
+
+			]
+		},
+
+		{
+			"category": "Getters",
+			"methods": []
+		},
+
+		{
+			"category": "Setters",
+			"methods": []
+		},
+
+		{
+			"category": "Static",
+			"methods": []
+		},
+
+		{
+			"category": "Other",
+			"methods": [
+
+				{
+					"name": "landed()",
+					"arguments": [
+						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
+							"name": "roll",
+							"type": "int"
+						},
+
+						{
+							"name": "state",
+							"type": "GameState"
+						}
+					],
+					"returnType": "GroupOfChanges",
+					"access": "Public",
+					"overrides": "Square.landed()",
+					"description": "Returns the GroupOfChanges resulting from the Player's landing on this Card"
+				}
+
+			]
+		}
+
+	],
+
+	"subclasses": []
+
+}
