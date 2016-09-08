@@ -1,4 +1,5 @@
 import random
+from gamestate import GameState
 
 class Roll(object):
 
@@ -55,7 +56,7 @@ class Engine(object):
 
 		cmd = raw_input('')
 		if cmd == 'state':
-			print self._state
+			print str(self._state)
 
 	def _notify_all(self):
 		changes = []
@@ -70,7 +71,8 @@ class Engine(object):
 	def _completed(self):
 		remaining = 0
 		for player in self._state.players:
-			remaining += 1 if player.is_in_game
+			 if player.is_in_game:
+			 	remaining += 1
 
 		return remaining <= 1
 

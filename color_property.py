@@ -1,11 +1,8 @@
-from property import Property
+from prop import Property
 from groupofchanges import GroupOfChanges
 
 class ColorProperty(Property):
-	# Constants
-	NUM_HOUSES_BEFORE_HOTEL = 4
-
-	def __init__(self, name, price, rents, property_group, size_of_property_group, mortgaged=False, house_price, num_houses=0):
+	def __init__(self, name, price, rents, property_group, size_of_property_group, mortgaged=False, house_price=0, num_houses=0):
 		super(ColorProperty, self).__init__(name, price, rents, property_group, size_of_property_group, mortgaged)
 		self._num_houses = num_houses
 		self._house_price = house_price

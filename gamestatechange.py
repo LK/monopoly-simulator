@@ -14,6 +14,7 @@ from gamestate import GameState
 from gotojail import GoToJail
 from color_property import ColorProperty
 from card import Card
+from constants import *
 
 class GameStateChange(object):
 	def __init__(self, change_in_cash={}, new_position={}, added_props={}, removed_props={}, card_drawn={}, card_replaced={}, change_in_jail_moves={}, change_in_jail_free_count={}, is_in_game={}, change_in_houses={}, change_in_houses_remaining=0, change_in_hotels_remaining=0, is_mortgaged={}, description=''):
@@ -173,7 +174,7 @@ class GameStateChange(object):
 		return GameStateChange(added_props={ player_to: [prop] }, removed_props={ player_from: [prop] }, description=player_from.name + ' transferred ' + prop.name + ' to ' + player_to.name)
 
 	@staticmethod
-	def buy_property(player, prop, mortgaged=False, bank):
+	def buy_property(player, prop, mortgaged=False, bank=None):
 		transfer_money = transfer_money(player, bank, prop.price)
 		transfer_property = transfer_property(bank, player, prop)
 		return GameStateChange(change_in_cash=transfer_money.change_in_cash, added_props=transfer_property.added_props, removed_props=transfer_property.removed_props, is_mortgaged={ prop: mortgaged }, description=player_from.name + ' purchased ' + prop.name + ' (mortgaged)' if mortgaged else '')
@@ -181,10 +182,10 @@ class GameStateChange(object):
 	@staticmethod
 	def change_position(player, new_position, bank):
 		max_roll = 12
-		if player.position >= (Square.INDEX[Square.GO] - max_roll) % GameState.NUM_SQUARES and new_position < (Square.INDEX[Square.GO] - max_roll) % GameState.NUM_SQUARES:
-			return GameStateChange(new_position={ player: new_position }, change_in_cash:{ player: +200, bank: -200 }, description=player.name + ' moved to ' + str(new_position))
+		if player.position >= (Square.INDEX[Square.GO] - max_roll) % NUM_SQUARES and new_position < (Square.INDEX[Square.GO] - max_roll) % NUM_SQUARES:
+			return GameStateChange(new_position={ player: new_position }, change_in_cash={ player: +200, bank: -200 }, description=player.name + ' moved to ' + str(new_position))
 		else:
-			return GameStateChange(new_position={ player: new_position }, description=player.name + ' moved to ' + str(new_position), ' passing GO')
+			return GameStateChange(new_position={ player: new_position }, description=player.name + ' moved to ' + str(new_position) + ' passing GO')
 
 	 # TODO: Need to get a reference to player (owner of property) for mortgage(),
 	 # unmortgage(), build_house(), build_hotel(), demolish_house(),

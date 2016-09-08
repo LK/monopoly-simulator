@@ -1,5 +1,4 @@
-from property import Property
-from gamestatechange import GameStateChange
+from prop import Property
 from groupofchanges import GroupOfChanges
 from square import Square
 

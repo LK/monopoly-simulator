@@ -8,16 +8,6 @@ from groupofchanges import GroupOfChanges
 
 class Card(Square):
 
-	# Constants
-	CHANCE_CARD = True
-	COMMUNITY_CHEST_CARD = not CHANCE_CARD
-	CHANCE_PER_HOUSE_FEE = 25
-	CHANCE_PER_HOTEL_FEE = 100
-	COMMUNITY_CHEST_PER_HOUSE_FEE = 40
-	COMMUNITY_CHEST_PER_HOTEL_FEE = 115
-
-
-
 	# Chance and community chest functions
 	@staticmethod
 	def _advance_to_square(player, square_indaex, roll, state):
@@ -202,11 +192,6 @@ class Card(Square):
 	def _pay_building_fees_community_chest(player, state):
 		return _pay_building_fees(player, state, COMMUNITY_CHEST_PER_HOUSE_FEE,
 			COMMUNITY_CHEST_PER_HOTEL_FEE)
-
-
-
-	# These functions make lists of lambdas for the above functions
-	LMBDA_GET_OUT_OF_JAIL_FREE = lambda player, state: _get_out_of_jail_free(player, state)
 
 	@staticmethod
 	def make_chance_functions():

@@ -1,9 +1,8 @@
 from collections import Counter
 
 class Player(object):
-	# TODO: Proper default decision maker
 	# TODO: Initialize property_group_counts so that each property group maps to a count of 0
-	def __init__(self, position=0, cash=1500, props=[], property_group_counts={}, decision_maker=None, jail_free_count=0, jail_moves=0, is_in_game=True, name=''):
+	def __init__(self, position=0, cash=1500, props=[], property_group_counts={}, decision_maker=DefaultDecisionMaker(), jail_free_count=0, jail_moves=0, is_in_game=True, name=''):
 		self._position					= position
 		self._cash 							= cash
 		self._decision_maker		= decision_maker
