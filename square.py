@@ -5,7 +5,7 @@ class Square(object):
 		self._name = name
 
 	def landed(self, player, roll, state):
-		raise Exception("landed() called from an instance of Square")
+		raise NotImplementedError("landed() called from an instance of Square")
 
 	@property
 	def name(self):

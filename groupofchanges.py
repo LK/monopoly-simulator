@@ -20,7 +20,7 @@ class GroupOfChanges(object):
 
 	# Concatenates a list of GroupOfChanges objects, returns a new GroupOfChanges
 	@staticmethod
-	def combine(self, groups_of_changes):
+	def combine(groups_of_changes):
 		combined_group_of_changes = []
 		for group_of_changes in groups_of_changes:
 			combined_group_of_changes += group_of_changes
@@ -29,12 +29,28 @@ class GroupOfChanges(object):
 	def houses_built(self):
 		houses = 0
 		for change in self._changes:
-			houses -= change.change_in_houses_remaining
+			if change.change_in_houses_remaining < 0:
+				houses += -change.change_in_houses_remaining
 
 		return houses
 
 	def hotels_built(self):
 		hotels = 0
 		for change in self._changes:
-			hotels -= change.change_in_hotels_remaining
+			if change.change_in_hotels_remaining < 0:
+				hotels += -change.change_in_hotels_remaining
+		return hotels
+
+	def houses_demolished(self):
+		houses = 0
+		for change in self._changes:
+			if change.change_in_houses_remaining > 0:
+				houses += change.change_in_houses_remaining
+		return houses
+
+	def hotels_demolished(self):
+		hotels = 0
+		for change in self._changes:
+			if change.change_in_hotels_remaining > 0:
+				hotels += change.change_in_hotels_remaining
 		return hotels

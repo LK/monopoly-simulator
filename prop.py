@@ -54,4 +54,4 @@ class Property(Square):
 		self._mortgaged = mortgaged
 
 	def landed(self, player, roll, state):
-		raise Exception("landed() called from an instance of Property")
+		raise NotImplementedError("landed() called from an instance of Property")

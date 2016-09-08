@@ -27,10 +27,10 @@ class BuildingRequests(object):
 		self._hotel_demolitions = hotel_demolitions
 
 		# Calculate integer quantities of houses/hotels built and demolished
-		self._houses_built 			= len(self._house_builds)
-		self._hotels_built			= len(self._hotel_builds)
-		self._houses_demolished = len(self._house_demolitions)
-		self._hotels_demolished = len(self._hotel_demolitions)
+		self._houses_built 			= self._house_builds.houses_built
+		self._hotels_built			= self._hotel_builds.hotels_built
+		self._houses_demolished = self._house_demolitions.houses_demolished
+		self._hotels_demolished = self._hotel_demolitions.hotels_demolished
 
 	# Getters
 

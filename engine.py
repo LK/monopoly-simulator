@@ -3,6 +3,7 @@ from gamestate import GameState
 from roll import Roll
 from groupofchanges import GroupOfChanges
 from gamestatechange import GameStateChange
+from housingresolver import HousingResolver
 from constants import *
 
 class Engine(object):
@@ -47,14 +48,13 @@ class Engine(object):
 			print str(self._state)
 
 	def _notify_all(self):
-		changes = []
+		player_building_requests = {}
 		for player in self._state.players:
 			notification_changes = player.respond_to_state(self._state)
-			changes.append(notification_changes)
-			self._state.apply(notification_changes.other_changes)
+			self._state.apply(notification_changes.non_building_changes)
+			player_building_requests[player] = notification_changes.building_requests
 
-		building_requests = [change.building_requests for change in changes]
-		HousingResolver(building_requests, self._state)
+		HousingResolver(player_building_requests, self._state)
 
 	def _completed(self):
 		remaining = 0

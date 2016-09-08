@@ -79,6 +79,38 @@
 					"returnType": "Iterator",
 					"access": "Public",
 					"description": "Returns an Iterator that iterates over the internal list of GameStateChanges in the order of the list"
+				},
+
+				{
+					"name": "houses_built()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns the total number of houses built in this GroupOfChanges"
+				},
+
+				{
+					"name": "hotels_built()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns the total number of hotels built in this GroupOfChanges"
+				},
+
+				{
+					"name": "houses_demolished()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns the total number of houses demolished in this GroupOfChanges"
+				},
+
+				{
+					"name": "hotels_demolished()",
+					"arguments": [],
+					"returnType": "int",
+					"access": "Public",
+					"description": "Returns the total number of hotels demolished in this GroupOfChanges"
 				}
 
 			]
