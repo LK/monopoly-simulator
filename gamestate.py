@@ -81,9 +81,10 @@ class GameState(object):
 	def decks(self):
 		return self._decks
 	
-
-
 	# Other
+	def get_property_group(self, prop_group):
+		return [square if isinstance(square, Property) and square.property_group == prop_group for square in self.squares]
+
 	def get_owner(self, prop):
 		for player in self._players:
 			for p in player.props:

@@ -158,6 +158,19 @@
 			"methods": [
 
 				{
+					"name": "get_property_group()",
+					"arguments": [
+						{
+							"name": "prop_group",
+							"type": "int"
+						}
+					],
+					"returnType": "Property[]",
+					"access": "Public",
+					"description": "Returns an array of properties that belong to the indicated property group."
+				},
+
+				{
 					"name": "get_owner()",
 					"arguments": [
 						{

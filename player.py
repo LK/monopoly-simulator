@@ -20,8 +20,6 @@ class Player(object):
 	def copy(self):
 		return Player(position=self._position, cash=self._cash, props=self._props, property_group_counts=self._property_group_counts, decision_maker=self._decision_maker, jail_free_count=self._jail_free_count, jail_moves=self._jail_moves, is_in_game=self._is_in_game)
 
-
-
 	# Getters
 
 	@property
@@ -56,7 +54,6 @@ class Player(object):
 	def is_in_game(self):
 		return self._is_in_game
 
-	
 
 	# Setters
 	

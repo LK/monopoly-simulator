@@ -27,11 +27,20 @@ class Engine(object):
 		player = self._state.players[random.randint(0,num_players-1)]
 		while not self._completed():
 			roll = Roll()
+			if player.jail_moves > 0 and roll.is_doubles:
+				self._state.apply(GroupOfChanges(changes=[GameStateChange.leave_jail(player)]))
+			elif player.jail_moves >= 2:
+				self._state.apply(GroupOfChanges(changes=[GameStateChange.decrement_in_jail_moves(player)]))
+			elif player.jail_moves == 1:
+				pay_changes = player.pay(state.bank, 50, self._state)
+				leave_changes = GroupOfChanges(changes=[GameStateChange.decrement_in_jail_moves(player)])
+				self._state.apply(GroupOfChanges.combine([pay_changes, leave_changes]))
+
 			num_rolls = 0
 			while roll.is_doubles:
 				num_rolls += 1
 				if num_rolls > max_rolls:
-					self._state.apply(GroupOfChanges([GameStateChange.send_to_jail(player)]))
+					self._state.apply(GroupOfChanges(changes=[GameStateChange.send_to_jail(player)]))
 					break
 				self._take_turn(player, roll.value)
 				roll = Roll()
