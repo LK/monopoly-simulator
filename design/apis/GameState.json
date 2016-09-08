@@ -6,23 +6,6 @@
 
 	"constants": [
 
-		{
-			"name": "NUM_HOUSES",
-			"type": "int",
-			"description": "The total number of houses available on the market"
-		},
-
-		{
-			"name": "NUM_HOTELS",
-			"type": "int",
-			"description": "The total number of hotels available on the market"
-		},
-
-		{
-			"name": "NUM_SQUARES",
-			"type": "int",
-			"description": "The number of Squares on the board"
-		}
 
 	],
 

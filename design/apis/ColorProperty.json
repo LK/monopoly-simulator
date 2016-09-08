@@ -5,11 +5,7 @@
 
 	"constants": [
 
-		{
-			"name": "NUM_HOUSES_BEFORE_HOTEL",
-			"type": "int",
-			"description": "The number of houses a Player must build before upgrading to a hotel"
-		}
+		
 
 	],
 

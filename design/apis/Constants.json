@@ -1,0 +1,382 @@
+{
+	"name": "Constants",
+
+	"description": "This file contains all the constants used throughout the classes in the project.",
+
+	"constants": [
+
+		{
+			"name": "CHANCE_CARD",
+			"type": "boolean",
+			"description": "Boolean choice 0 represents a chance card"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_CARD",
+			"type": "boolean",
+			"description": "Boolean choice 1 represents a community chest card"
+		},
+
+		{
+			"name": "CHANCE_PER_HOUSE_FEE",
+			"type": "int",
+			"description": "Fee charged by the chance building card per house built"
+		},
+
+		{
+			"name": "CHANCE_PER_HOTEL_FEE",
+			"type": "int",
+			"description": "Fee charged by the chance building card per hotel built"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_PER_HOUSE_FEE",
+			"type": "int",
+			"description": "Fee charged by the community chest building card per house built"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_PER_HOTEL_FEE",
+			"type": "int",
+			"description": "Fee charged by the community chest building card per hotel built"
+		},
+
+		{
+			"name": "LMBDA_GET_OUT_OF_JAIL_FREE",
+			"type": "lambda",
+			"description": "The lambda executed upon drawing the 'Get out of jail free' card'"
+		},
+
+		{
+			"name": "NUM_HOUSES_BEFORE_HOTEL",
+			"type": "int",
+			"description": "The number of houses a Player must build before upgrading to a hotel"
+		},
+
+		{
+			"name": "NUM_HOUSES",
+			"type": "int",
+			"description": "The total number of houses available on the market"
+		},
+
+		{
+			"name": "NUM_HOTELS",
+			"type": "int",
+			"description": "The total number of hotels available on the market"
+		},
+
+		{
+			"name": "NUM_SQUARES",
+			"type": "int",
+			"description": "The number of Squares on the board"
+		},
+
+		{
+			"name": "INDEX",
+			"type": "{ String: int }",
+			"description": "A dictionary that maps square names to their indices on the board"
+		},
+
+		{
+			"name": "MEDITERRANEAN_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Mediterranean Avenue' Square"
+		},
+
+		{
+			"name": "BALTIC_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Baltic Avenue' Square"
+		},
+
+		{
+			"name": "ORIENTAL_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Oriental Avenue' Square"
+		},
+
+		{
+			"name": "VERMONT_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Vermont Avenue' Square"
+		},
+
+		{
+			"name": "CONNECTICUT_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Connecticut Avenue' Square"
+		},
+
+		{
+			"name": "ST_CHARLES_PLACE",
+			"type": "String",
+			"description": "String representation of the 'St. Charles Place' Square"
+		},
+
+		{
+			"name": "STATES_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'State Avenue' Square"
+		},
+
+		{
+			"name": "VIRGINIA_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Virginia Avenue' Square"
+		},
+
+		{
+			"name": "ST_JAMES_PLACE",
+			"type": "String",
+			"description": "String representation of the 'St. James Place' Square"
+		},
+
+		{
+			"name": "TENNESSEE_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Tennessee Avenue' Square"
+		},
+
+		{
+			"name": "NEW_YORK_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'New York Avenue' Square"
+		},
+
+		{
+			"name": "KENTUCKY_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Kentucky Avenue' Square"
+		},
+
+		{
+			"name": "INDIANA_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Indiana Avenue' Square"
+		},
+
+		{
+			"name": "ILLINOIS_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Illinois Avenue' Square"
+		},
+
+		{
+			"name": "ATLANTIC_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Atlantic Avenue' Square"
+		},
+
+		{
+			"name": "VENTNOR_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Ventnor Avenue' Square"
+		},
+
+		{
+			"name": "MARVIN_GARDENS",
+			"type": "String",
+			"description": "String representation of the 'Marvin Gardens' Square"
+		},
+
+		{
+			"name": "PACIFIC_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Pacific Avenue' Square"
+		},
+
+		{
+			"name": "NORTH_CAROLINA_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'North Carolina Avenue' Square"
+		},
+
+		{
+			"name": "PENNSYLVANIA_AVENUE",
+			"type": "String",
+			"description": "String representation of the 'Pennsylvania Avenue' Square"
+		},
+
+		{
+			"name": "PARK_PLACE",
+			"type": "String",
+			"description": "String representation of the 'Park Place' Square"
+		},
+
+		{
+			"name": "BOARDWALK",
+			"type": "String",
+			"description": "String representation of the 'Boardwalk' Square"
+		},
+
+		{
+			"name": "READING_RAILROAD",
+			"type": "String",
+			"description": "String representation of the 'Reading Railroad' Square"
+		},
+
+		{
+			"name": "PENNSYLVANIA_RAILROAD",
+			"type": "String",
+			"description": "String representation of the 'Pennsylvania Railroad' Square"
+		},
+
+		{
+			"name": "B_AND_O_RAILROAD",
+			"type": "String",
+			"description": "String representation of the 'B. & O. Railroad' Square"
+		},
+
+		{
+			"name": "SHORT_LINE_RAILROAD",
+			"type": "String",
+			"description": "String representation of the 'Short Line Railroad' Square"
+		},
+
+		{
+			"name": "ELECTRIC_COMPANY",
+			"type": "String",
+			"description": "String representation of the 'Electric Company' Square"
+		},
+
+		{
+			"name": "WATER_WORKS",
+			"type": "String",
+			"description": "String representation of the 'Water Works' Square"
+		},
+
+		{
+			"name": "GO",
+			"type": "String",
+			"description": "String representation of the 'Go' Square"
+		},
+
+		{
+			"name": "JAIL",
+			"type": "String",
+			"description": "String representation of the 'Jail' Square"
+		},
+
+		{
+			"name": "FREE_PARKING",
+			"type": "String",
+			"description": "String representation of the 'Free Parking' Square"
+		},
+
+		{
+			"name": "GO_TO_JAIL",
+			"type": "String",
+			"description": "String representation of the 'Go To Jail' Square"
+		},
+
+		{
+			"name": "CHANCE_1",
+			"type": "String",
+			"description": "String representation of the 'Chance' Square"
+		},
+
+		{
+			"name": "CHANCE_2",
+			"type": "String",
+			"description": "String representation of the 'Chance' Square"
+		},
+
+		{
+			"name": "CHANCE_3",
+			"type": "String",
+			"description": "String representation of the 'Chance' Square"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_1",
+			"type": "String",
+			"description": "String representation of the 'Community Chest' Square"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_2",
+			"type": "String",
+			"description": "String representation of the 'Community Chest' Square"
+		},
+
+		{
+			"name": "COMMUNITY_CHEST_3",
+			"type": "String",
+			"description": "String representation of the 'Community Chest' Square"
+		},
+
+		{
+			"name": "INCOME_TAX",
+			"type": "String",
+			"description": "String representation of the 'Income Tax' Square"
+		},
+
+		{
+			"name": "LUXURY_TAX",
+			"type": "String",
+			"description": "String representation of the 'Luxury Tax' Square"
+		}
+
+	],
+
+	"instanceVariables": [
+
+		
+
+	],
+
+	"methodCategories": [
+
+		{
+			"category": "Constructors",
+			"methods": [
+
+				
+
+			]
+
+		},
+
+		{
+			"category": "Getters",
+			"methods": [
+
+				
+				
+			]
+
+		},
+
+		{
+			"category": "Setters",
+			"methods": [
+
+				
+				
+			]
+
+		},
+
+		{
+			"category": "Static",
+			"methods": [
+
+				
+				
+			]
+
+		},
+
+		{
+			"category": "Other",
+			"methods": [
+
+				
+				
+			]
+
+		}
+
+	]
+
+}

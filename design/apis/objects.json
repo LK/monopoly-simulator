@@ -2,6 +2,7 @@
 	"BuildingRequests",
 	"Card",
 	"ColorProperty",
+	"Constants",
 	"DecisionMaker",
 	"Deck",
 	"Engine",
