@@ -2,7 +2,7 @@ from square import Square
 from deck import Deck
 from gamestatechange import GameStateChange
 from gotojail import GoToJail
-from engine import Engine
+from roll import Roll
 from groupofchanges import GroupOfChanges
 from constants import *
 
@@ -105,7 +105,7 @@ class Card(Square):
 		water_works 			= INDEX[WATER_WORKS]
 		nearest_utility 	= nearest_to(player.position, [electric_company,
 			water_works])
-		roll = Engine.roll()
+		roll = Roll().value
 		return _advance_to_square(player, nearest_utility, roll, state)  # TODO: Always make rent roll x 10
 
 	@staticmethod
