@@ -40,7 +40,7 @@
 						{
 							"name": "building_requests",
 							"type": "BuildingRequests",
-							"default": "[]"
+							"default": "BuildingRequests()"
 						}
 					],
 					"returnType": "Engine",

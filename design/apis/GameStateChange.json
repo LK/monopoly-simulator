@@ -440,6 +440,11 @@
 						},
 
 						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
 							"name": "bank",
 							"type": "Player"
 						}
@@ -455,6 +460,11 @@
 						{
 							"name": "prop",
 							"type": "ColorProperty"
+						},
+
+						{
+							"name": "player",
+							"type": "Player"
 						},
 
 						{

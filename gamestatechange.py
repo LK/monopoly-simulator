@@ -192,7 +192,7 @@ class GameStateChange(object):
 		return GameStateChange(is_mortgaged={ prop: False }, change_in_cash={ player: (-prop.price / 2) * 1.1, bank: (prop.price / 2) * 1.1 })
 	
 	@staticmethod
-	def build(prop, bank):
+	def build(prop, player, bank):
 		if prop.num_houses == ColorProperty.NUM_HOUSES_BEFORE_HOTEL:
 			# Build a hotel
 			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ player: -prop.house_price, bank: +prop.house_price }, change_in_houses_remaining=+ColorProperty.NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=-1)
@@ -201,7 +201,7 @@ class GameStateChange(object):
 			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ player: -prop.house_price, bank: +prop.house_price }, change_in_houses_remaining=-1)
 
 	@staticmethod
-	def demolish(prop, bank):
+	def demolish(prop, player, bank):
 		if prop.has_hotel():
 			# Demolish a hotel
 			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=-ColorProperty.NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=+1)
