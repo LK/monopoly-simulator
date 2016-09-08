@@ -213,7 +213,7 @@ class GameState(object):
 			for p in player.props:
 				if (p == prop):
 					return player
-		return None
+		return self._bank
 
 	def are_enough_houses(self, qty):
 		return self._houses_remaining - qty >= 0

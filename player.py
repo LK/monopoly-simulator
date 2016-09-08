@@ -142,7 +142,7 @@ class Player(object):
 	def buy_or_deny(self, prop, state):
 		return self.decision_maker.buy_or_deny(self, prop, state)
 
-	def pay(self, amount, state):
+	def pay(self, player, amount, state):
 		return self.decision_maker.pay(self, player, amount, state)
 
 	def bid_house_builds(self, highest_bid, props_to_build_on, state):
