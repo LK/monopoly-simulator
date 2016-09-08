@@ -175,10 +175,11 @@ class GameStateChange(object):
 		transfer_property = transfer_property(bank, player, prop)
 		return GameStateChange(change_in_cash=transfer_money.change_in_cash, added_props=transfer_property.added_props, removed_props=transfer_property.removed_props, is_mortgaged={ prop: mortgaged }, description=player_from.name + ' purchased ' + prop.name + ' (mortgaged)' if mortgaged else '')
 
+	# TODO: Remove argument 'squares' when we no longer need to print the square name out
 	@staticmethod
-	def change_position(player, new_position, bank):
+	def change_position(player, new_position, bank, squares):
 		max_roll = 12
-		description = player.name + ' moved to ' + str(new_position)
+		description = player.name + ' moved to ' + squares[new_position].name
 		if player.position >= (INDEX[GO] - max_roll) % NUM_SQUARES and new_position < (INDEX[GO] - max_roll) % NUM_SQUARES:
 			# Player passed GO
 			# TODO: Declare a constant for GO money (200)

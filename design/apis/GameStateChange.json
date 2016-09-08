@@ -408,6 +408,12 @@
 						{
 							"name": "bank",
 							"type": "Player"
+						},
+
+						{
+							"name": "squares",
+							"type": "Square[]",
+							"description": "THIS ARGUMENT IS TEMPORARY. The list of Squares from the current GameState. Used to write the name of the Player's new Square position in the description of the returned GameStateChange"
 						}
 					],
 					"returnType": "GameStateChange",

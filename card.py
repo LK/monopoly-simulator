@@ -11,7 +11,7 @@ class Card(Square):
 	# Chance and community chest functions
 	@staticmethod
 	def _advance_to_square(player, square_indaex, roll, state):
-		state.apply(GameStateChange.change_position(player, square_index))
+		state.apply(GameStateChange.change_position(player, square_index, state.bank, state.squares))
 		square = state.squares[square_index]
 		return square.landed(player, roll, state)
 
@@ -136,7 +136,7 @@ class Card(Square):
 
 	@staticmethod
 	def _go_back_three_spaces(player, state):
-		change_position = GameStateChange.change_position(player, player.position - 3)
+		change_position = GameStateChange.change_position(player, player.position - 3, state.bank, state.squares)
 		return GroupOfChanges([change_position])
 
 
