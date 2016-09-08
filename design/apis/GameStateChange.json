@@ -373,18 +373,25 @@
 					"name": "buy_property()",
 					"arguments": [
 						{
-							"name": "player",
-							"type": "Player"
-						},
-
-						{
 							"name": "prop",
 							"type": "Property"
 						},
 
 						{
+							"name": "player",
+							"type": "Player"
+						},
+
+						{
 							"name": "bank",
 							"type": "Player"
+						},
+
+						{
+							"name": "mortgaged",
+							"type": "boolean",
+							"description": "Indicates whether or not the given Player is buying the property mortgaged (True) or paying for it in full (False)",
+							"default": "False"
 						}
 					],
 					"returnType": "GameStateChange",

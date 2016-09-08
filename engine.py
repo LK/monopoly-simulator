@@ -14,8 +14,8 @@ class Engine(object):
 		num_players = len(self._state.players)
 		idx = random.randint(0,num_players-1)
 		while not self._completed():
-			cash = [player.cash for player in self._state.players]
-			print cash
+			# cash = [player.cash for player in self._state.players]
+			# print cash
 			player = self._state.players[idx]
 			idx = (idx + 1) % len(self._state.players)
 			roll = Roll()
@@ -50,9 +50,11 @@ class Engine(object):
 		self._state.apply(self._state.squares[position].landed(player, roll, self._state))
 		self._notify_all()
 
-		#cmd = raw_input('')
-		#if cmd == 'state':
-			#print str(self._state)
+		cmd = raw_input('')
+		if cmd == 'state':
+			print
+			print str(self._state)
+		print
 
 	def _notify_all(self):
 		player_building_requests = {}

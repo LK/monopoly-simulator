@@ -108,7 +108,7 @@ class Player(object):
 
 	# Adds the list of properties and updates the corresponding property group counts
 	def add_properties(self, added_properties):
-		self.props.extend(added_properties)
+		self._props += added_properties
 		for prop in added_properties:
 			self._property_group_counts[prop.property_group] += 1
 
@@ -123,16 +123,21 @@ class Player(object):
 
 	def __str__(self):
 		s = ""
+		s += self._name + "\n"
 		s += "Position: %d\n" % (self._position)
-		s += "Cash:     %d\n" % (self._cash)
+		s += "Cash: %d\n" % (self._cash)
+
 		s += "Props:\n"
 		for prop in self._props:
-			s += "\t" + str(prop) + "\n"
+			s += prop.name + ", "
+		s += "\n"
+
 		s += "Property group counts:\n"
 		for group, count in self._property_group_counts.iteritems():
-			s += "\t" + str(group) + ": " + str(count) + "\n"
+			s += str(group) + ": " + str(count) + "\n"
+
 		s += "Jail free count: %d\n" % (self._jail_free_count)
-		s += "Jail moves:      %d\n" % (self._jail_moves)
+		s += "Jail moves: %d\n" % (self._jail_moves)
 		s += "Is in game: " + str(self._is_in_game) + "\n"
 		return s
 

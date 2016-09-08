@@ -56,8 +56,8 @@ class ColorProperty(Property):
 
 	def __str__(self):
 		s = ""
-		s += "Name:       %s\n" % (self._name)
+		s += "Name: %s\n" % (self._name)
 		s += "Num houses: %d\n" % (self._num_houses)
-		s += "Mortgaged:  " + str(self._mortgaged) + "\n"
+		s += "Mortgaged: " + str(self._mortgaged) + "\n"
 		return s
 		

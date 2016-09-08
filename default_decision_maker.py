@@ -40,7 +40,7 @@ class DefaultDecisionMaker(object):
 	# Otherwise he passes
 	def buy_or_deny(self, player, prop, state):
 		if player.cash >= prop.price:
-			return GroupOfChanges(changes=[GameStateChange.buy_property(player, prop, False, state.bank)])
+			return GroupOfChanges(changes=[GameStateChange.buy_property(prop, player, state.bank)])
 		else:
 			return GroupOfChanges()
 

@@ -170,10 +170,15 @@ class GameStateChange(object):
 		return GameStateChange(added_props={ player_to: [prop] }, removed_props={ player_from: [prop] }, description=player_from.name + ' transferred ' + prop.name + ' to ' + player_to.name)
 
 	@staticmethod
-	def buy_property(player, prop, mortgaged=False, bank=None):
+	def buy_property(prop, player, bank, mortgaged=False):
 		transfer_money = GameStateChange.transfer_money(player, bank, prop.price)
 		transfer_property = GameStateChange.transfer_property(bank, player, prop)
-		return GameStateChange(change_in_cash=transfer_money.change_in_cash, added_props=transfer_property.added_props, removed_props=transfer_property.removed_props, is_mortgaged={ prop: mortgaged }, description='%s purchased %s%s' % (player.name, prop.name, ' (mortgaged)' if mortgaged else ''))
+		description = player.name + ' purchased ' + prop.name
+		if mortgaged:
+			description += ' mortgaged'
+		else:
+			description += ' in full'
+		return GameStateChange(change_in_cash=transfer_money.change_in_cash, added_props=transfer_property.added_props, removed_props=transfer_property.removed_props, is_mortgaged={ prop: mortgaged }, description=description)
 
 	# TODO: Remove argument 'squares' when we no longer need to print the square name out
 	@staticmethod
