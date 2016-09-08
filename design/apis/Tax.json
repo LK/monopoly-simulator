@@ -73,6 +73,15 @@
 					"access": "Public",
 					"overrides": "Square.landed()",
 					"description": "Returns the GroupOfChanges resulting from a Player's payment of the tax"
+				},
+
+				{
+					"name": "__str__()",
+					"arguments": [],
+					"returnType": "String",
+					"access": "Public",
+					"overrides": "Square.__str__()",
+					"description": "Returns a string representation of this Tax object"
 				}
 
 			]

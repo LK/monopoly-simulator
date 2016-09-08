@@ -516,6 +516,14 @@
 					"returnType": "void",
 					"access": "Public",
 					"description": "Communicates to this Player that he is no longer in the game. Does not take any further action; namely, no other objects in the game are aware of this Player's elimination after calling this method. They must check through the GameState"
+				},
+
+				{
+					"name": "__str__()",
+					"arguments": [],
+					"returnType": "String",
+					"access": "Public",
+					"description": "Returns a string representation of this Player"
 				}
 
 			]

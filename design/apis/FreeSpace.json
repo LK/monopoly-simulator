@@ -70,6 +70,15 @@
 					"access": "Public",
 					"overrides": "Square.landed()",
 					"description": "Returns the GroupOfChanges doing absolutely nothing"
+				},
+
+				{
+					"name": "__str__()",
+					"arguments": [],
+					"returnType": "String",
+					"access": "Public",
+					"overrides": "Square.__str__()",
+					"description": "Returns a string representation of this FreeSpace"
 				}
 
 			]

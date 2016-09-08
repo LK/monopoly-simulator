@@ -121,6 +121,20 @@ class Player(object):
 	def eliminate(self):
 		self._is_in_game = False
 
+	def __str__(self):
+		s = ""
+		s += "Position: %d\n" % (self._position)
+		s += "Cash:     %d\n" % (self._cash)
+		s += "Props:\n"
+		for prop in self._props:
+			s += "\t" + str(prop) + "\n"
+		s += "Property group counts:\n"
+		for group, count in self._property_group_counts.iteritems():
+			s += "\t" + str(group) + ": " + str(count) + "\n"
+		s += "Jail free count: %d\n" % (self._jail_free_count)
+		s += "Jail moves:      %d\n" % (self._jail_moves)
+		s += "Is in game: " + str(self._is_in_game) + "\n"
+		return s
 
 
 	# DecisionMaker interactions

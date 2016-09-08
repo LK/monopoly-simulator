@@ -151,3 +151,16 @@ class GameState(object):
 	def apply(self, changes):
 		for change in changes:
 			_apply_single_change(change)
+
+	def __str__(self):
+		s = ""
+		s += "Players:\n"
+		for player in self._players:
+			s += "\t" + str(player) + "\n"
+		s += "Squares:\n"
+		for square in self._squares:
+			s += "\t" + str(square) + "\n"
+		s += "Houses remaining: %d\n" % (self._houses_remaining)
+		s += "Hotels remaining: %d\n" % (self._hotels_remaining)
+		s += "Bank: " + str(bank) + "\n"
+		return s

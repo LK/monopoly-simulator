@@ -32,3 +32,9 @@ class NonColorProperty(Property):
 			return multiplier * roll
 		else:
 			return self.rents[num_owned]
+
+	def __str__(self):
+		s = ""
+		s += "Name:      %s\n" % (self._name)
+		s += "Mortgaged: " + str(self._mortgaged) + "\n"
+		return s

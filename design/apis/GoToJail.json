@@ -78,6 +78,15 @@
 					"access": "Public",
 					"overrides": "Square.landed()",
 					"description": "Returns the GroupOfChanges sending the given Player to jail"
+				},
+
+				{
+					"name": "__str__()",
+					"arguments": [],
+					"returnType": "String",
+					"access": "Public",
+					"overrides": "Square.__str__()",
+					"description": "Returns a string representation of this GoToJail object"
 				}
 
 			]

@@ -101,3 +101,7 @@ class Square(object):
 	@property
 	def name(self):
 		return self._name
+
+	def __str__(self):
+		s = "Name: %s\n" % (self._name)
+		return s

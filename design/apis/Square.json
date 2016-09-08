@@ -330,6 +330,14 @@
 					"returnType": "GroupOfChanges",
 					"access": "Public",
 					"description": "Returns a GroupOfChanges corresponding to the action required when the given Player lands on this Square. Implemented in subclasses. Note that this should never be called by a direct instance of Square; it should only be called by an instance of one of its subclasses"
+				},
+
+				{
+					"name": "__str__()",
+					"arguments": [],
+					"returnType": "String",
+					"access": "Public",
+					"description": "Returns a string representation of this Square"
 				}
 
 			]
