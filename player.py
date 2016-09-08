@@ -3,7 +3,7 @@ from collections import Counter
 class Player(object):
 	# TODO: Proper default decision maker
 	# TODO: Initialize property_group_counts so that each property group maps to a count of 0
-	def __init__(self, position=0, cash=1500, props=[], property_group_counts={}, decision_maker=None, jail_free_count=0, jail_moves=0, is_in_game=True):
+	def __init__(self, position=0, cash=1500, props=[], property_group_counts={}, decision_maker=None, jail_free_count=0, jail_moves=0, is_in_game=True, name=''):
 		self._position					= position
 		self._cash 							= cash
 		self._decision_maker		= decision_maker
@@ -11,6 +11,7 @@ class Player(object):
 		self._jail_moves				= jail_moves
 		self._is_in_game				= is_in_game
 		self._props 						= props
+		self._name 							= name
 
 		# Compute property group count
 		groups = [prop.property_group for prop in props]
@@ -54,6 +55,10 @@ class Player(object):
 	def is_in_game(self):
 		return self._is_in_game
 
+	@property
+	def name(self):
+		return self._name
+	
 
 	# Setters
 	
@@ -123,7 +128,7 @@ class Player(object):
 	def buy_or_deny(self, prop, state):
 		return self.decision_maker.buy_or_deny(self, prop, state)
 
-	def pay(self, player, amount, state):
+	def pay(self, amount, state):
 		return self.decision_maker.pay(self, player, amount, state)
 
 	def bid_house_builds(self, highest_bid, props_to_build_on, state):

@@ -53,6 +53,12 @@
 			"name": "_is_in_game",
 			"type": "boolean",
 			"description": "The in-game status of this Player. True if this Player is still in the game, False if he went bankrupt"
+		},
+
+		{
+			"name": "_name",
+			"type": "string",
+			"description": "The name of the player"
 		}
 
 	],
@@ -112,6 +118,12 @@
 							"name": "is_in_game",
 							"type": "boolean",
 							"default": "True"
+						},
+
+						{
+							"name": "name",
+							"type": "string",
+							"default": "''"
 						}
 					],
 					"returnType": "Player",
@@ -188,6 +200,14 @@
 					"returnType": "boolean",
 					"access": "Public",
 					"description": "Returns this instance's is-game status"
+				},
+
+				{
+					"name": "name()",
+					"arguments": [],
+					"returnType": "string",
+					"access": "Public",
+					"description": "Returns this instance's name"
 				}
 
 			]

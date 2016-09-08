@@ -33,7 +33,7 @@ class Engine(object):
 				self._state.apply(GroupOfChanges(changes=[GameStateChange.decrement_in_jail_moves(player)]))
 			elif player.jail_moves == 1:
 				pay_changes = player.pay(state.bank, 50, self._state)
-				leave_changes = GroupOfChanges(changes=[GameStateChange.decrement_in_jail_moves(player)])
+				leave_changes = GroupOfChanges(changes=[GameStateChange.leave_jail(player)])
 				self._state.apply(GroupOfChanges.combine([pay_changes, leave_changes]))
 
 			num_rolls = 0
@@ -43,14 +43,19 @@ class Engine(object):
 					self._state.apply(GroupOfChanges(changes=[GameStateChange.send_to_jail(player)]))
 					break
 				self._take_turn(player, roll.value)
+
 				roll = Roll()
 
 
 	def _take_turn(self, player, roll):
-		position = (player.position + roll) % 40
+		position = (player.position + roll) % GameState.NUM_SQUARES
 		self._state.apply(GroupOfChanges([GameStateChange.change_position(player, position)]))
 		self._state.apply(self._state.squares[position].landed(player, roll, self._state))
 		self._notify_all()
+
+		cmd = raw_input('')
+		if cmd == 'state':
+			print self._state
 
 	def _notify_all(self):
 		changes = []
@@ -70,7 +75,7 @@ class Engine(object):
 		return remaining <= 1
 
 def main():
-	engine = Engine()
+	engine = Engine(4)
 	engine.run()
 
 

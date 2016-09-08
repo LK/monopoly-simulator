@@ -84,6 +84,12 @@
 			"name": "_is_mortgaged",
 			"type": "{ Property: boolean }",
 			"description": "Dictionary mapping Property objects to their mortgage status (if it changed) - True if mortgaged, False if not"
+		},
+
+		{
+			"name": "_description",
+			"type": "{ Property: string }",
+			"description": "A string describing the change performed by this GameStateChange."
 		}
 
 	],
@@ -173,6 +179,12 @@
 							"name": "is_mortgaged",
 							"type": "{ Property: boolean }",
 							"default": "{}"
+						},
+
+						{
+							"name": "description",
+							"type": "{ Property: string }",
+							"default": "''"
 						}
 					],
 					"returnType": "GameStateChange",
@@ -289,6 +301,14 @@
 					"returnType": "{ Property: boolean }",
 					"access": "Public",
 					"description": "Returns this instance's is_mortgaged dictionary"
+				},
+
+				{
+					"name": "description()",
+					"arguments": [],
+					"returnType": "{ Property: string }",
+					"access": "Public",
+					"description": "Returns this instance's description string"
 				}
 
 			]

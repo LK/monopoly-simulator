@@ -23,7 +23,7 @@ class GameState(object):
 	def _initialize_players(num_players):
 		players = []
 		for i in range(0, num_players):
-			players.append(Player())
+			players.append(Player(name='\033[92mPlayer ' + str(i+1) + '\033[0m'))
 		return players
 
 	def _initialize_bank(all_squares):
@@ -32,7 +32,7 @@ class GameState(object):
 			if isinstance(square, Property):
 				prop = square
 				all_props += prop
-		return Player(cash=0, props=all_props)
+		return Player(cash=0, props=all_props, name='\033[94mThe Bank\033[0m')
 
 	def __init__(self, num_players):
 		self._players                = _initialize_players(num_players)
@@ -100,6 +100,8 @@ class GameState(object):
 
 	# Applies a single GameStateChange
 	def _apply_single_change(self, change):
+		print change.description
+
 		for player, change_in_cash in change.change_in_cash.iteritems():
 			player.cash += change_in_cash
 

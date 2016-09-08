@@ -16,7 +16,7 @@ from color_property import ColorProperty
 from card import Card
 
 class GameStateChange(object):
-	def __init__(self, change_in_cash={}, new_position={}, added_props={}, removed_props={}, card_drawn={}, card_replaced={}, change_in_jail_moves={}, change_in_jail_free_count={}, is_in_game={}, change_in_houses={}, change_in_houses_remaining=0, change_in_hotels_remaining=0, is_mortgaged={}):
+	def __init__(self, change_in_cash={}, new_position={}, added_props={}, removed_props={}, card_drawn={}, card_replaced={}, change_in_jail_moves={}, change_in_jail_free_count={}, is_in_game={}, change_in_houses={}, change_in_houses_remaining=0, change_in_hotels_remaining=0, is_mortgaged={}, description=''):
 		self._change_in_cash            	= change_in_cash
 		self._new_position              	= new_position
 		self._added_props          				= added_props
@@ -30,6 +30,7 @@ class GameStateChange(object):
 		self._change_in_houses_remaining	= change_in_houses_remaining
 		self._change_in_hotels_remaining	= change_in_hotels_remaining
 		self._is_mortgaged								= is_mortgaged
+		self._description									= description
 
 	@property
 	def change_in_cash(self):
@@ -83,6 +84,11 @@ class GameStateChange(object):
 	def is_mortgaged(self):
 		return self._is_mortgaged
 	
+	@property
+	def description(self):
+		return self._description
+	
+
 	@staticmethod
 	def combine(self, changes): # TODO: Deprecated - remove combine()
 		combined = GameStateChange()
@@ -160,80 +166,80 @@ class GameStateChange(object):
 
 	@staticmethod
 	def transfer_money(player_from, player_to, amount):
-		return GameStateChange(change_in_cash={ player_from: -amount, player_to: +amount })
+		return GameStateChange(change_in_cash={ player_from: -amount, player_to: +amount }, description=player_from.name + ' paid ' + str(amount) + ' to ' + player_to.name)
 
 	@staticmethod
 	def transfer_property(player_from, player_to, prop):
-		return GameStateChange(added_props={ player_to: [prop] }, removed_props={ player_from: [prop] })
+		return GameStateChange(added_props={ player_to: [prop] }, removed_props={ player_from: [prop] }, description=player_from.name + ' transferred ' + prop.name + ' to ' + player_to.name)
 
 	@staticmethod
 	def buy_property(player, prop, mortgaged=False, bank):
 		transfer_money = transfer_money(player, bank, prop.price)
 		transfer_property = transfer_property(bank, player, prop)
-		return GameStateChange(change_in_cash=transfer_money.change_in_cash, added_props=transfer_property.added_props, removed_props=transfer_property.removed_props, is_mortgaged={ prop: mortgaged })
+		return GameStateChange(change_in_cash=transfer_money.change_in_cash, added_props=transfer_property.added_props, removed_props=transfer_property.removed_props, is_mortgaged={ prop: mortgaged }, description=player_from.name + ' purchased ' + prop.name + ' (mortgaged)' if mortgaged else '')
 
 	@staticmethod
 	def change_position(player, new_position, bank):
 		max_roll = 12
 		if player.position >= (Square.INDEX[Square.GO] - max_roll) % GameState.NUM_SQUARES and new_position < (Square.INDEX[Square.GO] - max_roll) % GameState.NUM_SQUARES:
-			return GameStateChange(new_position={ player: new_position }, change_in_cash:{ player: +200, bank: -200 })
+			return GameStateChange(new_position={ player: new_position }, change_in_cash:{ player: +200, bank: -200 }, description=player.name + ' moved to ' + str(new_position))
 		else:
-			return GameStateChange(new_position={ player: new_position })
+			return GameStateChange(new_position={ player: new_position }, description=player.name + ' moved to ' + str(new_position), ' passing GO')
 
 	 # TODO: Need to get a reference to player (owner of property) for mortgage(),
 	 # unmortgage(), build_house(), build_hotel(), demolish_house(),
 	 # demolish_hotel()
 	@staticmethod
 	def mortgage(prop, bank):
-		return GameStateChange(is_mortgaged={ prop: True }, change_in_cash={ player: +prop.price / 2, bank: -prop.price / 2 })
+		return GameStateChange(is_mortgaged={ prop: True }, change_in_cash={ player: +prop.price / 2, bank: -prop.price / 2 }, description=prop.name + ' was mortgaged')
 	
 	@staticmethod
 	def unmortgage(prop, bank):
-		return GameStateChange(is_mortgaged={ prop: False }, change_in_cash={ player: (-prop.price / 2) * 1.1, bank: (prop.price / 2) * 1.1 })
+		return GameStateChange(is_mortgaged={ prop: False }, change_in_cash={ player: (-prop.price / 2) * 1.1, bank: (prop.price / 2) * 1.1 }, description=prop.name  + ' was unmortgaged')
 	
 	@staticmethod
 	def build(prop, player, bank):
 		if prop.num_houses == ColorProperty.NUM_HOUSES_BEFORE_HOTEL:
 			# Build a hotel
-			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ player: -prop.house_price, bank: +prop.house_price }, change_in_houses_remaining=+ColorProperty.NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=-1)
+			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ player: -prop.house_price, bank: +prop.house_price }, change_in_houses_remaining=+ColorProperty.NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=-1, description=player.name + ' built a hotel on ' + prop.name)
 		else:
 			# Build a house
-			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ player: -prop.house_price, bank: +prop.house_price }, change_in_houses_remaining=-1)
+			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ player: -prop.house_price, bank: +prop.house_price }, change_in_houses_remaining=-1, description=player.name + ' built a house on ' + prop.name)
 
 	@staticmethod
 	def demolish(prop, player, bank):
 		if prop.has_hotel():
 			# Demolish a hotel
-			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=-ColorProperty.NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=+1)
+			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=-ColorProperty.NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=+1, description=player.name + ' demolished a hotel on ' + prop.name)
 		else:
 			# Demolish a house
-			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=+1)
+			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=+1, description=player.name + ' demolished a house on ' + prop.name)
 
 	@staticmethod
 	def draw_card(deck, player):
 		next_card = deck.peek()
 		if next_card == Card.LMBDA_GET_OUT_OF_JAIL_FREE:
 			# Do not replace the "Get out of jail free" card
-			return GameStateChange(card_drawn={ deck: next_card }, change_in_jail_free_count={ player: +1 })
+			return GameStateChange(card_drawn={ deck: next_card }, change_in_jail_free_count={ player: +1 }, description=player.name + ' drew a Get Out of Jail Free card')
 		else:
-			return GameStateChange(card_drawn={ deck: next_card }, card_replaced={ deck: next_card })
+			return GameStateChange(card_drawn={ deck: next_card }, card_replaced={ deck: next_card }, description=player.name + ' drew a card')
 
 	@staticmethod
 	def decrement_jail_card_count(player, deck):
 		# TODO: How does the caller know which deck to return "Get out of jail free" to?
-		return GameStateChange(card_replaced={ deck: Card.LMBDA_GET_OUT_OF_JAIL_FREE }, change_in_jail_free_count={ player: -1 })
+		return GameStateChange(card_replaced={ deck: Card.LMBDA_GET_OUT_OF_JAIL_FREE }, change_in_jail_free_count={ player: -1 }, description=player.name + ' used a Get Out of Jail Free card')
 
 	@staticmethod
 	def send_to_jail(player):
-		return GameStateChange(new_position={ player: Square.INDEX[Square.JAIL] }, change_in_jail_moves={ player: +GoToJail.JAIL_MOVES })
+		return GameStateChange(new_position={ player: Square.INDEX[Square.JAIL] }, change_in_jail_moves={ player: +GoToJail.JAIL_MOVES }, description=player.name + ' went to jail')
 
 	@staticmethod
 	def decrement_in_jail_moves(player):
-		return GameStateChange(change_in_jail_moves={ player: -1 })
+		return GameStateChange(change_in_jail_moves={ player: -1 }, description=player.name + ' spent a turn in jail')
 
 	@staticmethod
 	def leave_jail(player):
-		return GameStateChange(change_in_jail_moves={ player: -player.jail_moves })
+		return GameStateChange(change_in_jail_moves={ player: -player.jail_moves }, description=player.name + ' left jail')
 
 	@staticmethod
 	def eliminate(player_eliminated, player_eliminator):
@@ -244,4 +250,4 @@ class GameStateChange(object):
 			if isinstance(prop, ColorProperty):
 				demolitions[prop] = -prop.num_houses
 
-		return GameStateChange(is_in_game={ player_eliminated: False }, change_in_cash={ player_eliminated: -player_eliminated.cash, player_eliminator: +player_eliminated.cash }, removed_props={ player_eliminated: player_eliminated.props }, added_props={ player_eliminator: player_eliminated.props }, change_in_jail_free_count={ player_eliminated: -player_eliminated.jail_free_count, player_eliminator: +player_eliminated.jail_free_count }, change_in_houses=demolitions)
+		return GameStateChange(is_in_game={ player_eliminated: False }, change_in_cash={ player_eliminated: -player_eliminated.cash, player_eliminator: +player_eliminated.cash }, removed_props={ player_eliminated: player_eliminated.props }, added_props={ player_eliminator: player_eliminated.props }, change_in_jail_free_count={ player_eliminated: -player_eliminated.jail_free_count, player_eliminator: +player_eliminated.jail_free_count }, change_in_houses=demolitions, description=player_eliminated.name + ' lost to ' + player_eliminator.name)
