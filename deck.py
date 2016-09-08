@@ -11,12 +11,12 @@ from sys import argv
 
 class Deck(object):
 	def __init__(self, cards):
-		self._next = 0     # index of the next card to draw
-		self._cards = []   # list of cards
+		self._next = 0     									# index of the next card to draw
+		self._cards = [None] * len(cards)   # list of cards
 
 		# Make private copy of cards
-		for card in cards:
-			self._cards.append(card)
+		for i in range(0, len(cards)):
+			self._cards[i] = cards[i]
 
 	def size(self):
 		return len(self._cards)

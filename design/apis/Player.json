@@ -57,7 +57,7 @@
 
 		{
 			"name": "_name",
-			"type": "string",
+			"type": "String",
 			"description": "The name of the player"
 		}
 
@@ -122,7 +122,7 @@
 
 						{
 							"name": "name",
-							"type": "string",
+							"type": "String",
 							"default": "''"
 						}
 					],
@@ -205,7 +205,7 @@
 				{
 					"name": "name()",
 					"arguments": [],
-					"returnType": "string",
+					"returnType": "String",
 					"access": "Public",
 					"description": "Returns this instance's name"
 				}

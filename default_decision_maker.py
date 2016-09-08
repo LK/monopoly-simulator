@@ -62,7 +62,7 @@ class DefaultDecisionMaker(object):
 	def bid_hotel_demolitions(self, player, highest_bid, props_to_demolish_on, state):
 		bid = player.cash / 2
 		prop_to_demolish_on = props_to_demolish_on[0]
-		hotel_demolition = GameStateChange.demolish(prop, player state.bank)
+		hotel_demolition = GameStateChange.demolish(prop, player, state.bank)
 		house_builds = [GameStateChange.build(prop, player, state.bank)] * NUM_HOUSES_BEFORE_HOTEL
 		return GroupOfChanges([hotel_demolition] + house_builds)
 
