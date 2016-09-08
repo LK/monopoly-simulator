@@ -88,7 +88,7 @@
 
 		{
 			"name": "_description",
-			"type": "{ Property: string }",
+			"type": "String",
 			"description": "A string describing the change performed by this GameStateChange."
 		}
 
@@ -97,7 +97,7 @@
 	"methodCategories": [
 
 		{
-			"category": "Costructors",
+			"category": "Constructors",
 			"methods": [
 
 				{
@@ -183,7 +183,7 @@
 
 						{
 							"name": "description",
-							"type": "{ Property: string }",
+							"type": "String",
 							"default": "''"
 						}
 					],
@@ -306,7 +306,7 @@
 				{
 					"name": "description()",
 					"arguments": [],
-					"returnType": "{ Property: string }",
+					"returnType": "String",
 					"access": "Public",
 					"description": "Returns this instance's description string"
 				}
