@@ -17,7 +17,7 @@ class Player(object):
 		groups = [prop.property_group for prop in props]
 		self._property_group_counts = Counter(groups)
 
-	
+
 	def copy(self):
 		return Player(position=self._position, cash=self._cash, props=self._props, property_group_counts=self._property_group_counts, decision_maker=self._decision_maker, jail_free_count=self._jail_free_count, jail_moves=self._jail_moves, is_in_game=self._is_in_game)
 
@@ -38,11 +38,11 @@ class Player(object):
 	@property
 	def property_group_counts(self):
 		return self._property_group_counts
-	
+
 	@property
 	def decision_maker(self):
 		return self._decision_maker
-	
+
 	@property
 	def jail_free_count(self):
 		return self._jail_free_count
@@ -58,14 +58,14 @@ class Player(object):
 	@property
 	def name(self):
 		return self._name
-	
+
 
 	# Setters
-	
+
 	@position.setter
 	def position(self, position):
 		self._position = position
-	
+
 	@cash.setter
 	def cash(self, cash):
 		self._cash = cash
@@ -77,7 +77,7 @@ class Player(object):
 	@jail_moves.setter
 	def jail_moves(self, jail_moves):
 		self._jail_moves = jail_moves
-	
+
 	@is_in_game.setter
 	def is_in_game(self, is_in_game):
 		self._is_in_game = is_in_game
@@ -93,9 +93,9 @@ class Player(object):
 		if self.property_group_counts[property_group] == 0:
 			return False
 
-		# Find the first property in the group and check the total size of the 
+		# Find the first property in the group and check the total size of the
 		# property group
-		for prop in self.properties:
+		for prop in self.props:
 			if prop.property_group == property_group:
 				return prop.size_of_property_group == self.property_group_counts[property_group]
 

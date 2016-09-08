@@ -37,7 +37,7 @@ class GameState(object):
 
 		RAILROAD 		= 100
 		UTILITY 		= 101
-		
+
 		PROP_MEDITERRANEAN 					= ColorProperty(MEDITERRANEAN_AVENUE, 		60, 	[4, 10, 30, 90, 160, 250], 				PURPLE, 		2, 50)
 		PROP_BALTIC 								= ColorProperty(BALTIC_AVENUE, 						60, 	[4, 20, 60, 180, 320, 450], 			PURPLE, 		2, 50)
 
@@ -192,11 +192,11 @@ class GameState(object):
 	@property
 	def houses_remaining(self):
 		return self._houses_remaining
-	
+
 	@property
 	def hotels_remaining(self):
 		return self._hotels_remaining
-	
+
 	@property
 	def bank(self):
 		return self._bank
@@ -204,7 +204,7 @@ class GameState(object):
 	@property
 	def decks(self):
 		return self._decks
-	
+
 	# Other
 	def get_property_group(self, prop_group):
 		property_group = [square if isinstance(square, Property) and square.property_group == prop_group else None for square in self.squares]
@@ -267,7 +267,7 @@ class GameState(object):
 		self._hotels_remaining += change.change_in_hotels_remaining
 
 		for prop, is_mortgaged in change.is_mortgaged.iteritems():
-			prop.is_mortgaged = is_mortgaged  
+			prop.is_mortgaged = is_mortgaged
 
 
 	# Applies a GroupOfChanges
@@ -285,5 +285,5 @@ class GameState(object):
 			s += "\t" + str(square) + "\n"
 		s += "Houses remaining: %d\n" % (self._houses_remaining)
 		s += "Hotels remaining: %d\n" % (self._hotels_remaining)
-		s += "Bank: " + str(bank) + "\n"
+		s += "Bank: " + str(self.bank) + "\n"
 		return s

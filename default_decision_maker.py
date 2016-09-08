@@ -1,4 +1,5 @@
 from color_property import ColorProperty
+from non_color_property import NonColorProperty
 from notification_changes import NotificationChanges
 from groupofchanges import GroupOfChanges
 from gamestatechange import GameStateChange
@@ -12,6 +13,9 @@ class DefaultDecisionMaker(object):
 
 	@staticmethod
 	def _can_mortgage_property(prop, state):
+		if isinstance(prop, NonColorProperty):
+			return True
+
 		for prop in state.get_property_group(prop.property_group):
 			if prop.num_houses > 0:
 				return False
@@ -36,7 +40,7 @@ class DefaultDecisionMaker(object):
 	# Otherwise he passes
 	def buy_or_deny(self, player, prop, state):
 		if player.cash >= prop.price:
-			return GroupOfChanges(changes=[GameStateChange.transfer_money(player, state.bank, prop.price)])
+			return GroupOfChanges(changes=[GameStateChange.buy_property(player, prop, False, state.bank)])
 		else:
 			return GroupOfChanges()
 
@@ -59,14 +63,14 @@ class DefaultDecisionMaker(object):
 			prop = player_from.props[i]
 			i += 1
 			if not prop.mortgaged and DefaultDecisionMaker._can_mortgage_property(prop, state):
-				mortgage = GameStateChange.mortgage(prop, state.bank)
+				mortgage = GameStateChange.mortgage(prop, player_from, state.bank)
 				changes.append(mortgage)
 				difference -= mortgage.change_in_cash[player_from]
 
 		if difference <= 0:
 			changes.append(transfer_money)
 			return GroupOfChanges(changes=changes)
-		
+
 		# Mortgaging was not enough. Demolish until the difference is paid off
 		i = 0
 		while difference > 0 and i < len(player_from.props):
@@ -118,9 +122,9 @@ class DefaultDecisionMaker(object):
 			# Pick a Deck to return the jail free card to randomly
 			# TODO: Need a better way of picking a Deck to return the jail free card to
 			if (randint(0, 1) == 0):
-				deck = new_state.deck[CHANCE_CARD]
+				deck = new_state.decks[CHANCE_CARD]
 			else:
-				deck = new_state.deck[COMMUNITY_CHEST_CARD]
+				deck = new_state.decks[COMMUNITY_CHEST_CARD]
 			get_out_of_jail = GameStateChange.decrement_jail_card_count(player, deck)
 			return NotificationChanges([get_out_of_jail])
 		else:

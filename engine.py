@@ -1,4 +1,4 @@
-from random import randint
+import random
 from gamestate import GameState
 from roll import Roll
 from groupofchanges import GroupOfChanges
@@ -12,11 +12,14 @@ class Engine(object):
 
 	def run(self):
 		num_players = len(self._state.players)
-		idx = randint(0,num_players-1)
+		idx = random.randint(0,num_players-1)
 		while not self._completed():
+			cash = [player.cash for player in self._state.players]
+			print cash
 			player = self._state.players[idx]
 			idx = (idx + 1) % len(self._state.players)
 			roll = Roll()
+			print '%s rolled a %d%s' % (player.name, roll.value, ' (doubles)' if roll.is_doubles else '')
 			if player.jail_moves > 0 and roll.is_doubles:
 				self._state.apply(GroupOfChanges(changes=[GameStateChange.leave_jail(player)]))
 			elif player.jail_moves >= 2:
@@ -28,26 +31,28 @@ class Engine(object):
 				leave_changes 				= GroupOfChanges(changes=[GameStateChange.leave_jail(player)])
 				self._state.apply(GroupOfChanges.combine([decrement_jail_moves, pay_changes, leave_changes]))
 
+			self._take_turn(player, roll.value)
+
 			num_rolls = 0
 			max_rolls = 2
 			while roll.is_doubles:
+				roll = Roll()
+				print '%s rolled a %d%s' % (player.name, roll.value, ' (doubles)' if roll.is_doubles else '')
 				num_rolls += 1
 				if num_rolls > max_rolls:
 					self._state.apply(GroupOfChanges(changes=[GameStateChange.send_to_jail(player)]))
 					break
 				self._take_turn(player, roll.value)
-				roll = Roll()
 
 	def _take_turn(self, player, roll):
 		position = (player.position + roll) % NUM_SQUARES
-		print player.name + ' rolled a ' + str(roll)
 		self._state.apply(GroupOfChanges([GameStateChange.change_position(player, position, self._state.bank, self._state.squares)]))
 		self._state.apply(self._state.squares[position].landed(player, roll, self._state))
 		self._notify_all()
 
-		cmd = raw_input('')
-		if cmd == 'state':
-			print str(self._state)
+		#cmd = raw_input('')
+		#if cmd == 'state':
+			#print str(self._state)
 
 	def _notify_all(self):
 		player_building_requests = {}

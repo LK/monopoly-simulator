@@ -1,6 +1,6 @@
 '''
 Author:   Lenny Khazan
-Created:  
+Created:
 
 Description:
 	A GameStateChange represents a state transition for the GameState. This class
@@ -32,15 +32,15 @@ class GameStateChange(object):
 	@property
 	def change_in_cash(self):
 		return self._change_in_cash
-		
+
 	@property
 	def new_position(self):
 		return self._new_position
-		
+
 	@property
 	def added_props(self):
 		return self._added_props
-	
+
 	@property
 	def removed_props(self):
 		return self._removed_props
@@ -48,11 +48,11 @@ class GameStateChange(object):
 	@property
 	def card_drawn(self):
 		return self._card_drawn
-	
+
 	@property
 	def card_replaced(self):
 		return self._card_replaced
-	
+
 	@property
 	def change_in_jail_moves(self):
 		return self._change_in_jail_moves
@@ -64,7 +64,7 @@ class GameStateChange(object):
 	@property
 	def is_in_game(self):
 		return self._is_in_game
-	
+
 	@property
 	def change_in_houses(self):
 		return self._change_in_houses
@@ -72,19 +72,19 @@ class GameStateChange(object):
 	@property
 	def change_in_houses_remaining(self):
 		return self._change_in_houses_remaining
-	
+
 	@property
 	def change_in_hotels_remaining(self):
 		return self._change_in_hotels_remaining
-	
+
 	@property
 	def is_mortgaged(self):
 		return self._is_mortgaged
-	
+
 	@property
 	def description(self):
 		return self._description
-	
+
 
 	@staticmethod
 	def combine(self, changes): # TODO: Deprecated - remove combine()
@@ -104,7 +104,7 @@ class GameStateChange(object):
 			for player, props in change._added_props.iteritems():
 				if player not in combined._added_props:
 					combined._added_props[player] = []
-				
+
 				for prop in props:
 					if prop in combined._removed_props[player]:
 						combined._removed_props[player].remove(prop)
@@ -116,7 +116,7 @@ class GameStateChange(object):
 			for player, props in change._removed_props.iteritems():
 				if player not in combined._removed_props:
 					combined._removed_props[player] = []
-				
+
 				for prop in props:
 					if prop in combined._added_props[player]:
 						combined._added_props[player].remove(prop)
@@ -171,9 +171,9 @@ class GameStateChange(object):
 
 	@staticmethod
 	def buy_property(player, prop, mortgaged=False, bank=None):
-		transfer_money = transfer_money(player, bank, prop.price)
-		transfer_property = transfer_property(bank, player, prop)
-		return GameStateChange(change_in_cash=transfer_money.change_in_cash, added_props=transfer_property.added_props, removed_props=transfer_property.removed_props, is_mortgaged={ prop: mortgaged }, description=player_from.name + ' purchased ' + prop.name + ' (mortgaged)' if mortgaged else '')
+		transfer_money = GameStateChange.transfer_money(player, bank, prop.price)
+		transfer_property = GameStateChange.transfer_property(bank, player, prop)
+		return GameStateChange(change_in_cash=transfer_money.change_in_cash, added_props=transfer_property.added_props, removed_props=transfer_property.removed_props, is_mortgaged={ prop: mortgaged }, description='%s purchased %s%s' % (player.name, prop.name, ' (mortgaged)' if mortgaged else ''))
 
 	# TODO: Remove argument 'squares' when we no longer need to print the square name out
 	@staticmethod
@@ -192,13 +192,13 @@ class GameStateChange(object):
 	 # unmortgage(), build_house(), build_hotel(), demolish_house(),
 	 # demolish_hotel()
 	@staticmethod
-	def mortgage(prop, bank):
-		return GameStateChange(is_mortgaged={ prop: True }, change_in_cash={ player: +prop.price / 2, bank: -prop.price / 2 }, description=prop.name + ' was mortgaged')
-	
+	def mortgage(prop, player, bank):
+		return GameStateChange(is_mortgaged={ prop: True }, change_in_cash={ player: +prop.price / 2, bank: -prop.price / 2 }, description=player.name + ' mortgaged ' + prop.name)
+
 	@staticmethod
-	def unmortgage(prop, bank):
-		return GameStateChange(is_mortgaged={ prop: False }, change_in_cash={ player: (-prop.price / 2) * 1.1, bank: (prop.price / 2) * 1.1 }, description=prop.name  + ' was unmortgaged')
-	
+	def unmortgage(prop, player, bank):
+		return GameStateChange(is_mortgaged={ prop: False }, change_in_cash={ player: (-prop.price / 2) * 1.1, bank: (prop.price / 2) * 1.1 }, description=player.name + ' unmortgaged ' + prop.name)
+
 	@staticmethod
 	def build(prop, player, bank):
 		if prop.num_houses == NUM_HOUSES_BEFORE_HOTEL:

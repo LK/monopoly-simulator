@@ -4,14 +4,20 @@ from gamestatechange import GameStateChange
 from gotojail import GoToJail
 from roll import Roll
 from groupofchanges import GroupOfChanges
+from color_property import ColorProperty
 from constants import *
 
 class Card(Square):
 
+	# Convenience methods
+	@staticmethod
+	def _group_from_single_change(change):
+		return GroupOfChanges(changes=[change])
+
 	# Chance and community chest functions
 	@staticmethod
 	def _advance_to_square(player, square_index, roll, state):
-		state.apply(GameStateChange.change_position(player, square_index, state.bank, state.squares))
+		state.apply(Card._group_from_single_change(GameStateChange.change_position(player, square_index, state.bank, state.squares)))
 		square = state.squares[square_index]
 		return square.landed(player, roll, state)
 
@@ -22,7 +28,7 @@ class Card(Square):
 	@staticmethod
 	def _go_to_jail(player, state):
 		go_to_jail = state.squares[INDEX[GO_TO_JAIL]]
-		return jail.landed(player, 0, state)
+		return go_to_jail.landed(player, 0, state)
 
 	@staticmethod
 	def _pay_building_fees(player, state, per_house_fee, per_hotel_fee):
@@ -33,7 +39,7 @@ class Card(Square):
 				if prop.has_hotel():
 					total_hotels += 1
 				else:
-					total_houses += prop.num_houses()
+					total_houses += prop.num_houses
 		fee = (total_houses * per_house_fee) + (total_hotels * per_hotel_fee)
 		return player.pay(state.bank, fee, state)
 
@@ -114,7 +120,7 @@ class Card(Square):
 		pennsylvania_railroad	= INDEX[PENNSYLVANIA_RAILROAD]
 		b_and_o_railroad 			= INDEX[B_AND_O_RAILROAD]
 		short_line_railroad 	= INDEX[SHORT_LINE_RAILROAD]
-		nearest_railroad 			= Card.nearest_to(player.position, [reading_railroad,
+		nearest_railroad 			= Card._nearest_to(player.position, [reading_railroad,
 			pennsylvania_railroad, b_and_o_railroad, short_line_railroad])
 		return Card._advance_to_square(player, nearest_railroad, 0, state)
 
@@ -252,7 +258,12 @@ class Card(Square):
 		deck = state.decks[self._card_type]
 		draw_card = GameStateChange.draw_card(deck, player)
 		card_lmbda = draw_card.card_drawn[deck]
-		result_of_card = card_lmbda(player, state)
+		result_of_card = None
+		if card_lmbda == LMBDA_GET_OUT_OF_JAIL_FREE:
+			result_of_card = GroupOfChanges()
+		else:
+			result_of_card = card_lmbda(player, state)
+
 		return GroupOfChanges.combine([GroupOfChanges([draw_card]), result_of_card])
 
 

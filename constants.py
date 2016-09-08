@@ -11,7 +11,7 @@ NUM_HOUSES = 32
 NUM_HOTELS = 12
 NUM_SQUARES = 40
 
-LMBDA_GET_OUT_OF_JAIL_FREE = lambda player, state: _get_out_of_jail_free(player, state)
+LMBDA_GET_OUT_OF_JAIL_FREE = 'jail card'
 
 JAIL_MOVES = 3
 

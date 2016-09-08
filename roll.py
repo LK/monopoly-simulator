@@ -20,7 +20,7 @@ class Roll(object):
 		@property
 		def value(self):
 			return self._value
-		
+
 		@property
 		def is_doubles(self):
 			return self._is_doubles
