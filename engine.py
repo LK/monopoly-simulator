@@ -10,7 +10,6 @@ class Engine(object):
 		self._state = GameState(num_players)
 
 	def run(self):
-		max_rolls = 2
 		num_players = len(self._state.players)
 		player = self._state.players[randint(0,num_players-1)]
 		while not self._completed():
@@ -18,26 +17,28 @@ class Engine(object):
 			if player.jail_moves > 0 and roll.is_doubles:
 				self._state.apply(GroupOfChanges(changes=[GameStateChange.leave_jail(player)]))
 			elif player.jail_moves >= 2:
-				self._state.apply(GroupOfChanges(changes=[GameStateChange.decrement_in_jail_moves(player)]))
+				self._state.apply(GroupOfChanges(changes=[GameStateChange.decrement_jail_moves(player)]))
 			elif player.jail_moves == 1:
-				pay_changes = player.pay(state.bank, 50, self._state)
-				leave_changes = GroupOfChanges(changes=[GameStateChange.leave_jail(player)])
-				self._state.apply(GroupOfChanges.combine([pay_changes, leave_changes]))
+				# TODO: Allow player to choose to use a "Get out of jail free" card
+				decrement_jail_moves  = GroupOfChanges(changes=[GameStateChange.decrement_jail_moves(player)])
+				pay_changes 					= player.pay(state.bank, 50, self._state)
+				leave_changes 				= GroupOfChanges(changes=[GameStateChange.leave_jail(player)])
+				self._state.apply(GroupOfChanges.combine([decrement_jail_moves, pay_changes, leave_changes]))
 
 			num_rolls = 0
+			max_rolls = 2
 			while roll.is_doubles:
 				num_rolls += 1
 				if num_rolls > max_rolls:
 					self._state.apply(GroupOfChanges(changes=[GameStateChange.send_to_jail(player)]))
 					break
 				self._take_turn(player, roll.value)
-
 				roll = Roll()
 
 
 	def _take_turn(self, player, roll):
 		position = (player.position + roll) % NUM_SQUARES
-		self._state.apply(GroupOfChanges([GameStateChange.change_position(player, position)]))
+		self._state.apply(GroupOfChanges([GameStateChange.change_position(player, position, self._state.bank)]))
 		self._state.apply(self._state.squares[position].landed(player, roll, self._state))
 		self._notify_all()
 

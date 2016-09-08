@@ -547,7 +547,7 @@
 				},
 
 				{
-					"name": "decrement_in_jail_moves()",
+					"name": "decrement_jail_moves()",
 					"arguments": [
 						{
 							"name": "player",

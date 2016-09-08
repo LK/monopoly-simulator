@@ -231,7 +231,7 @@ class GameStateChange(object):
 		return GameStateChange(new_position={ player: INDEX[JAIL] }, change_in_jail_moves={ player: +JAIL_MOVES }, description=player.name + ' went to jail')
 
 	@staticmethod
-	def decrement_in_jail_moves(player):
+	def decrement_jail_moves(player):
 		return GameStateChange(change_in_jail_moves={ player: -1 }, description=player.name + ' spent a turn in jail')
 
 	@staticmethod
