@@ -9,6 +9,7 @@ class DefaultDecisionMaker(object):
 	def __init__(self):
 		pass
 
+	@staticmethod
 	def _can_mortgage_property(prop, state):
 		for prop in state.get_property_group(prop.property_group):
 			if prop.num_houses > 0:
@@ -16,6 +17,7 @@ class DefaultDecisionMaker(object):
 
 		return True
 
+	@staticmethod
 	def _demolish_from_property_group(prop, state):
 		max_houses = 0
 		max_houses_prop = None
@@ -40,13 +42,13 @@ class DefaultDecisionMaker(object):
 		difference = amount - player.cash
 		while difference > 0:
 			for prop in player_from.props:
-				if not prop.mortgaged and _can_mortgage_property(prop, state):
+				if not prop.mortgaged and DefaultDecisionMaker._can_mortgage_property(prop, state):
 					changes.append(GameStateChange.mortgage(prop, state.bank))
 					continue
 
 			for prop in player_from.props:
 				if prop.num_houses > 0:
-					changes.append(_demolish_from_property_group(prop, state))
+					changes.append(DefaultDecisionMaker._demolish_from_property_group(prop, state))
 					continue
 
 			return GroupOfChanges(changes=[GameStateChange.eliminate(player_from, player_to)])

@@ -25,7 +25,7 @@ class GameState(object):
 	# Initialization
 
 	@staticmethod
-	def _create_squares():
+	def _initialize_squares():
 		PURPLE 			= 0
 		LIGHT_BLUE 	= 1
 		PINK 				= 2
@@ -156,7 +156,7 @@ class GameState(object):
 
 	def __init__(self, num_players):
 		self._players                = GameState._initialize_players(num_players)
-		self._squares                = GameState._create_squares()
+		self._squares                = GameState._initialize_squares()
 		self._houses_remaining       = NUM_HOUSES
 		self._hotels_remaining       = NUM_HOTELS
 		self._bank 									 = GameState._initialize_bank(self._squares)
@@ -230,8 +230,6 @@ class GameState(object):
 
 		for player, new_position in change.new_position.iteritems():
 			player.position = new_position
-			if new_position < player.position:
-				player.cash += 200
 
 		for player, added_props in change.added_props.iteritems():
 			player.add_properties(added_props)
@@ -273,7 +271,7 @@ class GameState(object):
 	# Applies a GroupOfChanges
 	def apply(self, changes):
 		for change in changes:
-			_apply_single_change(change)
+			self._apply_single_change(change)
 
 	def __str__(self):
 		s = ""

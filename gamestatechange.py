@@ -178,10 +178,14 @@ class GameStateChange(object):
 	@staticmethod
 	def change_position(player, new_position, bank):
 		max_roll = 12
+		description = player.name + ' moved to ' + str(new_position)
 		if player.position >= (INDEX[GO] - max_roll) % NUM_SQUARES and new_position < (INDEX[GO] - max_roll) % NUM_SQUARES:
-			return GameStateChange(new_position={ player: new_position }, change_in_cash={ player: +200, bank: -200 }, description=player.name + ' moved to ' + str(new_position))
+			# Player passed GO
+			# TODO: Declare a constant for GO money (200)
+			return GameStateChange(new_position={ player: new_position }, change_in_cash={ player: +200, bank: -200 }, description=description + ' passing ' + GO)
 		else:
-			return GameStateChange(new_position={ player: new_position }, description=player.name + ' moved to ' + str(new_position) + ' passing GO')
+			# Normal position change
+			return GameStateChange(new_position={ player: new_position }, description=description)
 
 	 # TODO: Need to get a reference to player (owner of property) for mortgage(),
 	 # unmortgage(), build_house(), build_hotel(), demolish_house(),

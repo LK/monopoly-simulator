@@ -52,7 +52,7 @@ class HousingResolver(object):
 			self._hotels_built 			+= building_requests.hotels_built
 			self._houses_demolished += building_requests.houses_demolished
 			self._hotels_demolished += building_requests.hotels_demolished
-		_resolve()
+		self._resolve()
 
 
 	# Building/demolishing
@@ -117,6 +117,7 @@ class HousingResolver(object):
 					players_building_houses.append(player)
 		return players_building_houses
 
+	@staticmethod
 	def _auction(num_houses, players, lambda_bid, lambda_extract_bid):
 		players_in_auction = dict(zip(players, [True] * len(players)))
 		properties_to_build_houses_on = self._properties_to_build_houses_on()
@@ -181,10 +182,11 @@ class HousingResolver(object):
 	# Auctions the number of houses among the list of players provided. Returns
 	# a GroupOfChanges building the houses for the winners of each auction on
 	# their desired properties
+	@staticmethod
 	def _auction_house_builds(num_houses, players):
 		bid = lambda player, highest_bid, props, state: player.bid_house_builds(highest_bid, props, state)
 		extract_bid = lambda change, state: change.change_in_cash[state.bank] - change.changes_in_houses.keys()[0].house_price
-		_auction(num_houses, players, bid, extract_bid)
+		HousingResolver._auction(num_houses, players, bid, extract_bid)
 
 	# Returns a list of players who requested hotel builds
 	def _get_players_building_hotels(self):
@@ -197,10 +199,11 @@ class HousingResolver(object):
 	# Auctions the number of hotels among the list of players provided. Returns
 	# a GroupOfChanges building the hotels for the winners of each auction on
 	# their desired properties
+	@staticmethod
 	def _auction_hotel_builds(num_hotels, players):
 		lambda bid(player, highest_bid, props, state): player.bid_hotel_builds(highest_bid, props, state)
 		lambda extract_bid(change, state): change.change_in_cash[state.bank] - change.changes_in_houses.keys()[0].house_price
-		_auction(num_houses, players, bid, extract_bid)
+		HousingResolver._auction(num_houses, players, bid, extract_bid)
 
 	# Returns a list of players who requested hotel demolitions
 	def _get_players_demolishing_hotels(self):
@@ -213,10 +216,11 @@ class HousingResolver(object):
 	# Auctions the number of houses (for hotel demolitions) among the list of
 	# players provided. Returns a GroupOfChanges building the houses for the
 	# winners of each auction on their desired properties
+	@staticmethod
 	def _auction_hotel_demolitions(num_houses, players):
 		lambda bid(player, highest_bid, props, state): player.bid_hotel_demolitions(highest_bid, props, state)
 		lambda extract_bid(change, state): change.change_in_cash[state.bank] + change.changes_in_houses.keys()[0].house_price/2
-		_auction(int(num_houses/NUM_HOUSES_BEFORE_HOTEL), players, bid, extract_bid)
+		Housing_Resolver._auction(int(num_houses/NUM_HOUSES_BEFORE_HOTEL), players, bid, extract_bid)
 
 
 	# Special case procedure for hotel demolitions
@@ -234,15 +238,15 @@ class HousingResolver(object):
 	# than 4 houses available. Applies the changes that demolish hotels and
 	# builds houses appropriately according to the players' desires
 	def _settle_hotel_demolitions(self, were_houses_built):
-		if _are_enough_houses_for_hotel_demolitions(were_houses_built):
+		if self._are_enough_houses_for_hotel_demolitions(were_houses_built):
 				for player, building_requests in self._player_building_requests.iteritems():
 					self._state.apply(building_requests.hotel_demolitions)
 			else:
 				# Ask players demolishing hotels if it is ok to reduce past the 4 house
 				# level, or auction them
-				players_demolishing_hotels = _get_players_demolishing_hotels()
+				players_demolishing_hotels = self._get_players_demolishing_hotels()
 				if len(players_demolishing_hotels) > 1:
-					result_of_auction = _auction_hotel_demolitions(self._state.houses_remaining, players_demolishing_hotels, self._state)
+					result_of_auction = HousingResolver._auction_hotel_demolitions(self._state.houses_remaining, players_demolishing_hotels, self._state)
 					self._state.apply(result_of_auction)
 				elif len(players_demolishing_hotels) == 1:
 					# Ask the 1 player if he wants to reduce past the 4 house level
@@ -260,50 +264,50 @@ class HousingResolver(object):
 	# changes directly to the GameState
 	def _resolve(self):
 		# 1: Demolish houses
-		_demolish_houses()
+		self._demolish_houses()
 
-		if _is_hotel_shortage(_BEFORE_HOTEL_DEMOLITIONS):
+		if self._is_hotel_shortage(_BEFORE_HOTEL_DEMOLITIONS):
 			# 2: Build houses
-			if not _is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _OVERRIDE_TRUE):
-				_build_houses()
+			if not self._is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _OVERRIDE_TRUE):
+				self._build_houses()
 			else:
 				# Auction houses
-				result_of_auction = _auction_house_builds(self._state.houses_remaining, _get_players_building_houses(), self._state)
+				result_of_auction = HousingResolver._auction_house_builds(self._state.houses_remaining, self._get_players_building_houses(), self._state)
 				self._state.apply(result_of_auction)
 
 			# 3: Demolish hotels
-			_settle_hotel_demolitions(_AFTER_HOUSE_BUILDS) # special case dealt with separately
+			self._settle_hotel_demolitions(_AFTER_HOUSE_BUILDS) # special case dealt with separately
 
 			# 4: Build hotels
-			if not _is_hotel_shortage(_AFTER_HOTEL_DEMOLITIONS):
-				_build_hotels()
+			if not self._is_hotel_shortage(_AFTER_HOTEL_DEMOLITIONS):
+				self._build_hotels()
 			else:
 				# Auction the remaining hotels
-				result_of_auction = _auction_hotel_builds(self._state.hotels_remaining, _get_players_building_hotels(), self._state)
+				result_of_auction = HousingResolver._auction_hotel_builds(self._state.hotels_remaining, self._get_players_building_hotels(), self._state)
 				self._state.apply(result_of_auction)
 				
-		elif _is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _BEFORE_HOTEL_BUILDS):
+		elif self._is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _BEFORE_HOTEL_BUILDS):
 			# 2: Build hotels
-			if not _is_hotel_shortage(_OVERRIDE_TRUE):
-				_build_hotels()
+			if not self._is_hotel_shortage(_OVERRIDE_TRUE):
+				self._build_hotels()
 			else:
 				# Auction for the remaining hotels
-				result_of_auction = _auction_hotel_builds(self._state.hotels_remaining, _get_players_building_hotels(), self._state)
+				result_of_auction = HousingResolver._auction_hotel_builds(self._state.hotels_remaining, self._get_players_building_hotels(), self._state)
 				self._state.apply(result_of_auction)
 
 			# 3: Build houses
-			if not _is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _AFTER_HOTEL_BUILDS):
-				_build_houses()
+			if not self._is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _AFTER_HOTEL_BUILDS):
+				self._build_houses()
 			else:
 				# Auction for the remaining houses
-				result_of_auction = _auction_house_builds(self._state.houses_remaining, _get_players_building_houses(), self._state)
+				result_of_auction = HousingResolver._auction_house_builds(self._state.houses_remaining, self._get_players_building_houses(), self._state)
 				self._state.apply(result_of_auction)
 
 			# 4: Demolish hotels
-			_settle_hotel_demolitions(_AFTER_HOUSE_BUILDS) # special case dealt with separately
+			self._settle_hotel_demolitions(_AFTER_HOUSE_BUILDS) # special case dealt with separately
 
 		else:	# no shortage, so order doesn't matter
-			_build_and_demolish_all()
+			self._build_and_demolish_all()
 
 
 	# Convenience Methods
