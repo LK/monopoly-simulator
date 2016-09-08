@@ -1,6 +1,6 @@
 from prop import Property
 from groupofchanges import GroupOfChanges
-from square import Square
+from constants import *
 
 class NonColorProperty(Property):
 
@@ -24,8 +24,8 @@ class NonColorProperty(Property):
 	# Returns the rent on this property based on the number of properties in this
 	# group owned and the landing player's roll
 	def get_rent(self, num_owned, roll, state):
-		water_works				= state.props[Square.INDEX[Square.WATER_WORKS]]
-		electric_company	= state.props[Square.INDEX[Square.ELECTRIC_COMPANY]]
+		water_works				= state.props[INDEX[WATER_WORKS]]
+		electric_company	= state.props[INDEX[ELECTRIC_COMPANY]]
 		if self == water_works or self == electric_company:
 			multiplier = NonColorProperty._UTILITY_MULTIPLIERS[num_owned]
 			return multiplier * roll

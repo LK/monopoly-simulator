@@ -1,10 +1,10 @@
 from square import Square
 from deck import Deck
 from gamestatechange import GameStateChange
-from gamestate import GameState
 from gotojail import GoToJail
 from engine import Engine
 from groupofchanges import GroupOfChanges
+from constants import *
 
 class Card(Square):
 
@@ -17,11 +17,11 @@ class Card(Square):
 
 	@staticmethod
 	def _advance_to_go(player, state):
-		return _advance_to_square(player, Square.INDEX[Square.GO], 0, state)
+		return _advance_to_square(player, INDEX[GO], 0, state)
 
 	@staticmethod
 	def _go_to_jail(player, state):
-		go_to_jail = state.props[Square.INDEX[Square.GO_TO_JAIL]]
+		go_to_jail = state.props[INDEX[GO_TO_JAIL]]
 		return jail.landed(player, 0, state)
 
 	@staticmethod
@@ -84,12 +84,12 @@ class Card(Square):
 	# Returns the square nearest to the given position going forward
 	@staticmethod
 	def _nearest_to(position, square_indices):
-		min_dist = GameState.NUM_SQUARES + 1
+		min_dist = NUM_SQUARES + 1
 		nearest = square_indices[0]
 		for square_index in square_indices:
 			if square_index - position < 0:
 				# Account for going around the board mod 40
-				dist_to_go = -position % GameState.NUM_SQUARES
+				dist_to_go = -position % NUM_SQUARES
 				dist = dist_to_go + square_index
 			else:
 				dist = square_index - position
@@ -101,8 +101,8 @@ class Card(Square):
 
 	@staticmethod
 	def _advance_to_nearest_utility(player, state):
-		electric_company 	= Square.INDEX[Square.ELECTRIC_COMAPNY]
-		water_works 			= Square.INDEX[Square.WATER_WORKS]
+		electric_company 	= INDEX[ELECTRIC_COMPANY]
+		water_works 			= INDEX[WATER_WORKS]
 		nearest_utility 	= nearest_to(player.position, [electric_company,
 			water_works])
 		roll = Engine.roll()
@@ -110,29 +110,29 @@ class Card(Square):
 
 	@staticmethod
 	def _advance_to_nearest_railroad(player, state):
-		reading_railroad 			= Square.INDEX[Square.READING_RAILROAD]
-		pennsylvania_railroad	= Square.INDEX[Square.PENNSYLVANIA_RAILROAD]
-		b_and_o_railroad 			= Square.INDEX[Square.B_AND_O_RAILROAD]
-		short_line_railroad 	= Square.INDEX[Square.SHORT_LINE_RAILROAD]
+		reading_railroad 			= INDEX[READING_RAILROAD]
+		pennsylvania_railroad	= INDEX[PENNSYLVANIA_RAILROAD]
+		b_and_o_railroad 			= INDEX[B_AND_O_RAILROAD]
+		short_line_railroad 	= INDEX[SHORT_LINE_RAILROAD]
 		nearest_railroad 			= nearest_to(player.position, [reading_railroad,
 			pennsylvania_railroad, b_and_o_railroad, short_line_railroad])
 		return _advance_to_square(player, nearest_railroad, 0, state)
 
 	@staticmethod
 	def _advance_to_reading_railroad(player, state):
-		return _advance_to_square(player, Square.INDEX[Square.READING_RAILROAD], 0, state)
+		return _advance_to_square(player, INDEX[READING_RAILROAD], 0, state)
 
 	@staticmethod
 	def _advance_to_boardwalk(player, state):
-		return _advance_to_square(player, Square.INDEX[Square.BOARDWALK], 0, state)
+		return _advance_to_square(player, INDEX[BOARDWALK], 0, state)
 
 	@staticmethod
 	def _advance_to_illinois_avenue(player, state):
-		return _advance_to_square(player, Square.INDEX[Square.ILLINOIS_AVENUE], 0, state)
+		return _advance_to_square(player, INDEX[ILLINOIS_AVENUE], 0, state)
 
 	@staticmethod
 	def _advance_to_st_charles_place(player, state):
-		return _advance_to_square(player, Square.INDEX[Square.ST_CHARLES_PLACE], 0, state)
+		return _advance_to_square(player, INDEX[ST_CHARLES_PLACE], 0, state)
 
 	@staticmethod
 	def _go_back_three_spaces(player, state):

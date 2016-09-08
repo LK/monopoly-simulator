@@ -9,11 +9,7 @@ Description:
 	an instance of GameStateChange.
 '''
 
-from square import Square
-from gamestate import GameState
-from gotojail import GoToJail
 from color_property import ColorProperty
-from card import Card
 from constants import *
 
 class GameStateChange(object):
@@ -182,7 +178,7 @@ class GameStateChange(object):
 	@staticmethod
 	def change_position(player, new_position, bank):
 		max_roll = 12
-		if player.position >= (Square.INDEX[Square.GO] - max_roll) % NUM_SQUARES and new_position < (Square.INDEX[Square.GO] - max_roll) % NUM_SQUARES:
+		if player.position >= (INDEX[GO] - max_roll) % NUM_SQUARES and new_position < (INDEX[GO] - max_roll) % NUM_SQUARES:
 			return GameStateChange(new_position={ player: new_position }, change_in_cash={ player: +200, bank: -200 }, description=player.name + ' moved to ' + str(new_position))
 		else:
 			return GameStateChange(new_position={ player: new_position }, description=player.name + ' moved to ' + str(new_position) + ' passing GO')
@@ -200,9 +196,9 @@ class GameStateChange(object):
 	
 	@staticmethod
 	def build(prop, player, bank):
-		if prop.num_houses == ColorProperty.NUM_HOUSES_BEFORE_HOTEL:
+		if prop.num_houses == NUM_HOUSES_BEFORE_HOTEL:
 			# Build a hotel
-			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ player: -prop.house_price, bank: +prop.house_price }, change_in_houses_remaining=+ColorProperty.NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=-1, description=player.name + ' built a hotel on ' + prop.name)
+			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ player: -prop.house_price, bank: +prop.house_price }, change_in_houses_remaining=+NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=-1, description=player.name + ' built a hotel on ' + prop.name)
 		else:
 			# Build a house
 			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ player: -prop.house_price, bank: +prop.house_price }, change_in_houses_remaining=-1, description=player.name + ' built a house on ' + prop.name)
@@ -211,7 +207,7 @@ class GameStateChange(object):
 	def demolish(prop, player, bank):
 		if prop.has_hotel():
 			# Demolish a hotel
-			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=-ColorProperty.NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=+1, description=player.name + ' demolished a hotel on ' + prop.name)
+			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=-NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=+1, description=player.name + ' demolished a hotel on ' + prop.name)
 		else:
 			# Demolish a house
 			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=+1, description=player.name + ' demolished a house on ' + prop.name)
@@ -219,7 +215,7 @@ class GameStateChange(object):
 	@staticmethod
 	def draw_card(deck, player):
 		next_card = deck.peek()
-		if next_card == Card.LMBDA_GET_OUT_OF_JAIL_FREE:
+		if next_card == LMBDA_GET_OUT_OF_JAIL_FREE:
 			# Do not replace the "Get out of jail free" card
 			return GameStateChange(card_drawn={ deck: next_card }, change_in_jail_free_count={ player: +1 }, description=player.name + ' drew a Get Out of Jail Free card')
 		else:
@@ -228,11 +224,11 @@ class GameStateChange(object):
 	@staticmethod
 	def decrement_jail_card_count(player, deck):
 		# TODO: How does the caller know which deck to return "Get out of jail free" to?
-		return GameStateChange(card_replaced={ deck: Card.LMBDA_GET_OUT_OF_JAIL_FREE }, change_in_jail_free_count={ player: -1 }, description=player.name + ' used a Get Out of Jail Free card')
+		return GameStateChange(card_replaced={ deck: LMBDA_GET_OUT_OF_JAIL_FREE }, change_in_jail_free_count={ player: -1 }, description=player.name + ' used a Get Out of Jail Free card')
 
 	@staticmethod
 	def send_to_jail(player):
-		return GameStateChange(new_position={ player: Square.INDEX[Square.JAIL] }, change_in_jail_moves={ player: +GoToJail.JAIL_MOVES }, description=player.name + ' went to jail')
+		return GameStateChange(new_position={ player: INDEX[JAIL] }, change_in_jail_moves={ player: +JAIL_MOVES }, description=player.name + ' went to jail')
 
 	@staticmethod
 	def decrement_in_jail_moves(player):

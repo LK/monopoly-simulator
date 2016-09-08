@@ -3,7 +3,6 @@ from notification_changes import NotificationChanges
 from groupofchanges import GroupOfChanges
 from gamestatechange import GameStateChange
 from random import randint
-from card import Card
 from constants import *
 
 class DefaultDecisionMaker(object):

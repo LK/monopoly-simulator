@@ -15,8 +15,8 @@ Description:
 
 from groupofchanges import GroupOfChanges
 from gamestatechange import GameStateChange
-from colorproperty import ColorProperty
 import datetime
+from constants import *
 
 class HousingResolver(object):
 
@@ -101,9 +101,9 @@ class HousingResolver(object):
 			if not were_houses_demolished and were_hotels_built:
 				num_houses_to_become_available = self._houses_demolished
 			elif were_houses_demolished and not were_hotels_built:
-				num_houses_to_become_available = ColorProperty.NUM_HOUSES_BEFORE_HOTEL * self._hotels_built
+				num_houses_to_become_available = NUM_HOUSES_BEFORE_HOTEL * self._hotels_built
 			else:
-				num_houses_to_become_available = self._houses_demolished + (ColorProperty.NUM_HOUSES_BEFORE_HOTEL * self._hotels_built)
+				num_houses_to_become_available = self._houses_demolished + (NUM_HOUSES_BEFORE_HOTEL * self._hotels_built)
 			return self._houses_built > self._state.houses_remaining + num_houses_to_become_available
 
 
@@ -216,7 +216,7 @@ class HousingResolver(object):
 	def _auction_hotel_demolitions(num_houses, players):
 		lambda bid(player, highest_bid, props, state): player.bid_hotel_demolitions(highest_bid, props, state)
 		lambda extract_bid(change, state): change.change_in_cash[state.bank] + change.changes_in_houses.keys()[0].house_price/2
-		_auction(int(num_houses/ColorProperty.NUM_HOUSES_BEFORE_HOTEL), players, bid, extract_bid)
+		_auction(int(num_houses/NUM_HOUSES_BEFORE_HOTEL), players, bid, extract_bid)
 
 
 	# Special case procedure for hotel demolitions
@@ -224,7 +224,7 @@ class HousingResolver(object):
 	# Returns true if there are enough houses to demolish the requested number of
 	# hotels, false if not, based on whether houses were built yet
 	def _are_enough_houses_for_hotel_demolitions(self, were_houses_built):
-		num_houses_needed = ColorProperty.NUM_HOUSES_BEFORE_HOTEL * self._hotels_demolished
+		num_houses_needed = NUM_HOUSES_BEFORE_HOTEL * self._hotels_demolished
 		if were_houses_built:
 			return num_houses_needed <= self._state.houses_remaining
 		else:

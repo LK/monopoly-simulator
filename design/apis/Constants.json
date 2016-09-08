@@ -72,9 +72,9 @@
 		},
 
 		{
-			"name": "INDEX",
-			"type": "{ String: int }",
-			"description": "A dictionary that maps square names to their indices on the board"
+			"name": "JAIL_MOVES",
+			"type": "int",
+			"description": "The number of 'in-jail moves' given to a Player when landing on this Square"
 		},
 
 		{
@@ -315,6 +315,12 @@
 			"name": "LUXURY_TAX",
 			"type": "String",
 			"description": "String representation of the 'Luxury Tax' Square"
+		},
+
+		{
+			"name": "INDEX",
+			"type": "{ String: int }",
+			"description": "A dictionary that maps square names to their indices on the board"
 		}
 
 	],

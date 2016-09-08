@@ -1,5 +1,6 @@
 from prop import Property
 from groupofchanges import GroupOfChanges
+from constants import *
 
 class ColorProperty(Property):
 	def __init__(self, name, price, rents, property_group, size_of_property_group, mortgaged=False, house_price=0, num_houses=0):
@@ -51,7 +52,7 @@ class ColorProperty(Property):
 		self.num_houses -= qty
 
 	def has_hotel(self):
-		return self.num_houses == self.NUM_HOUSES_BEFORE_HOTEL + 1
+		return self.num_houses == NUM_HOUSES_BEFORE_HOTEL + 1
 
 	def __str__(self):
 		s = ""

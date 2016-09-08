@@ -5,12 +5,6 @@
 
 	"constants": [
 
-		{
-			"name": "JAIL_MOVES",
-			"type": "int",
-			"description": "The number of 'in-jail moves' given to a Player when landing on this Square"
-		}
-
 	],
 
 	"instanceVariables": [],

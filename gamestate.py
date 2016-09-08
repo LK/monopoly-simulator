@@ -16,6 +16,7 @@ from non_color_property import NonColorProperty
 from tax import Tax
 from gotojail import GoToJail
 from free_space import FreeSpace
+from constants import *
 
 class GameState(object):
 	# Initialization

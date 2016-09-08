@@ -13,6 +13,8 @@ NUM_SQUARES = 40
 
 LMBDA_GET_OUT_OF_JAIL_FREE = lambda player, state: _get_out_of_jail_free(player, state)
 
+JAIL_MOVES = 3
+
 GO 										= "Go"
 MEDITERRANEAN_AVENUE 	= "Mediterranean Avenue"
 COMMUNITY_CHEST_1 		= "Community Chest 1"
