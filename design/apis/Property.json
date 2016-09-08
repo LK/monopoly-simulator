@@ -185,6 +185,15 @@
 					"access": "Public",
 					"overrides": "Square.landed()",
 					"description": "Returns the GroupOfChanges resulting from the Player's landing on this Property. Note that this should never be called by a direct instance of Property; it should only be called by an instance of one of its subclasses"
+				},
+
+				{
+					"name": "__str__()",
+					"arguments": [],
+					"returnType": "String",
+					"access": "Public",
+					"overrides": "Square.__str__()",
+					"description": "Returns a string representation of this Property"
 				}
 
 			]

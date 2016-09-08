@@ -233,6 +233,14 @@
 					"returnType": "void",
 					"access": "Public",
 					"description": "Modifies this GameState by applying all of the changes in the GroupOfChanges container, in the order specified upon initializing the GroupOfChanges"
+				},
+
+				{
+					"name": "__str__()",
+					"arguments": [],
+					"returnType": "String",
+					"access": "Public",
+					"description": "Returns a string representation of this GameState"
 				}
 
 			]

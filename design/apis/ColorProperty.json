@@ -214,6 +214,15 @@
 					"returnType": "boolean",
 					"access": "Public",
 					"description": "Returns True if this ColorProperty has a hotel on it, False if not"
+				},
+
+				{
+					"name": "__str__()",
+					"arguments": [],
+					"returnType": "String",
+					"access": "Public",
+					"overrides": "Square.__str__()",
+					"description": "Returns a string representation of this ColorProperty"
 				}
 
 			]

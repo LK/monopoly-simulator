@@ -127,6 +127,15 @@
 					"access": "Public",
 					"overrides": "Square.landed()",
 					"description": "Returns the GroupOfChanges resulting from the Player's landing on this Card"
+				},
+
+				{
+					"name": "__str__()",
+					"arguments": [],
+					"returnType": "String",
+					"access": "Public",
+					"overrides": "Square.__str__()",
+					"description": "Returns a string representation of this Card"
 				}
 
 			]

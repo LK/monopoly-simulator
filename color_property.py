@@ -55,4 +55,11 @@ class ColorProperty(Property):
 
 	def has_hotel(self):
 		return self.num_houses == self.NUM_HOUSES_BEFORE_HOTEL + 1
+
+	def __str__(self):
+		s = ""
+		s += "Name:       %s\n" % (self._name)
+		s += "Num houses: %d\n" % (self._num_houses)
+		s += "Mortgaged:  " + str(self._mortgaged) + "\n"
+		return s
 		

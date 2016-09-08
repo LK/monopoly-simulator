@@ -121,6 +121,15 @@
 					"returnType": "int",
 					"access": "Public",
 					"description": "Returns the amount a Player must pay when landing on this NonColorProperty given the number of properties in the group that the owner owns, the landing Player's roll, and the current GameState"
+				},
+
+				{
+					"name": "__str__()",
+					"arguments": [],
+					"returnType": "String",
+					"access": "Public",
+					"overrides": "Square.__str__()",
+					"description": "Returns a string representation of this NonColorProperty"
 				}
 
 			]
