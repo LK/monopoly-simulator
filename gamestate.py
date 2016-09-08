@@ -160,8 +160,10 @@ class GameState(object):
 		self._houses_remaining       = NUM_HOUSES
 		self._hotels_remaining       = NUM_HOTELS
 		self._bank 									 = GameState._initialize_bank(self._squares)
-		self._decks									 = { CHANCE_CARD: Deck(Card.make_chance_functions()).shuffle(), COMMUNITY_CHEST_CARD: Deck(Card.make_community_chest_functions()).shuffle() }
-		
+		self._decks									 = { CHANCE_CARD: Deck(Card.make_chance_functions()), COMMUNITY_CHEST_CARD: Deck(Card.make_community_chest_functions()) }
+
+		self._decks[CHANCE_CARD].shuffle()
+		self._decks[COMMUNITY_CHEST_CARD].shuffle()
 
 	# Private
 

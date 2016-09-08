@@ -12,8 +12,10 @@ class Engine(object):
 
 	def run(self):
 		num_players = len(self._state.players)
-		player = self._state.players[randint(0,num_players-1)]
+		idx = randint(0,num_players-1)
 		while not self._completed():
+			player = self._state.players[idx]
+			idx = (idx + 1) % len(self._state.players)
 			roll = Roll()
 			if player.jail_moves > 0 and roll.is_doubles:
 				self._state.apply(GroupOfChanges(changes=[GameStateChange.leave_jail(player)]))
@@ -22,7 +24,7 @@ class Engine(object):
 			elif player.jail_moves == 1:
 				# TODO: Allow player to choose to use a "Get out of jail free" card
 				decrement_jail_moves  = GroupOfChanges(changes=[GameStateChange.decrement_jail_moves(player)])
-				pay_changes 					= player.pay(state.bank, 50, self._state)
+				pay_changes 					= player.pay(self._state.bank, 50, self._state)
 				leave_changes 				= GroupOfChanges(changes=[GameStateChange.leave_jail(player)])
 				self._state.apply(GroupOfChanges.combine([decrement_jail_moves, pay_changes, leave_changes]))
 
@@ -36,9 +38,9 @@ class Engine(object):
 				self._take_turn(player, roll.value)
 				roll = Roll()
 
-
 	def _take_turn(self, player, roll):
 		position = (player.position + roll) % NUM_SQUARES
+		print player.name + ' rolled a ' + str(roll)
 		self._state.apply(GroupOfChanges([GameStateChange.change_position(player, position, self._state.bank, self._state.squares)]))
 		self._state.apply(self._state.squares[position].landed(player, roll, self._state))
 		self._notify_all()

@@ -266,9 +266,9 @@ class HousingResolver(object):
 		# 1: Demolish houses
 		self._demolish_houses()
 
-		if self._is_hotel_shortage(_BEFORE_HOTEL_DEMOLITIONS):
+		if self._is_hotel_shortage(HousingResolver._BEFORE_HOTEL_DEMOLITIONS):
 			# 2: Build houses
-			if not self._is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _OVERRIDE_TRUE):
+			if not self._is_house_shortage(HousingResolver._AFTER_HOUSE_DEMOLITIONS, HousingResolver._OVERRIDE_TRUE):
 				self._build_houses()
 			else:
 				# Auction houses
@@ -276,19 +276,19 @@ class HousingResolver(object):
 				self._state.apply(result_of_auction)
 
 			# 3: Demolish hotels
-			self._settle_hotel_demolitions(_AFTER_HOUSE_BUILDS) # special case dealt with separately
+			self._settle_hotel_demolitions(HousingResolver._AFTER_HOUSE_BUILDS) # special case dealt with separately
 
 			# 4: Build hotels
-			if not self._is_hotel_shortage(_AFTER_HOTEL_DEMOLITIONS):
+			if not self._is_hotel_shortage(HousingResolver._AFTER_HOTEL_DEMOLITIONS):
 				self._build_hotels()
 			else:
 				# Auction the remaining hotels
 				result_of_auction = HousingResolver._auction_hotel_builds(self._state.hotels_remaining, self._get_players_building_hotels(), self._state)
 				self._state.apply(result_of_auction)
 				
-		elif self._is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _BEFORE_HOTEL_BUILDS):
+		elif self._is_house_shortage(HousingResolver._AFTER_HOUSE_DEMOLITIONS, HousingResolver._BEFORE_HOTEL_BUILDS):
 			# 2: Build hotels
-			if not self._is_hotel_shortage(_OVERRIDE_TRUE):
+			if not self._is_hotel_shortage(HousingResolver._OVERRIDE_TRUE):
 				self._build_hotels()
 			else:
 				# Auction for the remaining hotels
@@ -296,7 +296,7 @@ class HousingResolver(object):
 				self._state.apply(result_of_auction)
 
 			# 3: Build houses
-			if not self._is_house_shortage(_AFTER_HOUSE_DEMOLITIONS, _AFTER_HOTEL_BUILDS):
+			if not self._is_house_shortage(HousingResolver._AFTER_HOUSE_DEMOLITIONS, HousingResolver._AFTER_HOTEL_BUILDS):
 				self._build_houses()
 			else:
 				# Auction for the remaining houses
@@ -304,7 +304,7 @@ class HousingResolver(object):
 				self._state.apply(result_of_auction)
 
 			# 4: Demolish hotels
-			self._settle_hotel_demolitions(_AFTER_HOUSE_BUILDS) # special case dealt with separately
+			self._settle_hotel_demolitions(HousingResolver._AFTER_HOUSE_BUILDS) # special case dealt with separately
 
 		else:	# no shortage, so order doesn't matter
 			self._build_and_demolish_all()

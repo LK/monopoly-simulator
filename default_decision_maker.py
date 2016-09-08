@@ -48,12 +48,12 @@ class DefaultDecisionMaker(object):
 		changes = []
 
 		# Try paying all cash first
-		if player.cash >= amount:
+		if player_from.cash >= amount:
 			changes.append(transfer_money)
 			return GroupOfChanges(changes=changes)
 
 		# Mortgage properties until the difference is paid off
-		difference = amount - player.cash
+		difference = amount - player_from.cash
 		i = 0
 		while difference > 0 and i < len(player_from.props):
 			prop = player_from.props[i]
@@ -61,7 +61,7 @@ class DefaultDecisionMaker(object):
 			if not prop.mortgaged and DefaultDecisionMaker._can_mortgage_property(prop, state):
 				mortgage = GameStateChange.mortgage(prop, state.bank)
 				changes.append(mortgage)
-				difference -= mortgage.change_in_cash[player]
+				difference -= mortgage.change_in_cash[player_from]
 
 		if difference <= 0:
 			changes.append(transfer_money)
@@ -76,7 +76,7 @@ class DefaultDecisionMaker(object):
 				demolition = DefaultDecisionMaker._demolish_from_property_group(prop, state)
 				if demolition != None:
 					changes.append(demolition)
-					difference -= demolition.change_in_cash[player]
+					difference -= demolition.change_in_cash[player_from]
 
 		if difference <= 0:
 			changes.append(transfer_money)
