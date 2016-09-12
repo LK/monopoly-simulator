@@ -1,21 +1,24 @@
-from collections import Counter
 from default_decision_maker import DefaultDecisionMaker
 
 class Player(object):
 	# TODO: Initialize property_group_counts so that each property group maps to a count of 0
-	def __init__(self, position=0, cash=1500, props=[], property_group_counts={}, decision_maker=DefaultDecisionMaker(), jail_free_count=0, jail_moves=0, is_in_game=True, name=''):
+	def __init__(self, position=0, cash=1500, props=[], decision_maker=DefaultDecisionMaker(), jail_free_count=0, jail_moves=0, is_in_game=True, name=''):
 		self._position					= position
 		self._cash 							= cash
+		self._props = []
+		self._property_group_counts = {}
+		for prop in props:
+			self._props.append(prop)
+			group = prop.property_group
+			if group in self._property_group_counts.keys():
+				self._property_group_counts[group] += 1
+			else:
+				self._property_group_counts[group] = 1
 		self._decision_maker		= decision_maker
 		self._jail_free_count		= jail_free_count
 		self._jail_moves				= jail_moves
 		self._is_in_game				= is_in_game
-		self._props 						= props
 		self._name 							= name
-
-		# Compute property group count
-		groups = [prop.property_group for prop in props]
-		self._property_group_counts = Counter(groups)
 
 
 	def copy(self):
@@ -110,13 +113,22 @@ class Player(object):
 	def add_properties(self, added_properties):
 		self._props += added_properties
 		for prop in added_properties:
-			self._property_group_counts[prop.property_group] += 1
+			group = prop.property_group
+			if group in self._property_group_counts.keys():
+				self._property_group_counts[group] += 1
+			else:
+				self._property_group_counts[group] = 1
 
 	# Removes the list of properties and updates the corresponding property group counts
 	def remove_properties(self, removed_properties):
 		for prop in removed_properties:
 			self.props.remove(prop)
-			self._property_group_counts[prop.property_group] -= 1
+			group = prop.property_group
+			if group in self._property_group_counts.keys():
+				self._property_group_counts[group] -= 1
+			else:
+				self._property_group_counts[group] = 1
+
 
 	def eliminate(self):
 		self._is_in_game = False

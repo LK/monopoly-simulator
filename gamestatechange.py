@@ -14,20 +14,54 @@ from constants import *
 
 class GameStateChange(object):
 	def __init__(self, change_in_cash={}, new_position={}, added_props={}, removed_props={}, card_drawn={}, card_replaced={}, change_in_jail_moves={}, change_in_jail_free_count={}, is_in_game={}, change_in_houses={}, change_in_houses_remaining=0, change_in_hotels_remaining=0, is_mortgaged={}, description=''):
-		self._change_in_cash            	= change_in_cash
-		self._new_position              	= new_position
-		self._added_props          				= added_props
-		self._removed_props        				= removed_props
-		self._card_drawn									= card_drawn
-		self._card_replaced								= card_replaced
-		self._change_in_jail_moves				= change_in_jail_moves
-		self._change_in_jail_free_count		= change_in_jail_free_count
-		self._is_in_game									= is_in_game
-		self._change_in_houses						= change_in_houses
-		self._change_in_houses_remaining	= change_in_houses_remaining
-		self._change_in_hotels_remaining	= change_in_hotels_remaining
-		self._is_mortgaged								= is_mortgaged
-		self._description									= description
+		self._change_in_cash = {}
+		for player in change_in_cash.keys():
+			self._change_in_cash[player] = change_in_cash[player]
+
+		self._new_position = {}
+		for player in new_position.keys():
+			self._new_position[player] = new_position[player]
+
+		self._added_props = {}
+		for player in added_props.keys():
+			self._added_props[player] = added_props[player]
+
+		self._removed_props = {}
+		for player in removed_props.keys():
+			self._removed_props[player] = removed_props[player]
+
+		self._card_drawn = {}
+		for deck, card in card_drawn.iteritems():
+			self._card_drawn[deck] = card
+
+		self._card_replaced = {}
+		for deck, card in card_replaced.iteritems():
+			self._card_replaced[deck] = card
+
+		self._change_in_jail_moves = {}
+		for player in change_in_jail_moves.keys():
+			self._change_in_jail_moves[player] = change_in_jail_moves[player]
+
+		self._change_in_jail_free_count = {}
+		for player in change_in_jail_free_count.keys():
+			self._change_in_jail_free_count[player] = change_in_jail_free_count[player]
+
+		self._is_in_game = {}
+		for player in is_in_game.keys():
+			self._is_in_game[player] = is_in_game[player]
+
+		self._change_in_houses = {}
+		for prop in change_in_houses.keys():
+			self._change_in_houses[prop] = change_in_houses[prop]
+
+		self._change_in_houses_remaining = change_in_houses_remaining
+		self._change_in_hotels_remaining = change_in_hotels_remaining
+
+		self._is_mortgaged = {}
+		for prop in is_mortgaged.keys():
+			self._is_mortgaged[prop] = is_mortgaged[prop]
+
+		self._description = description
 
 	@property
 	def change_in_cash(self):
