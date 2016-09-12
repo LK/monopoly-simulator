@@ -5,6 +5,7 @@ from gotojail import GoToJail
 from roll import Roll
 from groupofchanges import GroupOfChanges
 from color_property import ColorProperty
+from non_color_property import NonColorProperty
 from constants import *
 
 class Card(Square):
@@ -19,7 +20,10 @@ class Card(Square):
 	def _advance_to_square(player, square_index, roll, state): # TODO: Account for GO money when passing GO
 		state.apply(Card._group_from_single_change(GameStateChange.change_position(player, square_index, state.bank, state.squares)))
 		square = state.squares[square_index]
-		return square.landed(player, roll, state)
+		if isinstance(square, NonColorProperty):
+			return square.landed(player, roll, state, from_card=True)
+		else:
+			return square.landed(player, roll, state)
 
 	@staticmethod
 	def _advance_to_go(player, state):
@@ -112,7 +116,7 @@ class Card(Square):
 		nearest_utility 	= Card._nearest_to(player.position, [electric_company,
 			water_works])
 		roll = Roll().value
-		return Card._advance_to_square(player, nearest_utility, roll, state)  # TODO: Always make rent roll x 10
+		return Card._advance_to_square(player, nearest_utility, roll, state)
 
 	@staticmethod
 	def _advance_to_nearest_railroad(player, state):

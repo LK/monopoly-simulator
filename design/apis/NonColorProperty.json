@@ -90,6 +90,13 @@
 						{
 							"name": "state",
 							"type": "GameState"
+						},
+
+						{
+							"name": "from_card",
+							"type": "boolean",
+							"default": "False",
+							"description": "Indicates whether the call to this method was the result of a Chance card. If so, the appropriate rent rules apply: For utilities, rent is x10 the roll, and for railroads, the rent is x2 the rent on the deed"
 						}
 					],
 					"returnType": "GroupOfChanges",
