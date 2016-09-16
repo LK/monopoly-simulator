@@ -18,6 +18,7 @@ class Card(Square):
 	# Chance and community chest functions
 	@staticmethod
 	def _advance_to_square(player, square_index, roll, state): # TODO: Account for GO money when passing GO
+		# Apply the player's new position now so they are aware of their position
 		state.apply(Card._group_from_single_change(GameStateChange.change_position(player, square_index, state.bank, state.squares)))
 		square = state.squares[square_index]
 		if isinstance(square, NonColorProperty):

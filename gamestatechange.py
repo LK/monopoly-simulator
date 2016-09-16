@@ -227,9 +227,7 @@ class GameStateChange(object):
 			# Normal position change
 			return GameStateChange(new_position={ player: new_position }, description=description)
 
-	 # TODO: Need to get a reference to player (owner of property) for mortgage(),
-	 # unmortgage(), build_house(), build_hotel(), demolish_house(),
-	 # demolish_hotel()
+	 # TODO: Need to get a reference to player (owner of property) for mortgage(), unmortgage(), build_house(), build_hotel(), demolish_house(), demolish_hotel()
 	@staticmethod
 	def mortgage(prop, player, bank):
 		return GameStateChange(is_mortgaged={ prop: True }, change_in_cash={ player: +prop.price / 2, bank: -prop.price / 2 }, description=player.name + ' mortgaged ' + prop.name)
