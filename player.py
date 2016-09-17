@@ -1,24 +1,30 @@
 from default_decision_maker import DefaultDecisionMaker
+from constants import *
 
 class Player(object):
+
+	@staticmethod
+	def _initialize_property_group_counts():
+		groups = [PURPLE, LIGHT_BLUE, PINK, ORANGE, RED, YELLOW, GREEN, DARK_BLUE, RAILROAD, UTILITY]
+		property_group_counts = {}
+		for group in groups:
+			property_group_counts[group] = 0
+		return property_group_counts
+
 	# TODO: Initialize property_group_counts so that each property group maps to a count of 0
 	def __init__(self, position=0, cash=1500, props=[], decision_maker=DefaultDecisionMaker(), jail_free_count=0, jail_moves=0, is_in_game=True, name=''):
-		self._position					= position
-		self._cash 							= cash
-		self._props = []
-		self._property_group_counts = {}
+		self._position							= position
+		self._cash 									= cash
+		self._props 								= []
+		self._property_group_counts = Player._initialize_property_group_counts()
 		for prop in props:
 			self._props.append(prop)
-			group = prop.property_group
-			if group in self._property_group_counts.keys():
-				self._property_group_counts[group] += 1
-			else:
-				self._property_group_counts[group] = 1
-		self._decision_maker		= decision_maker
-		self._jail_free_count		= jail_free_count
-		self._jail_moves				= jail_moves
-		self._is_in_game				= is_in_game
-		self._name 							= name
+			self._property_group_counts[prop.property_group] += 1
+		self._decision_maker				= decision_maker
+		self._jail_free_count				= jail_free_count
+		self._jail_moves						= jail_moves
+		self._is_in_game						= is_in_game
+		self._name 									= name
 
 
 	def copy(self):

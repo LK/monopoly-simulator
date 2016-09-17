@@ -26,18 +26,6 @@ class GameState(object):
 
 	@staticmethod
 	def _initialize_squares():
-		PURPLE 			= 0
-		LIGHT_BLUE 	= 1
-		PINK 				= 2
-		ORANGE 			= 3
-		RED 				= 4
-		YELLOW 			= 5
-		GREEN 			= 6
-		DARK_BLUE 	= 7
-
-		RAILROAD 		= 100
-		UTILITY 		= 101
-		
 		PROP_MEDITERRANEAN 					= ColorProperty(name=MEDITERRANEAN_AVENUE, 
 																								price=60, 
 																								rents=[4, 10, 30, 90, 160, 250], 				

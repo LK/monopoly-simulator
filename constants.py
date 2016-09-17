@@ -1,3 +1,4 @@
+# Card-related constants
 CHANCE_CARD = True
 COMMUNITY_CHEST_CARD = not CHANCE_CARD
 CHANCE_PER_HOUSE_FEE = 25
@@ -7,14 +8,30 @@ COMMUNITY_CHEST_PER_HOTEL_FEE = 115
 
 NUM_HOUSES_BEFORE_HOTEL = 4
 
+# Total quantities of items on the board
 NUM_HOUSES = 32
 NUM_HOTELS = 12
 NUM_SQUARES = 40
 
+# Represents the "Get out of jail free" card
 LMBDA_GET_OUT_OF_JAIL_FREE = 'jail card'
 
+# Max number of moves a player can spend in jail
 JAIL_MOVES = 3
 
+# Property group labels
+PURPLE 			= 0
+LIGHT_BLUE 	= 1
+PINK 				= 2
+ORANGE 			= 3
+RED 				= 4
+YELLOW 			= 5
+GREEN 			= 6
+DARK_BLUE 	= 7
+RAILROAD 		= 100
+UTILITY 		= 101
+
+# Square names
 GO 										= "Go"
 MEDITERRANEAN_AVENUE 	= "Mediterranean Avenue"
 COMMUNITY_CHEST_1 		= "Community Chest 1"
