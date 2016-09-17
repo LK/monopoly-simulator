@@ -125,8 +125,9 @@ class DefaultDecisionMaker(object):
 				deck = new_state.decks[CHANCE_CARD]
 			else:
 				deck = new_state.decks[COMMUNITY_CHEST_CARD]
-			get_out_of_jail = GameStateChange.decrement_jail_card_count(player, deck)
-			return NotificationChanges([get_out_of_jail])
+			use_card 		= GameStateChange.decrement_jail_card_count(player, deck)
+			leave_jail 	= GameStateChange.leave_jail(player)
+			return NotificationChanges(non_building_changes=[use_card, leave_jail])
 		else:
 			return NotificationChanges()
 

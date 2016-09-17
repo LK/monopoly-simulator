@@ -26,10 +26,9 @@ class Engine(object):
 				self._state.apply(GroupOfChanges(changes=[GameStateChange.decrement_jail_moves(player)]))
 			elif player.jail_moves == 1:
 				# TODO: Allow player to choose to use a "Get out of jail free" card
-				decrement_jail_moves  = GroupOfChanges(changes=[GameStateChange.decrement_jail_moves(player)])
 				pay_changes 					= player.pay(self._state.bank, 50, self._state)
 				leave_changes 				= GroupOfChanges(changes=[GameStateChange.leave_jail(player)])
-				self._state.apply(GroupOfChanges.combine([decrement_jail_moves, pay_changes, leave_changes]))
+				self._state.apply(GroupOfChanges.combine([pay_changes, leave_changes]))
 
 			self._take_turn(player, roll.value)
 
