@@ -10,6 +10,13 @@ class Engine(object):
 	def __init__(self, num_players):
 		self._state = GameState(num_players)
 
+	def _wait(self):
+		cmd = raw_input('')
+		if cmd == 'state':
+			print
+			print str(self._state)
+		print
+
 	def run(self):
 		num_players = len(self._state.players)
 		idx = random.randint(0,num_players-1)
@@ -24,6 +31,8 @@ class Engine(object):
 				self._state.apply(GroupOfChanges(changes=[GameStateChange.leave_jail(player)]))
 			elif player.jail_moves >= 2:
 				self._state.apply(GroupOfChanges(changes=[GameStateChange.decrement_jail_moves(player)]))
+				self._wait()
+				continue
 			elif player.jail_moves == 1:
 				# TODO: Allow player to choose to use a "Get out of jail free" card
 				pay_changes 					= player.pay(self._state.bank, 50, self._state)
@@ -49,11 +58,7 @@ class Engine(object):
 		self._state.apply(self._state.squares[position].landed(player, roll, self._state))
 		self._notify_all()
 
-		cmd = raw_input('')
-		if cmd == 'state':
-			print
-			print str(self._state)
-		print
+		self._wait()
 
 	def _notify_all(self):
 		player_building_requests = {}
