@@ -43,7 +43,7 @@ class NonColorProperty(Property):
 				multiplier = NonColorProperty._UTILITY_MULTIPLIERS[num_owned]
 			return multiplier * roll
 		else:
-			rent = self.rents[num_owned]
+			rent = self.rents[num_owned - 1]
 			if from_card:
 				return 2 * rent
 			else:
