@@ -283,10 +283,13 @@ class GameStateChange(object):
 	@staticmethod
 	def eliminate(player_eliminated, player_eliminator):
 		# Eliminated player's properties get completely demolished
-		# TODO: Add money from taking down houses
 		demolitions = { }
 		for prop in player_eliminated.props:
 			if isinstance(prop, ColorProperty):
 				demolitions[prop] = -prop.num_houses
 
-		return GameStateChange(is_in_game={ player_eliminated: False }, change_in_cash={ player_eliminated: -player_eliminated.cash, player_eliminator: +player_eliminated.cash }, removed_props={ player_eliminated: player_eliminated.props }, added_props={ player_eliminator: player_eliminated.props }, change_in_jail_free_count={ player_eliminated: -player_eliminated.jail_free_count, player_eliminator: +player_eliminated.jail_free_count }, change_in_houses=demolitions, description=player_eliminated.name + ' lost to ' + player_eliminator.name)
+		house_money = 0
+		for prop, houses in demolitions.iteritems():
+			house_money += prop.house_price * 0.5 * houses
+
+		return GameStateChange(is_in_game={ player_eliminated: False }, change_in_cash={ player_eliminated: -player_eliminated.cash, player_eliminator: +player_eliminated.cash + house_money }, removed_props={ player_eliminated: player_eliminated.props }, added_props={ player_eliminator: player_eliminated.props }, change_in_jail_free_count={ player_eliminated: -player_eliminated.jail_free_count, player_eliminator: +player_eliminated.jail_free_count }, change_in_houses=demolitions, description=player_eliminated.name + ' lost to ' + player_eliminator.name)
