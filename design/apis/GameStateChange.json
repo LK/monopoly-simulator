@@ -437,13 +437,13 @@
 						},
 
 						{
-							"name": "bank",
-							"type": "Player"
+							"name": "state",
+							"type": "GameState"
 						}
 					],
 					"returnType": "GameStateChange",
 					"access": "Public",
-					"description": "Returns a GameStateChange that mortgages the given property. Uses the bank to give the owner mortgage money"
+					"description": "Returns a GameStateChange that mortgages the given property"
 				},
 
 				{
@@ -455,13 +455,13 @@
 						},
 
 						{
-							"name": "bank",
-							"type": "Player"
+							"name": "state",
+							"type": "GameState"
 						}
 					],
 					"returnType": "GameStateChange",
 					"access": "Public",
-					"description": "Returns a GameStateChange that unmortgages the given property. Uses the bank so the Player can repay the mortgage money"
+					"description": "Returns a GameStateChange that unmortgages the given property"
 				},
 
 				{
@@ -473,13 +473,8 @@
 						},
 
 						{
-							"name": "player",
-							"type": "Player"
-						},
-
-						{
-							"name": "bank",
-							"type": "Player"
+							"name": "state",
+							"type": "GameState"
 						}
 					],
 					"returnType": "GameStateChange",
@@ -496,13 +491,8 @@
 						},
 
 						{
-							"name": "player",
-							"type": "Player"
-						},
-
-						{
-							"name": "bank",
-							"type": "Player"
+							"name": "state",
+							"type": "GameState"
 						}
 					],
 					"returnType": "GameStateChange",

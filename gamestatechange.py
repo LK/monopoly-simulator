@@ -229,30 +229,34 @@ class GameStateChange(object):
 
 	 # TODO: Need to get a reference to player (owner of property) for mortgage(), unmortgage(), build_house(), build_hotel(), demolish_house(), demolish_hotel()
 	@staticmethod
-	def mortgage(prop, player, bank):
-		return GameStateChange(is_mortgaged={ prop: True }, change_in_cash={ player: +prop.price / 2, bank: -prop.price / 2 }, description=player.name + ' mortgaged ' + prop.name)
+	def mortgage(prop, state):
+		owner = state.get_owner(prop)
+		return GameStateChange(is_mortgaged={ prop: True }, change_in_cash={ owner: +prop.price / 2, state.bank: -prop.price / 2 }, description=owner.name + ' mortgaged ' + prop.name)
 
 	@staticmethod
-	def unmortgage(prop, player, bank):
-		return GameStateChange(is_mortgaged={ prop: False }, change_in_cash={ player: (-prop.price / 2) * 1.1, bank: (prop.price / 2) * 1.1 }, description=player.name + ' unmortgaged ' + prop.name)
+	def unmortgage(prop, state):
+		owner = state.get_owner(prop)
+		return GameStateChange(is_mortgaged={ prop: False }, change_in_cash={ owner: (-prop.price / 2) * 1.1, state.bank: (prop.price / 2) * 1.1 }, description=owner.name + ' unmortgaged ' + prop.name)
 
 	@staticmethod
-	def build(prop, player, bank):
+	def build(prop, state):
+		owner = state.get_owner(prop)
 		if prop.num_houses == NUM_HOUSES_BEFORE_HOTEL:
 			# Build a hotel
-			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ player: -prop.house_price, bank: +prop.house_price }, change_in_houses_remaining=+NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=-1, description=player.name + ' built a hotel on ' + prop.name)
+			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ owner: -prop.house_price, state.bank: +prop.house_price }, change_in_houses_remaining=+NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=-1, description=owner.name + ' built a hotel on ' + prop.name)
 		else:
 			# Build a house
-			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ player: -prop.house_price, bank: +prop.house_price }, change_in_houses_remaining=-1, description=player.name + ' built a house on ' + prop.name)
+			return GameStateChange(change_in_houses={ prop: +1 }, change_in_cash={ owner: -prop.house_price, state.bank: +prop.house_price }, change_in_houses_remaining=-1, description=owner.name + ' built a house on ' + prop.name)
 
 	@staticmethod
-	def demolish(prop, player, bank):
+	def demolish(prop, state):
+		owner = state.get_owner(prop)
 		if prop.has_hotel():
 			# Demolish a hotel
-			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=-NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=+1, description=player.name + ' demolished a hotel on ' + prop.name)
+			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ owner: +prop.house_price / 2, state.bank: -prop.house_price / 2 }, change_in_houses_remaining=-NUM_HOUSES_BEFORE_HOTEL, change_in_hotels_remaining=+1, description=owner.name + ' demolished a hotel on ' + prop.name)
 		else:
 			# Demolish a house
-			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ player: +prop.house_price / 2, bank: -prop.house_price / 2 }, change_in_houses_remaining=+1, description=player.name + ' demolished a house on ' + prop.name)
+			return GameStateChange(change_in_houses={ prop: -1 }, change_in_cash={ owner: +prop.house_price / 2, state.bank: -prop.house_price / 2 }, change_in_houses_remaining=+1, description=owner.name + ' demolished a house on ' + prop.name)
 
 	@staticmethod
 	def draw_card(deck, player):

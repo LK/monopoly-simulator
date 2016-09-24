@@ -32,7 +32,7 @@ class DefaultDecisionMaker(object):
 				max_houses_prop = prop
 
 		if max_houses_prop != None:
-			return GameStateChange.demolish(max_houses_prop, state.bank)
+			return GameStateChange.demolish(max_houses_prop, state)
 		else:
 			return None
 
@@ -93,22 +93,22 @@ class DefaultDecisionMaker(object):
 	def bid_house_builds(self, player, highest_bid, props_to_build_on, state):
 		bid = player.cash / 2
 		prop_to_build_on = props_to_build_on[0]
-		house_build = GameStateChange.build(prop, player, state.bank)
+		house_build = GameStateChange.build(prop, state)
 		return GroupOfChanges([house_build])
 
 	# By default, player bids half his cash
 	def bid_hotel_builds(self, player, highest_bid, props_to_build_on, state):
 		bid = player.cash / 2
 		prop_to_build_on = props_to_build_on[0]
-		hotel_build = GameStateChange.build(prop, player, state.bank)
+		hotel_build = GameStateChange.build(prop, state)
 		return GroupOfChanges([hotel_build])
 
 	# By default, player bids half his cash
 	def bid_hotel_demolitions(self, player, highest_bid, props_to_demolish_on, state):
 		bid = player.cash / 2
 		prop_to_demolish_on = props_to_demolish_on[0]
-		hotel_demolition = GameStateChange.demolish(prop, player, state.bank)
-		house_builds = [GameStateChange.build(prop, player, state.bank)] * NUM_HOUSES_BEFORE_HOTEL
+		hotel_demolition = GameStateChange.demolish(prop, state)
+		house_builds = [GameStateChange.build(prop, state)] * NUM_HOUSES_BEFORE_HOTEL
 		return GroupOfChanges([hotel_demolition] + house_builds)
 
 	# By default, players deny all trades
