@@ -55,7 +55,7 @@ class GameState(object):
 																								house_price=50)
 
 		PROP_CONNECTICUT 						= ColorProperty(name=CONNECTICUT_AVENUE, 	
-																								price=60, 	
+																								price=120, 	
 																								rents=[8, 40, 100, 300, 450, 600], 			
 																								property_group=LIGHT_BLUE, 
 																								size_of_property_group=3,
@@ -384,10 +384,10 @@ class GameState(object):
 			player.position = new_position
 
 		for player, added_props in change.added_props.iteritems():
-			player.add_properties(added_props)
+			player.add_props(added_props)
 
 		for player, removed_props in change.removed_props.iteritems():
-			player.remove_properties(removed_props)
+			player.remove_props(removed_props)
 
 		for deck, card_drawn in change.card_drawn.iteritems():
 			deck.draw_and_remove()
@@ -406,18 +406,16 @@ class GameState(object):
 
 		for prop, change_in_houses in change.change_in_houses.iteritems():
 			# TODO: Add a mechanism to validate that Players did not try to build/demolish houses AND hotels in the same GroupOfChanges. This must be done by two separate GroupOfChanges objects
-			if change_in_houses == 0:
-				continue
-			elif change_in_houses > 0:
+			if change_in_houses > 0:
 				prop.build(change_in_houses)
-			else:
-				prop.demolish(change_in_houses)
+			elif change_in_houses < 0:
+				prop.demolish(-change_in_houses)
 
 		self._houses_remaining += change.change_in_houses_remaining
 		self._hotels_remaining += change.change_in_hotels_remaining
 
 		for prop, is_mortgaged in change.is_mortgaged.iteritems():
-			prop.is_mortgaged = is_mortgaged
+			prop.mortgaged = is_mortgaged
 
 
 	# Applies a GroupOfChanges

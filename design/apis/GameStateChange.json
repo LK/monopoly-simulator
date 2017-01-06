@@ -586,7 +586,12 @@
 						{
 							"name": "player_eliminator",
 							"type": "Player"
-						}
+						},
+
+                        {
+                            "name": "state",
+                            "type": "GameState"
+                        }
 					],
 					"returnType": "GameStateChange",
 					"access": "Public",

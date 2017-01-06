@@ -87,7 +87,7 @@ class DefaultDecisionMaker(object):
 			return GroupOfChanges(changes=changes)
 
 		# Player cannot pay it off, so he loses
-		return GroupOfChanges(changes=[GameStateChange.eliminate(player_from, player_to)])
+		return GroupOfChanges(changes=[GameStateChange.eliminate(player_from, player_to, state)])
 
 	# By default, player bids half his cash
 	def bid_house_builds(self, player, highest_bid, props_to_build_on, state):

@@ -11,7 +11,6 @@ class Player(object):
 			property_group_counts[group] = 0
 		return property_group_counts
 
-	# TODO: Initialize property_group_counts so that each property group maps to a count of 0
 	def __init__(self, position=0, cash=1500, props=[], decision_maker=DefaultDecisionMaker(), jail_free_count=0, jail_moves=0, is_in_game=True, name=''):
 		self._position							= position
 		self._cash 									= cash
@@ -116,25 +115,28 @@ class Player(object):
 	# Setter-esque methods
 
 	# Adds the list of properties and updates the corresponding property group counts
-	def add_properties(self, added_properties):
-		self._props += added_properties
-		for prop in added_properties:
+	def add_props(self, added_props):
+		self._props += added_props
+		for prop in added_props:
 			group = prop.property_group
 			if group in self._property_group_counts.keys():
 				self._property_group_counts[group] += 1
 			else:
 				self._property_group_counts[group] = 1
 
-	# Removes the list of properties and updates the corresponding property group counts
-	def remove_properties(self, removed_properties):
-		for prop in removed_properties:
-			self.props.remove(prop)
-			group = prop.property_group
-			if group in self._property_group_counts.keys():
-				self._property_group_counts[group] -= 1
+	# Removes the list of properties and updates the corresponding property group
+	# counts
+	def remove_props(self, removed_props):
+		# Construct a new list of properties excluding the removed ones
+		new_props = []
+		for prop in self._props:
+			if prop not in removed_props:
+				new_props.append(prop)
 			else:
-				self._property_group_counts[group] = 1
-
+				# Adjust the removed properties' property group counts
+				group = prop.property_group
+				self._property_group_counts[group] -= 1
+		self._props = new_props
 
 	def eliminate(self):
 		self._is_in_game = False

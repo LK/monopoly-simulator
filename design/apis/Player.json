@@ -479,10 +479,10 @@
 				},
 
 				{
-					"name": "add_properties()",
+					"name": "add_props()",
 					"arguments": [
 						{
-							"name": "added_properties",
+							"name": "added_props",
 							"type": "Property[]"
 						}
 					],
@@ -492,10 +492,10 @@
 				},
 
 				{
-					"name": "remove_properties()",
+					"name": "remove_props()",
 					"arguments": [
 						{
-							"name": "removed_properties",
+							"name": "removed_props",
 							"type": "Property[]"
 						}
 					],

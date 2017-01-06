@@ -39,8 +39,8 @@ BALTIC_AVENUE 				= "Baltic Avenue"
 INCOME_TAX 						= "Income Tax"
 READING_RAILROAD 			= "Reading Railroad"
 ORIENTAL_AVENUE 			= "Oriental Avenue"
-VERMONT_AVENUE 				= "Vermont Avenue"
 CHANCE_1							= "Chance 1"
+VERMONT_AVENUE 				= "Vermont Avenue"
 CONNECTICUT_AVENUE 		= "Connecticut Avenue"
 JAIL 									= "Jail"
 ST_CHARLES_PLACE 			= "St. Charles Place"
@@ -82,8 +82,8 @@ names = [
 	INCOME_TAX,
 	READING_RAILROAD,
 	ORIENTAL_AVENUE,
-	VERMONT_AVENUE,
 	CHANCE_1,
+	VERMONT_AVENUE,
 	CONNECTICUT_AVENUE,
 	JAIL,
 	ST_CHARLES_PLACE,
