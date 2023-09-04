@@ -105,7 +105,8 @@ def main():
                       help='Name of JSON file to load from. If none provided, the simulator will start a new game.')
   args = parser.parse_args()
 
-  engine = Engine(load_from_file=args.load_from_file)
+  state = GameState(load_from_file=args.load_from_file)
+  engine = Engine(state, stalemate_threshold=1000)
   engine.run()
 
 
