@@ -106,6 +106,8 @@ def main():
   args = parser.parse_args()
 
   state = GameState(load_from_file=args.load_from_file)
+  state.randomize()
+
   print('Initial game state:')
   print(str(state))
 

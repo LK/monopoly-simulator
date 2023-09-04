@@ -21,6 +21,7 @@ from deck import Deck
 from constants import *
 import json
 import random
+import copy
 
 
 class GameState(object):
@@ -313,8 +314,6 @@ class GameState(object):
   def _initialize_decks():
     chance_deck = Deck(Card.make_chance_functions())
     community_chest_deck = Deck(Card.make_community_chest_functions())
-    chance_deck.shuffle()
-    community_chest_deck.shuffle()
     return {CHANCE_CARD: chance_deck, COMMUNITY_CHEST_CARD: community_chest_deck}
 
   # Constructor
@@ -323,6 +322,7 @@ class GameState(object):
     self._houses_remaining = NUM_HOUSES
     self._hotels_remaining = NUM_HOTELS
     self._decks = GameState._initialize_decks()
+    self._game_history = []
 
     if load_from_file:
       with open(load_from_file) as f:
@@ -343,7 +343,8 @@ class GameState(object):
             self._houses_remaining -= num_houses
 
       # Initialize bank
-        bank_props = [squares_dict[prop['name']] for prop in data['properties'] if prop['owner'] == None]
+        bank_props = [squares_dict[prop['name']]
+                      for prop in data['properties'] if prop['owner'] == None]
         self._bank = Player(cash=0, props=bank_props, name='The Bank')
 
       # Initialize players
@@ -352,30 +353,29 @@ class GameState(object):
         if player_data['current_turn']:
           self._current_player_index = i
 
-        props = [squares_dict[prop['name']] for prop in data['properties'] if prop['owner'] == player_data['name']]
+        props = [squares_dict[prop['name']]
+                 for prop in data['properties'] if prop['owner'] == player_data['name']]
         self._players.append(
-          Player(position=player_data['position'], cash=player_data['cash'], props=props, jail_free_count=player_data['get_out_of_jail_cards'], jail_moves=player_data['moves_remaining_in_jail'], name=player_data['name'])
+          Player(position=player_data['position'], cash=player_data['cash'], props=props,
+                 jail_free_count=player_data['get_out_of_jail_cards'], jail_moves=player_data['moves_remaining_in_jail'], name=player_data['name'])
         )
     else:
       num_players = 2
       self._players = GameState._initialize_players(num_players)
       self._squares = GameState._initialize_squares()
       self._bank = GameState._initialize_bank(self._squares)
-      self._current_player_index = random.randint(0, num_players - 1)
-      self._game_history = []
+      self._current_player_index = 0
+
+  # Methods
+
+  def randomize(self):
+    self._decks[COMMUNITY_CHEST_CARD].shuffle()
+    self._decks[CHANCE_CARD].shuffle()
 
   # Private
 
   def _copy(self):
-    num_players = len(self._players)
-    copy = GameState()
-    for i in range(0, num_players):
-      copy._players[i] = self._players[i].copy()
-    for square in self._squares:
-      copy._squares.append(square.copy())
-    copy._houses_remaining = self._houses_remaining
-    copy._hotels_remaining = self._hotels_remaining
-    return copy
+    return copy.deepcopy(self)
 
   # Getters
 
@@ -483,7 +483,8 @@ class GameState(object):
   def __str__(self):
     s = ""
 
-    s += "Current player: %s\n" % (self._players[self._current_player_index].name)
+    s += "Current player: %s\n" % (
+      self._players[self._current_player_index].name)
     s += "Players:\n"
     for player in self._players:
       s += str(player) + "\n"
