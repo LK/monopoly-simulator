@@ -481,6 +481,7 @@ class GameState(object):
   def __str__(self):
     s = ""
 
+    s += "Current player: %s\n" % (self._players[self._current_player_index].name)
     s += "Players:\n"
     for player in self._players:
       s += str(player) + "\n"

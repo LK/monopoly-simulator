@@ -106,6 +106,10 @@ def main():
   args = parser.parse_args()
 
   state = GameState(load_from_file=args.load_from_file)
+  print('Initial game state:')
+  print(str(state))
+
+  # Run game
   engine = Engine(state, stalemate_threshold=1000)
   engine.run()
 

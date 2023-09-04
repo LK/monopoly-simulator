@@ -2,7 +2,7 @@
   "players": [
     {
       "name": "Player 1",
-      "cash": 1500,
+      "cash": 1000,
       "position": 39,
       "current_turn": true,
       "get_out_of_jail_cards": 1,
@@ -10,25 +10,25 @@
     },
     {
       "name": "Player 2",
-      "cash": 1500,
-      "position": 39,
-      "current_turn": true,
-      "get_out_of_jail_cards": 1,
-      "moves_remaining_in_jail": 0
+      "cash": 900,
+      "position": 10,
+      "current_turn": false,
+      "get_out_of_jail_cards": 0,
+      "moves_remaining_in_jail": 2
     }
   ],
   "properties": [
     {
       "name": "Mediterranean Avenue",
       "mortgaged": false,
-      "houses": 0,
-      "owner": null
+      "houses": 2,
+      "owner": "Player 2"
     },
     {
       "name": "Baltic Avenue",
       "mortgaged": false,
-      "houses": 0,
-      "owner": null
+      "houses": 3,
+      "owner": "Player 2"
     },
     {
       "name": "Reading Railroad",
@@ -82,7 +82,7 @@
       "name": "Pennsylvania Railroad",
       "mortgaged": false,
       "houses": 0,
-      "owner": null
+      "owner": "Player 2"
     },
     {
       "name": "St. James Place",
@@ -140,9 +140,9 @@
     },
     {
       "name": "Water Works",
-      "mortgaged": false,
+      "mortgaged": true,
       "houses": 0,
-      "owner": null
+      "owner": "Player 1"
     },
     {
       "name": "Marvin Gardens",
@@ -177,13 +177,13 @@
     {
       "name": "Park Place",
       "mortgaged": false,
-      "houses": 0,
+      "houses": 5,
       "owner": "Player 1"
     },
     {
       "name": "Boardwalk",
       "mortgaged": false,
-      "houses": 1,
+      "houses": 4,
       "owner": "Player 1"
     }
   ]
