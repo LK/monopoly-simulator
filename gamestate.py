@@ -19,6 +19,7 @@ from gotojail import GoToJail
 from free_space import FreeSpace
 from deck import Deck
 from constants import *
+import random
 
 
 class GameState(object):
@@ -317,13 +318,18 @@ class GameState(object):
 
   # Constructor
 
-  def __init__(self, num_players):
-    self._players = GameState._initialize_players(num_players)
-    self._squares = GameState._initialize_squares()
-    self._houses_remaining = NUM_HOUSES
-    self._hotels_remaining = NUM_HOTELS
-    self._bank = GameState._initialize_bank(self._squares)
-    self._decks = GameState._initialize_decks()
+  def __init__(self, load_from_file=None):
+    if load_from_file:
+      pass # TODO
+    else:
+      num_players = 4
+      self._players = GameState._initialize_players(num_players)
+      self._squares = GameState._initialize_squares()
+      self._houses_remaining = NUM_HOUSES
+      self._hotels_remaining = NUM_HOTELS
+      self._bank = GameState._initialize_bank(self._squares)
+      self._decks = GameState._initialize_decks()
+      self._current_player_index = random.randint(0, num_players - 1)
 
   # Private
 
@@ -364,6 +370,10 @@ class GameState(object):
   @property
   def decks(self):
     return self._decks
+
+  @property
+  def current_player_index(self):
+    return self._current_player_index
 
   # Other
   def get_property_group(self, prop_group):
@@ -427,6 +437,9 @@ class GameState(object):
 
     for prop, is_mortgaged in change.is_mortgaged.items():
       prop.mortgaged = is_mortgaged
+
+    if change.next_player != None:
+      self._current_player_index = change.next_player
 
   # Applies a GroupOfChanges
 

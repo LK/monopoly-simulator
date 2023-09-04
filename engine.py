@@ -1,15 +1,15 @@
-import random
 from gamestate import GameState
 from roll import Roll
 from groupofchanges import GroupOfChanges
 from gamestatechange import GameStateChange
 from housingresolver import HousingResolver
 from constants import *
+import argparse
 
 
 class Engine(object):
-  def __init__(self, num_players):
-    self._state = GameState(num_players)
+  def __init__(self, load_from_file=None):
+    self._state = GameState(load_from_file=load_from_file)
 
   def _wait(self):
     cmd = input('')
@@ -19,13 +19,10 @@ class Engine(object):
     print()
 
   def run(self):
-    num_players = len(self._state.players)
-    idx = random.randint(0, num_players - 1)
     while not self._completed():
       # cash = [player.cash for player in self._state.players]
       # print cash
-      player = self._state.players[idx]
-      idx = (idx + 1) % len(self._state.players)
+      player = self._state.players[self._state.current_player_index]
       roll = Roll()
       print('%s rolled a %d%s' % (player.name, roll.value,
             ' (doubles)' if roll.is_doubles else ''))
@@ -59,6 +56,12 @@ class Engine(object):
           break
         self._take_turn(player, roll.value)
 
+      # Set to next player
+      next_changes = GroupOfChanges(
+        changes=[GameStateChange.set_next_player(self._state)]
+      )
+      self._state.apply(next_changes)
+
   def _take_turn(self, player, roll):
     position = (player.position + roll) % NUM_SQUARES
     self._state.apply(GroupOfChanges([GameStateChange.change_position(
@@ -88,7 +91,11 @@ class Engine(object):
 
 
 def main():
-  engine = Engine(4)
+  parser = argparse.ArgumentParser(prog='Monopoly Simulator')
+  parser.add_argument('-l', '--load-from-file', help='Name of JSON file to load from. If none provided, the simulator will start a new game.')
+  args = parser.parse_args()
+
+  engine = Engine(load_from_file=args.load_from_file)
   engine.run()
 
 

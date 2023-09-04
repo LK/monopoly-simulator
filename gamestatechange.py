@@ -17,7 +17,8 @@ class GameStateChange(object):
   def __init__(self, change_in_cash={}, new_position={}, added_props={}, removed_props={},
                card_drawn={}, card_replaced={}, change_in_jail_moves={}, change_in_jail_free_count={},
                is_in_game={}, change_in_houses={}, change_in_houses_remaining=0,
-               change_in_hotels_remaining=0, is_mortgaged={}, description=''):
+               change_in_hotels_remaining=0, is_mortgaged={}, next_player=None,
+               description=''):
     self._change_in_cash = {}
     for player in list(change_in_cash.keys()):
       self._change_in_cash[player] = change_in_cash[player]
@@ -65,6 +66,7 @@ class GameStateChange(object):
     for prop in list(is_mortgaged.keys()):
       self._is_mortgaged[prop] = is_mortgaged[prop]
 
+    self._next_player = next_player
     self._description = description
 
   @property
@@ -118,6 +120,10 @@ class GameStateChange(object):
   @property
   def is_mortgaged(self):
     return self._is_mortgaged
+
+  @property
+  def next_player(self):
+    return self._next_player
 
   @property
   def description(self):
@@ -332,6 +338,17 @@ class GameStateChange(object):
   def leave_jail(player):
     return GameStateChange(change_in_jail_moves={player: -player.jail_moves},
                            description=player.name + ' left jail')
+
+  @staticmethod
+  def set_next_player(state):
+    # Change to next non-eliminated player
+    for i in range(len(state.players)):
+      j = (state.current_player_index + i + 1) % (len(state.players))
+      if state.players[j].is_in_game:
+        return GameStateChange(next_player=j,
+                               description='Set current player to ' + state.players[j].name)
+    raise Exception('No players left in the game')
+
 
   @staticmethod
   def eliminate(player_eliminated, player_eliminator, state):
