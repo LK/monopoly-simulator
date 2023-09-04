@@ -18,50 +18,50 @@ class GameStateChange(object):
 		is_in_game={}, change_in_houses={}, change_in_houses_remaining=0,
 		change_in_hotels_remaining=0, is_mortgaged={}, description=''):
 		self._change_in_cash = {}
-		for player in change_in_cash.keys():
+		for player in list(change_in_cash.keys()):
 			self._change_in_cash[player] = change_in_cash[player]
 
 		self._new_position = {}
-		for player in new_position.keys():
+		for player in list(new_position.keys()):
 			self._new_position[player] = new_position[player]
 
 		self._added_props = {}
-		for player in added_props.keys():
+		for player in list(added_props.keys()):
 			self._added_props[player] = added_props[player]
 
 		self._removed_props = {}
-		for player in removed_props.keys():
+		for player in list(removed_props.keys()):
 			self._removed_props[player] = removed_props[player]
 
 		self._card_drawn = {}
-		for deck, card in card_drawn.iteritems():
+		for deck, card in card_drawn.items():
 			self._card_drawn[deck] = card
 
 		self._card_replaced = {}
-		for deck, card in card_replaced.iteritems():
+		for deck, card in card_replaced.items():
 			self._card_replaced[deck] = card
 
 		self._change_in_jail_moves = {}
-		for player in change_in_jail_moves.keys():
+		for player in list(change_in_jail_moves.keys()):
 			self._change_in_jail_moves[player] = change_in_jail_moves[player]
 
 		self._change_in_jail_free_count = {}
-		for player in change_in_jail_free_count.keys():
+		for player in list(change_in_jail_free_count.keys()):
 			self._change_in_jail_free_count[player] = change_in_jail_free_count[player]
 
 		self._is_in_game = {}
-		for player in is_in_game.keys():
+		for player in list(is_in_game.keys()):
 			self._is_in_game[player] = is_in_game[player]
 
 		self._change_in_houses = {}
-		for prop in change_in_houses.keys():
+		for prop in list(change_in_houses.keys()):
 			self._change_in_houses[prop] = change_in_houses[prop]
 
 		self._change_in_houses_remaining = change_in_houses_remaining
 		self._change_in_hotels_remaining = change_in_hotels_remaining
 
 		self._is_mortgaged = {}
-		for prop in is_mortgaged.keys():
+		for prop in list(is_mortgaged.keys()):
 			self._is_mortgaged[prop] = is_mortgaged[prop]
 
 		self._description = description
@@ -128,17 +128,17 @@ class GameStateChange(object):
 		combined = GameStateChange()
 		for change in changes:
 			# Merge change_in_cash
-			for player, change_in_cash in change._change_in_cash.iteritems():
+			for player, change_in_cash in change._change_in_cash.items():
 				if player not in combined._change_in_cash:
 					combined._change_in_cash[player] = 0
 				combined._change_in_cash[player] += change_in_cash
 
 			# Merge new_position
-			for player, new_position in change._new_position.iteritems():
+			for player, new_position in change._new_position.items():
 				combined._new_position[player] = new_position
 
 			# Merge added_props
-			for player, props in change._added_props.iteritems():
+			for player, props in change._added_props.items():
 				if player not in combined._added_props:
 					combined._added_props[player] = []
 
@@ -150,7 +150,7 @@ class GameStateChange(object):
 						combined._added_props[player].append(prop)
 
 			# Merge removed_props
-			for player, props in change._removed_props.iteritems():
+			for player, props in change._removed_props.items():
 				if player not in combined._removed_props:
 					combined._removed_props[player] = []
 
@@ -162,29 +162,29 @@ class GameStateChange(object):
 						combined._removed_props[player].append(prop)
 
 			# Merge change_in_jail_moves
-			for player, change_in_jail_moves in change._change_in_jail_moves.iteritems():
+			for player, change_in_jail_moves in change._change_in_jail_moves.items():
 				if player not in combined._change_in_jail_moves:
 					combined._change_in_jail_moves[player] = 0
 				combined._change_in_jail_moves[player] += change_in_jail_moves
 
 			# Merge change_in_jail_free_count
-			for player, change_in_jail_free_count in change._change_in_jail_free_count.iteritems():
+			for player, change_in_jail_free_count in change._change_in_jail_free_count.items():
 				if player not in combined._change_in_jail_free_count:
 					combined._change_in_jail_free_count[player] = 0
 				combined._change_in_jail_free_count[player] += change_in_jail_free_count
 
 			# Merge is_in_game
-			for player, is_in_game in change._is_in_game.iteritems():
+			for player, is_in_game in change._is_in_game.items():
 				combined._is_in_game[player] = is_in_game
 
 			# Merge change_in_houses
-			for color_prop, change_in_houses in change._change_in_houses.iteritems():
+			for color_prop, change_in_houses in change._change_in_houses.items():
 				if player not in combined._change_in_houses:
 					combined._change_in_houses[color_prop] = 0
 				combined._change_in_houses[color_prop] += change_in_houses
 
 			# Merge is_mortgaged
-			for prop, is_mortgaged in change._is_mortgaged.iteritems():
+			for prop, is_mortgaged in change._is_mortgaged.items():
 				combined._is_mortgaged[prop] = is_mortgaged
 
 		return combined
@@ -336,11 +336,11 @@ class GameStateChange(object):
 				demolitions[prop] = -prop.num_houses
 
 		house_money = 0
-		for prop, num_houses in demolitions.iteritems():
+		for prop, num_houses in demolitions.items():
 			house_money += prop.house_price * 0.5 * -num_houses # num_houses is negative
 
 		change_in_houses_remaining = 0
-		for prop, num_houses in demolitions.iteritems():
+		for prop, num_houses in demolitions.items():
 			change_in_houses_remaining += -num_houses # num_houses is negative
 
 		# If player is eliminated to the bank, properties become unmortgaged, 

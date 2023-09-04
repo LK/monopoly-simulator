@@ -278,7 +278,7 @@ def main():
 	position = 36
 	electric_company = 12
 	water_works = 28
-	print Card._nearest_to(position, [electric_company, water_works])
+	print(Card._nearest_to(position, [electric_company, water_works]))
 
 if __name__ == '__main__':
 	main()

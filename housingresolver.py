@@ -47,7 +47,7 @@ class HousingResolver(object):
 		self._hotels_built			= 0
 		self._houses_demolished = 0
 		self._hotels_demolished = 0
-		for _, building_requests in self._player_building_requests.iteritems():
+		for _, building_requests in self._player_building_requests.items():
 			self._houses_built 			+= building_requests.houses_built()
 			self._hotels_built 			+= building_requests.hotels_built()
 			self._houses_demolished += building_requests.houses_demolished()
@@ -58,25 +58,25 @@ class HousingResolver(object):
 	# Building/demolishing
 
 	def _build_houses(self):
-		for _, building_requests in self._player_building_requests.iteritems():
+		for _, building_requests in self._player_building_requests.items():
 			self._state.apply(building_requests.house_builds)
 
 	def _build_hotels(self):
-		for _, building_requests in self._player_building_requests.iteritems():
+		for _, building_requests in self._player_building_requests.items():
 			self._state.apply(building_requests.hotel_builds)
 
 	def _demolish_houses(self):
-		for _, building_requests in self._player_building_requests.iteritems():
+		for _, building_requests in self._player_building_requests.items():
 			self._state.apply(building_requests.house_demolitions)
 
 	def _demolish_hotels(self):
-		for _, building_requests in self._player_building_requests.iteritems():
+		for _, building_requests in self._player_building_requests.items():
 			self._state.apply(building_requests.hotel_demolitions)
 
 	# Optimized method for applying all building changes in one shot, rather than
 	# calling each of the preceding methods individually
 	def _build_and_demolish_all(self):
-		for _, building_requests in self._player_building_requests.iteritems():
+		for _, building_requests in self._player_building_requests.items():
 			self._state.apply(building_requests.hotel_demolitions)
 			self._state.apply(building_requests.house_builds)
 			self._state.apply(building_requests.hotel_builds)
@@ -112,14 +112,14 @@ class HousingResolver(object):
 	# Returns a list of players who requested house builds
 	def _get_players_building_houses(self):
 		players_building_houses = []
-		for player, building_requests in self._player_building_requests.iteritems():
+		for player, building_requests in self._player_building_requests.items():
 			if building_requests.houses_built > 0:
 				players_building_houses.append(player)
 		return players_building_houses
 
 	@staticmethod
 	def _auction(num_houses, players, lambda_bid, lambda_extract_bid):
-		players_in_auction = dict(zip(players, [True] * len(players)))
+		players_in_auction = dict(list(zip(players, [True] * len(players))))
 		properties_to_build_houses_on = self._properties_to_build_houses_on()
 		all_changes = []
 		for i in range(num_houses):
@@ -150,7 +150,7 @@ class HousingResolver(object):
 					fastest_time = 10000
 					fastest_player = None
 					fastest_goc = None
-					for player, goc in highest_changes_for_round.iteritems():
+					for player, goc in highest_changes_for_round.items():
 						# TODO: Don't use datetime, better timing solution (timeit doesn't work bc lambda params are out of scope)
 						times = []
 						for i in range(3):
@@ -170,9 +170,9 @@ class HousingResolver(object):
 
 				if highest_bid_for_round > highest_bid:
 					highest_bid = highest_bid_for_round
-					highest_changes = highest_changes_for_round[highest_changes_for_round.keys()[0]]
+					highest_changes = highest_changes_for_round[list(highest_changes_for_round.keys())[0]]
 
-				if len(highest_changes_for_round) == 0 or players_in_auction.values().count(True) <= 1:
+				if len(highest_changes_for_round) == 0 or list(players_in_auction.values()).count(True) <= 1:
 					break
 
 			all_changes.append(highest_changes)
@@ -185,13 +185,13 @@ class HousingResolver(object):
 	@staticmethod
 	def _auction_house_builds(num_houses, players):
 		bid = lambda player, highest_bid, props, state: player.bid_house_builds(highest_bid, props, state)
-		extract_bid = lambda change, state: change.change_in_cash[state.bank] - change.changes_in_houses.keys()[0].house_price
+		extract_bid = lambda change, state: change.change_in_cash[state.bank] - list(change.changes_in_houses.keys())[0].house_price
 		HousingResolver._auction(num_houses, players, bid, extract_bid)
 
 	# Returns a list of players who requested hotel builds
 	def _get_players_building_hotels(self):
 		players_building_hotels = []
-		for player, building_requests in self._player_building_requests.iteritems():
+		for player, building_requests in self._player_building_requests.items():
 			if building_requests.hotels_built > 0:
 				players_building_hotels.append(player)
 		return players_building_hotels
@@ -202,13 +202,13 @@ class HousingResolver(object):
 	@staticmethod
 	def _auction_hotel_builds(num_hotels, players):
 		bid = lambda player, highest_bid, props, state: player.bid_hotel_builds(highest_bid, props, state)
-		extract_bid = lambda change, state: change.change_in_cash[state.bank] - change.changes_in_houses.keys()[0].house_price
+		extract_bid = lambda change, state: change.change_in_cash[state.bank] - list(change.changes_in_houses.keys())[0].house_price
 		HousingResolver._auction(num_houses, players, bid, extract_bid)
 
 	# Returns a list of players who requested hotel demolitions
 	def _get_players_demolishing_hotels(self):
 		players_demolishing_hotels= []
-		for player, building_requests in self._player_building_requests.iteritems():
+		for player, building_requests in self._player_building_requests.items():
 			if building_requests.hotels_demolished > 0:
 				players_demolishing_hotels.append(player)
 		return players_demolishing_hotels
@@ -219,7 +219,7 @@ class HousingResolver(object):
 	@staticmethod
 	def _auction_hotel_demolitions(num_houses, players):
 		bid = lambda player, highest_bid, props, state: player.bid_hotel_demolitions(highest_bid, props, state)
-		extract_bid = lambda change, state: change.change_in_cash[state.bank] + change.changes_in_houses.keys()[0].house_price/2
+		extract_bid = lambda change, state: change.change_in_cash[state.bank] + list(change.changes_in_houses.keys())[0].house_price/2
 		Housing_Resolver._auction(int(num_houses/NUM_HOUSES_BEFORE_HOTEL), players, bid, extract_bid)
 
 
@@ -239,7 +239,7 @@ class HousingResolver(object):
 	# builds houses appropriately according to the players' desires
 	def _settle_hotel_demolitions(self, were_houses_built):
 		if self._are_enough_houses_for_hotel_demolitions(were_houses_built):
-			for player, building_requests in self._player_building_requests.iteritems():
+			for player, building_requests in self._player_building_requests.items():
 				self._state.apply(building_requests.hotel_demolitions)
 		else:
 			# Ask players demolishing hotels if it is ok to reduce past the 4 house
@@ -315,20 +315,20 @@ class HousingResolver(object):
 	# Returns a dict mapping players to a list of properties on which they indent to build houses on
 	def _properties_to_build_houses_on(self):
 		retval = dict()
-		for (player, building_request) in self._player_building_requests.iteritems():
+		for (player, building_request) in self._player_building_requests.items():
 			properties = []
 			for change in building_request.house_builds:
-				properties.append(change.change_in_houses.keys()[0])
+				properties.append(list(change.change_in_houses.keys())[0])
 
 			retval[player] = properties
 		return retval
 
 	def _properties_to_build_hotels_on(self):
 		retval = dict()
-		for (player, building_request) in self._player_building_requests.iteritems():
+		for (player, building_request) in self._player_building_requests.items():
 			properties = []
 			for change in building_request.hotel_builds:
-				properties.append(change.change_in_houses.keys()[0])
+				properties.append(list(change.change_in_houses.keys())[0])
 
 			retval[player] = properties
 		return retval

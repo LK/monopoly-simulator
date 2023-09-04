@@ -11,11 +11,11 @@ class Engine(object):
 		self._state = GameState(num_players)
 
 	def _wait(self):
-		cmd = raw_input('')
+		cmd = input('')
 		if cmd == 'state':
-			print
-			print str(self._state)
-		print
+			print()
+			print(str(self._state))
+		print()
 
 	def run(self):
 		num_players = len(self._state.players)
@@ -26,7 +26,7 @@ class Engine(object):
 			player = self._state.players[idx]
 			idx = (idx + 1) % len(self._state.players)
 			roll = Roll()
-			print '%s rolled a %d%s' % (player.name, roll.value, ' (doubles)' if roll.is_doubles else '')
+			print('%s rolled a %d%s' % (player.name, roll.value, ' (doubles)' if roll.is_doubles else ''))
 			if player.jail_moves > 0 and roll.is_doubles:
 				self._state.apply(GroupOfChanges(changes=[GameStateChange.leave_jail(player)]))
 			elif player.jail_moves >= 2:
@@ -45,7 +45,7 @@ class Engine(object):
 			max_rolls = 2
 			while roll.is_doubles:
 				roll = Roll()
-				print '%s rolled a %d%s' % (player.name, roll.value, ' (doubles)' if roll.is_doubles else '')
+				print('%s rolled a %d%s' % (player.name, roll.value, ' (doubles)' if roll.is_doubles else ''))
 				num_rolls += 1
 				if num_rolls > max_rolls:
 					self._state.apply(GroupOfChanges(changes=[GameStateChange.send_to_jail(player)]))

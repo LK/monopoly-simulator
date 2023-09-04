@@ -26,4 +26,4 @@ for i in range(20000):
 	batch = np.random.rand(10, 3).astype(np.float32)
 	sess.run(train_step, feed_dict={x: batch, y_: np.expand_dims(batch.sum(axis=1), axis=1) * 10 - 54})
 	if i % 1000 == 0:
-		print sess.run(error, feed_dict={x: batch, y_: np.expand_dims(batch.sum(axis=1), axis=1) * 10 - 54})
+		print(sess.run(error, feed_dict={x: batch, y_: np.expand_dims(batch.sum(axis=1), axis=1) * 10 - 54}))

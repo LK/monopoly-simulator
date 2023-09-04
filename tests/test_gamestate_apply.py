@@ -696,7 +696,7 @@ class TestGameStateApply(unittest.TestCase):
 
 		# Test every card in both decks
 		dict_card_types = { CHANCE_CARD: 'Chance', COMMUNITY_CHEST_CARD: 'Community Chest' }
-		for card_type, card_str in dict_card_types.iteritems():
+		for card_type, card_str in dict_card_types.items():
 			deck = state.decks[card_type]
 
 			# Draw every card in the deck, check that cards are handled correctly
@@ -751,7 +751,7 @@ class TestGameStateApply(unittest.TestCase):
 
 		# Test both decks
 		dict_card_types = { CHANCE_CARD: 'Chance', COMMUNITY_CHEST_CARD: 'Community Chest' }
-		for card_type, card_str in dict_card_types.iteritems():
+		for card_type, card_str in dict_card_types.items():
 			deck = state.decks[card_type]
 
 			# Set up a player to have a 'Get out of jail free' card

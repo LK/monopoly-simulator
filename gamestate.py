@@ -358,7 +358,7 @@ class GameState(object):
 	# Other
 	def get_property_group(self, prop_group):
 		property_group = [square if isinstance(square, Property) and square.property_group == prop_group else None for square in self.squares]
-		return filter(lambda x: x != None, property_group)
+		return [x for x in property_group if x != None]
 
 	def get_owner(self, prop):
 		for player in self._players:
@@ -375,36 +375,36 @@ class GameState(object):
 
 	# Applies a single GameStateChange
 	def _apply_single_change(self, change):
-		print change.description
+		print(change.description)
 
-		for player, change_in_cash in change.change_in_cash.iteritems():
+		for player, change_in_cash in change.change_in_cash.items():
 			player.cash += change_in_cash
 
-		for player, new_position in change.new_position.iteritems():
+		for player, new_position in change.new_position.items():
 			player.position = new_position
 
-		for player, added_props in change.added_props.iteritems():
+		for player, added_props in change.added_props.items():
 			player.add_props(added_props)
 
-		for player, removed_props in change.removed_props.iteritems():
+		for player, removed_props in change.removed_props.items():
 			player.remove_props(removed_props)
 
-		for deck, card_drawn in change.card_drawn.iteritems():
+		for deck, card_drawn in change.card_drawn.items():
 			deck.draw_and_remove()
 
-		for deck, card_replaced in change.card_replaced.iteritems():
+		for deck, card_replaced in change.card_replaced.items():
 			deck.insert_on_bottom(card_replaced)
 
-		for player, change_in_jail_free_count in change.change_in_jail_free_count.iteritems():
+		for player, change_in_jail_free_count in change.change_in_jail_free_count.items():
 			player.jail_free_count += change_in_jail_free_count
 
-		for player, change_in_jail_moves in change.change_in_jail_moves.iteritems():
+		for player, change_in_jail_moves in change.change_in_jail_moves.items():
 			player.jail_moves += change_in_jail_moves
 
-		for player, is_in_game in change.is_in_game.iteritems():
+		for player, is_in_game in change.is_in_game.items():
 			player.is_in_game = is_in_game
 
-		for prop, change_in_houses in change.change_in_houses.iteritems():
+		for prop, change_in_houses in change.change_in_houses.items():
 			# TODO: Add a mechanism to validate that Players did not try to build/demolish houses AND hotels in the same GroupOfChanges. This must be done by two separate GroupOfChanges objects
 			if change_in_houses > 0:
 				prop.build(change_in_houses)
@@ -414,7 +414,7 @@ class GameState(object):
 		self._houses_remaining += change.change_in_houses_remaining
 		self._hotels_remaining += change.change_in_hotels_remaining
 
-		for prop, is_mortgaged in change.is_mortgaged.iteritems():
+		for prop, is_mortgaged in change.is_mortgaged.items():
 			prop.mortgaged = is_mortgaged
 
 

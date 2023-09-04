@@ -65,12 +65,12 @@ class Deck(object):
 # Test client
 def main():
 	cards = [1, 2, 3, 4, 5]
-	print "---CARDS---"
-	print cards
+	print("---CARDS---")
+	print(cards)
 
 
 
-	print "Test shuffle() properly randomizes the cards"
+	print("Test shuffle() properly randomizes the cards")
 	deck = Deck(cards)
 	T = 10000
 
@@ -82,7 +82,7 @@ def main():
 			p = (card, i)
 			freq[p] = 0
 
-	print "Shuffling over many trials..."
+	print("Shuffling over many trials...")
 	for t in range(0, T):
 		deck.shuffle()
 
@@ -93,68 +93,68 @@ def main():
 
 	# Calculate average frequencies and compare to probabilistic average
 	prob = 1.0 / deck.size()
-	print "Each card should appear in each position of the deck with probability " + str(prob)
-	print "(c, d) : average number of times card c appeared at position d in the deck"
-	for p, freq in freq.iteritems():
+	print("Each card should appear in each position of the deck with probability " + str(prob))
+	print("(c, d) : average number of times card c appeared at position d in the deck")
+	for p, freq in freq.items():
 		avg_freq = float(freq) / float(T)
-		print str(p) + " : " + str(avg_freq)
-	print
+		print(str(p) + " : " + str(avg_freq))
+	print()
 	del deck
 
 
 
-	print "Test draw() takes cards out in order"
+	print("Test draw() takes cards out in order")
 	deck = Deck(cards)
 	deck.shuffle()
 	for count in range(0, 2): # repeat twice to check same order both times
 		for i in range(0, deck.size()):
-			print "Draw card " + str(i+1) + ": " + str(deck.draw())
-		print
-	print
+			print("Draw card " + str(i+1) + ": " + str(deck.draw()))
+		print()
+	print()
 	del deck
 
 
 
-	print "Test draw() vs peek()"
+	print("Test draw() vs peek()")
 	deck = Deck(cards)
 	deck.shuffle()
 	for i in range(0, deck.size()):
-		print "Peek", deck.peek()
-		print "Draw", deck.draw()
-		print "Peek again", deck.peek()
-	print
+		print("Peek", deck.peek())
+		print("Draw", deck.draw())
+		print("Peek again", deck.peek())
+	print()
 	del deck
 
 
 
-	print "Test draw_and_remove() + insert_on_bottom() does the same as draw()"
+	print("Test draw_and_remove() + insert_on_bottom() does the same as draw()")
 	deck1 = Deck(cards)
 	deck2 = Deck(cards)
 	for i in range(0, deck1.size()):
 		item = deck1.draw_and_remove()
-		print "Deck 1: Draw and remove", item
-		print "Deck 1: Inserting on bottom..."
+		print("Deck 1: Draw and remove", item)
+		print("Deck 1: Inserting on bottom...")
 		deck1.insert_on_bottom(item)
-		print "Deck 2: Draw", deck2.draw()
-	print
+		print("Deck 2: Draw", deck2.draw())
+	print()
 	del deck1
 	del deck2
 
 
 
-	print "Test draw_and_remove() + insert_on_top() does the same as peek()"
+	print("Test draw_and_remove() + insert_on_top() does the same as peek()")
 	deck1 = Deck(cards)
 	deck2 = Deck(cards)
 	for i in range(0, deck1.size()):
 		item = deck1.draw_and_remove()
-		print "Deck 1: Draw and remove", item
-		print "Deck 1: Inserting on top..."
+		print("Deck 1: Draw and remove", item)
+		print("Deck 1: Inserting on top...")
 		deck1.insert_on_top(item)
-		print "Deck 2: Peek", deck2.peek()
-		print "Next card..."
+		print("Deck 2: Peek", deck2.peek())
+		print("Next card...")
 		deck1.draw()
 		deck2.draw()
-	print
+	print()
 	del deck1
 	del deck2
 

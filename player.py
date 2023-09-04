@@ -119,7 +119,7 @@ class Player(object):
 		self._props += added_props
 		for prop in added_props:
 			group = prop.property_group
-			if group in self._property_group_counts.keys():
+			if group in list(self._property_group_counts.keys()):
 				self._property_group_counts[group] += 1
 			else:
 				self._property_group_counts[group] = 1
@@ -153,7 +153,7 @@ class Player(object):
 		s += "\n"
 
 		s += "Property group counts:\n"
-		for group, count in self._property_group_counts.iteritems():
+		for group, count in self._property_group_counts.items():
 			s += str(group) + ": " + str(count) + "\n"
 
 		s += "Jail free count: %d\n" % (self._jail_free_count)
