@@ -8,27 +8,33 @@ from constants import *
 
 
 class Engine(object):
-  def __init__(self, num_players):
+  def __init__(self, num_players, interactive=True, stalemate_threshold=None):
     self._state = GameState(num_players)
+    self._interactive = interactive
+    self._stalemate_threshold = stalemate_threshold
 
   def _wait(self):
-    cmd = input('')
-    if cmd == 'state':
+    if self._interactive:
+      cmd = input('')
+      if cmd == 'state':
+        print()
+        print(str(self._state))
       print()
-      print(str(self._state))
-    print()
 
   def run(self):
     num_players = len(self._state.players)
     idx = random.randint(0, num_players - 1)
-    while not self._completed():
+    steps = 0
+    while not self._completed() and (steps < self._stalemate_threshold or self._stalemate_threshold is None):
+      steps += 1
       # cash = [player.cash for player in self._state.players]
       # print cash
       player = self._state.players[idx]
       idx = (idx + 1) % len(self._state.players)
       roll = Roll()
-      print('%s rolled a %d%s' % (player.name, roll.value,
-            ' (doubles)' if roll.is_doubles else ''))
+      if self._interactive:
+        print('%s rolled a %d%s' % (player.name, roll.value,
+              ' (doubles)' if roll.is_doubles else ''))
       if player.jail_moves > 0 and roll.is_doubles:
         self._state.apply(GroupOfChanges(
           changes=[GameStateChange.leave_jail(player)]))
@@ -50,14 +56,17 @@ class Engine(object):
       max_rolls = 2
       while roll.is_doubles:
         roll = Roll()
-        print('%s rolled a %d%s' % (player.name, roll.value,
-              ' (doubles)' if roll.is_doubles else ''))
+        if self._interactive:
+          print('%s rolled a %d%s' % (player.name, roll.value,
+                ' (doubles)' if roll.is_doubles else ''))
         num_rolls += 1
         if num_rolls > max_rolls:
           self._state.apply(GroupOfChanges(
             changes=[GameStateChange.send_to_jail(player)]))
           break
         self._take_turn(player, roll.value)
+
+    return self._state
 
   def _take_turn(self, player, roll):
     position = (player.position + roll) % NUM_SQUARES
