@@ -28,7 +28,7 @@ class Player(object):
     self._name = name
 
   def copy(self):
-    return Player(position=self._position, cash=self._cash, props=self._props, property_group_counts=self._property_group_counts, decision_maker=self._decision_maker, jail_free_count=self._jail_free_count, jail_moves=self._jail_moves, is_in_game=self._is_in_game)
+    return Player(name=self._name, position=self._position, cash=self._cash, props=self._props, decision_maker=self._decision_maker, jail_free_count=self._jail_free_count, jail_moves=self._jail_moves, is_in_game=self._is_in_game)
 
   # Getters
 

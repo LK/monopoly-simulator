@@ -320,9 +320,9 @@ class GameState(object):
 
   def __init__(self, load_from_file=None):
     if load_from_file:
-      pass # TODO
+      pass  # TODO
     else:
-      num_players = 4
+      num_players = 2
       self._players = GameState._initialize_players(num_players)
       self._squares = GameState._initialize_squares()
       self._houses_remaining = NUM_HOUSES
@@ -335,11 +335,10 @@ class GameState(object):
 
   def _copy(self):
     num_players = len(self._players)
-    copy = GameState(num_players)
+    copy = GameState()
     for i in range(0, num_players):
       copy._players[i] = self._players[i].copy()
     for square in self._squares:
-      # TODO: Implement Square.copy() for all subclasses
       copy._squares.append(square.copy())
     copy._houses_remaining = self._houses_remaining
     copy._hotels_remaining = self._hotels_remaining

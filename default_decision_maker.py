@@ -66,7 +66,7 @@ class DefaultDecisionMaker(object):
       prop = player_from.props[i]
       i += 1
       if not prop.mortgaged and DefaultDecisionMaker._can_mortgage_property(prop, state):
-        mortgage = GameStateChange.mortgage(prop, player_from, state.bank)
+        mortgage = GameStateChange.mortgage(prop, state)
         changes.append(mortgage)
         difference -= mortgage.change_in_cash[player_from]
 
@@ -79,7 +79,7 @@ class DefaultDecisionMaker(object):
     while difference > 0 and i < len(player_from.props):
       prop = player_from.props[i]
       i += 1
-      if prop.num_houses > 0:
+      if isinstance(prop, ColorProperty) and prop.num_houses > 0:
         demolition = DefaultDecisionMaker._demolish_from_property_group(
           prop, state)
         if demolition != None:

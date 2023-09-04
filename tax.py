@@ -13,3 +13,6 @@ class Tax(Square):
 
   def landed(self, player, roll, state):
     return player.pay(state.bank, self._tax, state)
+
+  def copy(self):
+    return Tax(self.name, self._tax)

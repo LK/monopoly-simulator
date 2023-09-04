@@ -57,3 +57,6 @@ class NonColorProperty(Property):
     s += "Name: %s\n" % (self._name)
     s += "Mortgaged: " + str(self._mortgaged) + "\n"
     return s
+
+  def copy(self):
+    return NonColorProperty(self.name, self.price, [x for x in self.rents], self.property_group, self.size_of_property_group, self.mortgaged)
