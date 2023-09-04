@@ -1,16 +1,16 @@
 class Square(object):
-  # Methods
+    # Methods
 
-  def __init__(self, name):
-    self._name = name
+    def __init__(self, name):
+        self._name = name
 
-  def landed(self, player, roll, state):
-    raise NotImplementedError("landed() called from an instance of Square")
+    def landed(self, player, roll, state):
+        raise NotImplementedError("landed() called from an instance of Square")
 
-  @property
-  def name(self):
-    return self._name
+    @property
+    def name(self):
+        return self._name
 
-  def __str__(self):
-    s = "Name: %s\n" % (self._name)
-    return s
+    def __str__(self):
+        s = "Name: %s\n" % (self._name)
+        return s
