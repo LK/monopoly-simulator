@@ -7,6 +7,7 @@ Description:
   by GameState.apply(). Uses python's built-in unittest framework.
 '''
 
+import pdb
 import unittest
 import difflib
 from groupofchanges import GroupOfChanges
@@ -14,6 +15,7 @@ from gamestatechange import GameStateChange
 from gamestate import GameState
 from player import Player
 from constants import *
+
 
 class TestGameStateApply(unittest.TestCase):
 
@@ -26,7 +28,7 @@ class TestGameStateApply(unittest.TestCase):
   string, and the second item is the (differing) line from the second string.
   Assumes s1 and s2 have the same number of lines, and raises an exception if
   they don't.
-  
+
   Ex:
     > s = diff('Name: Park Place\nNum Houses: 1\nMortgaged: False\n',
              'Name: Boardwalk\nNum Houses: 2\nMortgaged: False\n')
@@ -34,6 +36,7 @@ class TestGameStateApply(unittest.TestCase):
     [('Name: Park Place', 'Name: Boardwalk'),
      ('Num Houses: 1', Num Houses: 2')]
   '''
+
   def diff(self, s1, s2):
     l1 = s1.splitlines()
     l2 = s2.splitlines()
@@ -47,7 +50,6 @@ class TestGameStateApply(unittest.TestCase):
         diff.append((l1[i], l2[i]))
     return diff
 
-
   '''
   Helper function for computing the difference between two GameStates.
 
@@ -59,19 +61,20 @@ class TestGameStateApply(unittest.TestCase):
   the string msg, along with the actual unified difference between the two strings
   and the expected_diff.
   '''
+
   def assertDiffGameStates(self, str_before, str_after, expected_diff, msg=''):
     test_diff = self.diff(str_before, str_after)
     unified_diff = ''.join(difflib.unified_diff(str_before.splitlines(1),
-      str_after.splitlines(1)))
+                                                str_after.splitlines(1)))
     self.assertEqual(test_diff, expected_diff,
-      msg=msg + '\n\nExpected Diff:\n%s \n\nActual Unified Diff:\n%s'
-      % (str(expected_diff), unified_diff))
-
+                     msg=msg + '\n\nExpected Diff:\n%s \n\nActual Unified Diff:\n%s'
+                     % (str(expected_diff), unified_diff))
 
   '''
   Apply a GameStateChange that transfers money from the bank to a player.
   Test that the resulting GameState is correct.
   '''
+
   def test_transfer_money_bank_to_player(self):
     import random
 
@@ -98,13 +101,13 @@ class TestGameStateApply(unittest.TestCase):
          'Cash: %d' % (bank_cash_before - amount))
       ]
       self.assertDiffGameStates(str_before, str_after, expected_diff,
-        msg='$%d was not transferred to player correctly. Here is diff:' % amount)
-
+                                msg='$%d was not transferred to player correctly. Here is diff:' % amount)
 
   '''
   Apply a GameStateChange that transfers money from a player to the bank.
   Test that the resulting GameState is correct.
   '''
+
   def test_transfer_money_player_to_bank(self):
     import random
 
@@ -136,13 +139,13 @@ class TestGameStateApply(unittest.TestCase):
          'Cash: %d' % (bank_cash_before + amount))
       ]
       self.assertDiffGameStates(str_before, str_after, expected_diff,
-        msg='$%d was not transferred to the bank correctly. Here is diff:' % amount)
-
+                                msg='$%d was not transferred to the bank correctly. Here is diff:' % amount)
 
   '''
   Apply a GameStateChange that transfers money from a player to another
   player. Test that the resulting GameState is correct.
   '''
+
   def test_transfer_money_player_to_player(self):
     import random
 
@@ -167,7 +170,7 @@ class TestGameStateApply(unittest.TestCase):
       str_before = str(state)
       state.apply(GroupOfChanges([
         GameStateChange.transfer_money(state.players[pfrom], state.players[pto],
-          amount)
+                                       amount)
       ]))
       str_after = str(state)
       expected_diff = [
@@ -186,13 +189,13 @@ class TestGameStateApply(unittest.TestCase):
         expected_diff.reverse()
 
       self.assertDiffGameStates(str_before, str_after, expected_diff,
-        msg='$%d was not transferred between players correctly. Here is diff:' % amount)
-
+                                msg='$%d was not transferred between players correctly. Here is diff:' % amount)
 
   '''
   Apply a GameStateChange that transfers a property (a purple) from one player to
   another player. Test that the resulting GameState is correct.
   '''
+
   def test_transfer_property(self):
     state = GameState(2)
     player1 = state.players[0]
@@ -203,25 +206,25 @@ class TestGameStateApply(unittest.TestCase):
     changes = []
     for prop_name in purples:
       changes.append(GameStateChange.buy_property(state.squares[INDEX[prop_name]],
-        player1, state.bank))
+                                                  player1, state.bank))
 
     state.apply(GroupOfChanges(changes))
 
     railroads = [READING_RAILROAD, PENNSYLVANIA_RAILROAD, B_AND_O_RAILROAD,
-      SHORT_LINE_RAILROAD]
+                 SHORT_LINE_RAILROAD]
     changes = []
     for prop_name in railroads:
       changes.append(GameStateChange.buy_property(state.squares[INDEX[prop_name]],
-        player2, state.bank))
+                                                  player2, state.bank))
 
-    state.apply(GroupOfChanges(changes))    
+    state.apply(GroupOfChanges(changes))
 
     # Transfer property
     str_before = str(state)
     state.apply(GroupOfChanges([
       GameStateChange.transfer_property(player1, player2,
-        state.squares[INDEX[BALTIC_AVENUE]])
-    ]))  
+                                        state.squares[INDEX[BALTIC_AVENUE]])
+    ]))
     str_after = str(state)
     expected_diff = [
       # Player 1 stats
@@ -229,18 +232,19 @@ class TestGameStateApply(unittest.TestCase):
       ('0: 2', '0: 1'),
 
       # Player 2 properties
-      ('Reading Railroad, Pennsylvania Railroad, B. & O. Railroad, Short Line Railroad, ', 'Reading Railroad, Pennsylvania Railroad, B. & O. Railroad, Short Line Railroad, Baltic Avenue, '),
+      ('Reading Railroad, Pennsylvania Railroad, B. & O. Railroad, Short Line Railroad, ',
+       'Reading Railroad, Pennsylvania Railroad, B. & O. Railroad, Short Line Railroad, Baltic Avenue, '),
       ('0: 0', '0: 1')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Baltic Avenue was not transferred properly')
-
+                              msg='Baltic Avenue was not transferred properly')
 
   '''
   Apply a GameStateChange that buys a property (a green) from the bank for a
   player as the player's first property. Test that the resulting GameState
   is correct.  
   '''
+
   def test_buy_property_from_nothing(self):
     state = GameState(1)
     player = state.players[0]
@@ -249,7 +253,7 @@ class TestGameStateApply(unittest.TestCase):
     str_before = str(state)
     state.apply(GroupOfChanges([
       GameStateChange.buy_property(state.squares[INDEX[PACIFIC_AVENUE]],
-        player, state.bank)
+                                   player, state.bank)
     ]))
     str_after = str(state)
     expected_diff = [
@@ -265,14 +269,14 @@ class TestGameStateApply(unittest.TestCase):
       ('6: 3', '6: 2')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Pacific Avenue was not purchased properly')
-
+                              msg='Pacific Avenue was not purchased properly')
 
   '''
   Apply a GameStateChange that buys a property (a green) from the bank for a
   player after he has already purchased some properties. Test that the
   resulting GameState is correct.  
   '''
+
   def test_buy_property_from_something(self):
     state = GameState(1)
     player = state.players[0]
@@ -281,7 +285,7 @@ class TestGameStateApply(unittest.TestCase):
     changes = []
     for prop_name in [PACIFIC_AVENUE, PENNSYLVANIA_AVENUE]:
       changes.append(GameStateChange.buy_property(state.squares[INDEX[prop_name]],
-        player, state.bank))
+                                                  player, state.bank))
 
     state.apply(GroupOfChanges(changes))
 
@@ -289,13 +293,14 @@ class TestGameStateApply(unittest.TestCase):
     str_before = str(state)
     state.apply(GroupOfChanges([
       GameStateChange.buy_property(state.squares[INDEX[NORTH_CAROLINA_AVENUE]],
-        player, state.bank)
+                                   player, state.bank)
     ]))
     str_after = str(state)
     expected_diff = [
       # Player 1 stats
-      ('Cash: 880', 'Cash: 580'), 
-      ('Pacific Avenue, Pennsylvania Avenue, ', 'Pacific Avenue, Pennsylvania Avenue, North Carolina Avenue, '),
+      ('Cash: 880', 'Cash: 580'),
+      ('Pacific Avenue, Pennsylvania Avenue, ',
+       'Pacific Avenue, Pennsylvania Avenue, North Carolina Avenue, '),
       ('6: 2', '6: 3'),
 
       # Bank stats
@@ -305,13 +310,13 @@ class TestGameStateApply(unittest.TestCase):
       ('6: 1', '6: 0')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='North Carolina Avenue was not purchased properly')
-
+                              msg='North Carolina Avenue was not purchased properly')
 
   '''
   Applies a GameStateChange that buys a property (a green) mortgaged for a
   player. Tests that the resulting GameState is correct.
   '''
+
   def test_buy_property_mortgaged(self):
     state = GameState(1)
     player = state.players[0]
@@ -320,7 +325,7 @@ class TestGameStateApply(unittest.TestCase):
     str_before = str(state)
     state.apply(GroupOfChanges([
       GameStateChange.buy_property(state.squares[INDEX[PENNSYLVANIA_AVENUE]],
-        player, state.bank, mortgaged=True)
+                                   player, state.bank, mortgaged=True)
     ]))
     str_after = str(state)
     expected_diff = [
@@ -332,45 +337,46 @@ class TestGameStateApply(unittest.TestCase):
       # Bank stats
       ('Cash: 0', 'Cash: 160'),
       ('Mediterranean Avenue, Baltic Avenue, Reading Railroad, Oriental Avenue, Vermont Avenue, Connecticut Avenue, St. Charles Place, Electric Company, States Avenue, Virginia Avenue, Pennsylvania Railroad, St. James Place, Tennessee Avenue, New York Avenue, Kentucky Avenue, Indiana Avenue, Illinois Avenue, B. & O. Railroad, Atlantic Avenue, Ventnor Avenue, Water Works, Marvin Gardens, Pacific Avenue, North Carolina Avenue, Pennsylvania Avenue, Short Line Railroad, Park Place, Boardwalk, ',
-        'Mediterranean Avenue, Baltic Avenue, Reading Railroad, Oriental Avenue, Vermont Avenue, Connecticut Avenue, St. Charles Place, Electric Company, States Avenue, Virginia Avenue, Pennsylvania Railroad, St. James Place, Tennessee Avenue, New York Avenue, Kentucky Avenue, Indiana Avenue, Illinois Avenue, B. & O. Railroad, Atlantic Avenue, Ventnor Avenue, Water Works, Marvin Gardens, Pacific Avenue, North Carolina Avenue, Short Line Railroad, Park Place, Boardwalk, '),
+       'Mediterranean Avenue, Baltic Avenue, Reading Railroad, Oriental Avenue, Vermont Avenue, Connecticut Avenue, St. Charles Place, Electric Company, States Avenue, Virginia Avenue, Pennsylvania Railroad, St. James Place, Tennessee Avenue, New York Avenue, Kentucky Avenue, Indiana Avenue, Illinois Avenue, B. & O. Railroad, Atlantic Avenue, Ventnor Avenue, Water Works, Marvin Gardens, Pacific Avenue, North Carolina Avenue, Short Line Railroad, Park Place, Boardwalk, '),
       ('6: 3', '6: 2'),
 
       # Pennsylvania Avenue stats
       ('Mortgaged: False', 'Mortgaged: True')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Pennsylvania Avenue was not mortgaged properly')
-
+                              msg='Pennsylvania Avenue was not mortgaged properly')
 
   '''
   Apply a GameStateChange that moves a player to some new position from the
   initial position (Go). Test that the resulting GameState is correct.  
   '''
+
   def test_change_position_from_start(self):
     state = GameState(1)
     player = state.players[0]
 
-    # Test player changing position from initial position (Go) to first 
+    # Test player changing position from initial position (Go) to first
     # Chance square
     chance1 = INDEX[CHANCE_1]
 
     str_before = str(state)
     state.apply(GroupOfChanges([
-      GameStateChange.change_position(player, chance1, state.bank, state.squares)
+      GameStateChange.change_position(
+        player, chance1, state.bank, state.squares)
     ]))
     str_after = str(state)
     expected_diff = [
       ('Position: 0', 'Position: %d' % chance1)
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Player was not moved to first Chance square properly')
-
+                              msg='Player was not moved to first Chance square properly')
 
   '''
   Apply a GameStateChange that moves a player to some new position from a
   square in the middle of the board. Test that the resulting GameState is
   correct.  
   '''
+
   def test_change_position_from_middle(self):
     state = GameState(1)
     player = state.players[0]
@@ -378,14 +384,14 @@ class TestGameStateApply(unittest.TestCase):
     # Set up player's initial position at Community Chest 2
     state.apply(GroupOfChanges([
       GameStateChange.change_position(player, INDEX[COMMUNITY_CHEST_2], state.bank,
-        state.squares)
+                                      state.squares)
     ]))
 
     # Test player changing position to Water Works
     str_before = str(state)
     state.apply(GroupOfChanges([
       GameStateChange.change_position(player, INDEX[WATER_WORKS], state.bank,
-        state.squares)
+                                      state.squares)
     ]))
     str_after = str(state)
     expected_diff = [
@@ -393,13 +399,13 @@ class TestGameStateApply(unittest.TestCase):
        'Position: %d' % INDEX[WATER_WORKS])
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Player was not moved from Community Chest 2 to Water Works properly')
-
+                              msg='Player was not moved from Community Chest 2 to Water Works properly')
 
   '''
   Apply a GameStateChange that moves a player from a square before Go to a
   square after Go. Test that the resulting GameState is correct.
   '''
+
   def test_change_position_passing_go(self):
     state = GameState(1)
     player = state.players[0]
@@ -407,14 +413,14 @@ class TestGameStateApply(unittest.TestCase):
     # Set up player's initial position at Short Line Railroad
     state.apply(GroupOfChanges([
       GameStateChange.change_position(player, INDEX[SHORT_LINE_RAILROAD], state.bank,
-        state.squares)
+                                      state.squares)
     ]))
 
     # Test player changing position to Reading Railroad
     str_before = str(state)
     state.apply(GroupOfChanges([
       GameStateChange.change_position(player, INDEX[READING_RAILROAD], state.bank,
-        state.squares)
+                                      state.squares)
     ]))
     str_after = str(state)
     expected_diff = [
@@ -427,13 +433,13 @@ class TestGameStateApply(unittest.TestCase):
       ('Cash: 0', 'Cash: -200')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Player did not pass Go properly')
-
+                              msg='Player did not pass Go properly')
 
   '''
   Apply a GameStateChange that moves a player from a square before Go to Go.
   Test that the resulting GameState is correct.
   '''
+
   def test_change_position_landing_on_go(self):
     state = GameState(1)
     player = state.players[0]
@@ -441,13 +447,14 @@ class TestGameStateApply(unittest.TestCase):
     # Set up player's initial position at Short Line Railroad
     state.apply(GroupOfChanges([
       GameStateChange.change_position(player, INDEX[SHORT_LINE_RAILROAD], state.bank,
-        state.squares)
+                                      state.squares)
     ]))
 
     # Test player changing position to Go
     str_before = str(state)
     state.apply(GroupOfChanges([
-      GameStateChange.change_position(player, INDEX[GO], state.bank, state.squares)
+      GameStateChange.change_position(
+        player, INDEX[GO], state.bank, state.squares)
     ]))
     str_after = str(state)
     expected_diff = [
@@ -460,13 +467,13 @@ class TestGameStateApply(unittest.TestCase):
       ('Cash: 0', 'Cash: -200')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Player did not pass Go properly')
-
+                              msg='Player did not pass Go properly')
 
   '''
   Apply a GameStateChange that mortgages an unmortgaged property (a railroad).
   Test that the resulting GameState is correct.
   '''
+
   def test_mortgage(self):
     state = GameState(1)
     player = state.players[0]
@@ -474,13 +481,14 @@ class TestGameStateApply(unittest.TestCase):
     # Set up player to own a railroad
     state.apply(GroupOfChanges([
       GameStateChange.buy_property(state.squares[INDEX[PENNSYLVANIA_RAILROAD]],
-        player, state.bank)
+                                   player, state.bank)
     ]))
 
     # Test mortgage
     str_before = str(state)
     state.apply(GroupOfChanges([
-      GameStateChange.mortgage(state.squares[INDEX[PENNSYLVANIA_RAILROAD]], state)
+      GameStateChange.mortgage(
+        state.squares[INDEX[PENNSYLVANIA_RAILROAD]], state)
     ]))
     str_after = str(state)
     expected_diff = [
@@ -494,13 +502,13 @@ class TestGameStateApply(unittest.TestCase):
       ('Mortgaged: False', 'Mortgaged: True')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Pennsylvania Railroad was not mortgaged properly')
-
+                              msg='Pennsylvania Railroad was not mortgaged properly')
 
   '''
   Apply a GameStateChange that unmortgages an mortgaged property (a utility).
   Test that the resulting GameState is correct.
   '''
+
   def test_unmortgage(self):
     state = GameState(1)
     player = state.players[0]
@@ -508,7 +516,7 @@ class TestGameStateApply(unittest.TestCase):
     # Set up player to own a mortgaged utility
     state.apply(GroupOfChanges([
       GameStateChange.buy_property(state.squares[INDEX[ELECTRIC_COMPANY]],
-        player, state.bank, mortgaged=True)
+                                   player, state.bank, mortgaged=True)
     ]))
 
     # Test unmortgage
@@ -528,24 +536,24 @@ class TestGameStateApply(unittest.TestCase):
       ('Mortgaged: True', 'Mortgaged: False')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Electric Company was not unmortgaged properly')  
-
+                              msg='Electric Company was not unmortgaged properly')
 
   '''
   Apply a GameStateChange that builds a house on the oranges. Test that the
   resulting GameState is correct.
   '''
+
   def test_build_house(self):
     state = GameState(1)
 
     # Set up a player to own oranges with no houses
     player = state.players[0]
     oranges = [ST_JAMES_PLACE, TENNESSEE_AVENUE, NEW_YORK_AVENUE]
-    
+
     changes = []
     for prop_name in oranges:
       changes.append(GameStateChange.buy_property(state.squares[INDEX[prop_name]],
-        player, state.bank))
+                                                  player, state.bank))
 
     state.apply(GroupOfChanges(changes))
 
@@ -562,13 +570,13 @@ class TestGameStateApply(unittest.TestCase):
       ('Houses remaining: 32', 'Houses remaining: 31')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='House build was not applied properly')
-
+                              msg='House build was not applied properly')
 
   '''
   Apply a GameStateChange that builds a hotel on the reds. Test that the resulting
   GameState is correct.
   '''
+
   def test_build_hotel(self):
     state = GameState(1)
 
@@ -577,13 +585,14 @@ class TestGameStateApply(unittest.TestCase):
     reds = [KENTUCKY_AVENUE, INDIANA_AVENUE, ILLINOIS_AVENUE]
 
     state.apply(GroupOfChanges([
-      GameStateChange.transfer_money(state.bank, player, 1130) # needs $1130 more to buy everything
+      # needs $1130 more to buy everything
+      GameStateChange.transfer_money(state.bank, player, 1130)
     ]))
 
     changes = []
     for prop_name in reds:
       changes.append(GameStateChange.buy_property(state.squares[INDEX[prop_name]],
-        player, state.bank))
+                                                  player, state.bank))
 
     state.apply(GroupOfChanges(changes))
 
@@ -607,13 +616,13 @@ class TestGameStateApply(unittest.TestCase):
       ('Hotels remaining: 12', 'Hotels remaining: 11')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Hotel build was not applied properly')
-
+                              msg='Hotel build was not applied properly')
 
   '''
   Apply a GameStateChange that demolishes a house on the dark blues. Test that
   the resulting GameState is correct.
   '''
+
   def test_demolish_house(self):
     state = GameState(1)
 
@@ -641,25 +650,25 @@ class TestGameStateApply(unittest.TestCase):
       ('Houses remaining: 31', 'Houses remaining: 32')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='House demolition was not applied correctly')
-
+                              msg='House demolition was not applied correctly')
 
   '''
   Apply a GameStateChange that demolishes a hotel on the pinks. Test that the
   resulting GameState is correct
   '''
+
   def test_demolish_hotel(self):
     state = GameState(1)
 
     # Set up a player to own a property group with hotels on all properties
     player = state.players[0]
     state.apply(GroupOfChanges([
-      GameStateChange.transfer_money(state.bank, player, 440)])) # Needs 440 more to buy everything
+      GameStateChange.transfer_money(state.bank, player, 440)]))  # Needs 440 more to buy everything
     pinks = [ST_CHARLES_PLACE, STATES_AVENUE, VIRGINIA_AVENUE]
     changes = []
     for prop_name in pinks:
       changes.append(GameStateChange.buy_property(state.squares[INDEX[prop_name]],
-        player, state.bank))
+                                                  player, state.bank))
 
     state.apply(GroupOfChanges(changes))
 
@@ -678,24 +687,25 @@ class TestGameStateApply(unittest.TestCase):
     expected_diff = [
       ('Cash: 0', 'Cash: 50'),            # player cash
       ('Cash: 1500', 'Cash: 1450'),       # bank cash
-      ('Num houses: 5', 'Num houses: 4'), # st charles place
+      ('Num houses: 5', 'Num houses: 4'),  # st charles place
       ('Houses remaining: 32', 'Houses remaining: 28'),
       ('Hotels remaining: 9', 'Hotels remaining: 10')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Hotel demolition was not applied correctly')
-
+                              msg='Hotel demolition was not applied correctly')
 
   '''
   Apply a GameStateChange that draws a card from Chance and Community Chest
   decks. Test that the resulting GameStates are correct.
   '''
+
   def test_draw_card(self):
     state = GameState(1)
     player = state.players[0]
 
     # Test every card in both decks
-    dict_card_types = { CHANCE_CARD: 'Chance', COMMUNITY_CHEST_CARD: 'Community Chest' }
+    dict_card_types = {CHANCE_CARD: 'Chance',
+                       COMMUNITY_CHEST_CARD: 'Community Chest'}
     for card_type, card_str in dict_card_types.items():
       deck = state.decks[card_type]
 
@@ -728,7 +738,7 @@ class TestGameStateApply(unittest.TestCase):
           # Jail Free card.
           for j in range(0, deck.size() - 1):
             deck.draw()
-          self.assertEqual(deck.draw(), card) # compare with last card
+          self.assertEqual(deck.draw(), card)  # compare with last card
 
           # Initialize
           expected_diff = []
@@ -737,20 +747,21 @@ class TestGameStateApply(unittest.TestCase):
         # string encodings of the GameStates
         str_after = str(state)
         self.assertDiffGameStates(str_before, str_after, expected_diff,
-          msg='The GameState was not modified correctly')
-
+                                  msg='The GameState was not modified correctly')
 
   '''
   Apply a GameStateChange that decrements number of jail cards in a player's
   hand and replaces the card to the appropriate deck. Test that the resulting
   GameState is correct.
   '''
+
   def test_decrement_jail_card_count(self):
     state = GameState(1)
     player = state.players[0]
 
     # Test both decks
-    dict_card_types = { CHANCE_CARD: 'Chance', COMMUNITY_CHEST_CARD: 'Community Chest' }
+    dict_card_types = {CHANCE_CARD: 'Chance',
+                       COMMUNITY_CHEST_CARD: 'Community Chest'}
     for card_type, card_str in dict_card_types.items():
       deck = state.decks[card_type]
 
@@ -759,7 +770,7 @@ class TestGameStateApply(unittest.TestCase):
         state.apply(GroupOfChanges([
           GameStateChange.draw_card(deck, player)]))
       state.apply(GroupOfChanges([
-        GameStateChange.draw_card(deck, player)])) # draw Jail Free card
+        GameStateChange.draw_card(deck, player)]))  # draw Jail Free card
 
       # Test difference in jail card count by looking at the difference in
       # GameStates' string encodings. Ensure that only the jail card count was
@@ -772,7 +783,7 @@ class TestGameStateApply(unittest.TestCase):
         ('Jail free count: 1', 'Jail free count: 0')
       ]
       self.assertDiffGameStates(str_before, str_after, expected_diff,
-        msg='Jail free count was not decremented correctly')
+                                msg='Jail free count was not decremented correctly')
 
       # Test that the Jail Free card was placed back on the bottom of the deck,
       # and that no additional copies of the Jail Free card are in the deck
@@ -782,15 +793,15 @@ class TestGameStateApply(unittest.TestCase):
         if card == LMBDA_GET_OUT_OF_JAIL_FREE:
           count += 1
       self.assertEqual(count, 0,
-        msg='Another Get out of jail free card is in the middle of the %s deck' % card_str)
+                       msg='Another Get out of jail free card is in the middle of the %s deck' % card_str)
       self.assertEqual(deck.peek(), LMBDA_GET_OUT_OF_JAIL_FREE,
-        msg='Get out of jail free card was not replaced into %s deck' % card_str)
-
+                       msg='Get out of jail free card was not replaced into %s deck' % card_str)
 
   '''
   Apply a GameStateChange that sends a player to jail. Test that the resulting
   GameState is correct.
   '''
+
   def test_send_to_jail(self):
     state = GameState(1)
     player = state.players[0]
@@ -808,13 +819,13 @@ class TestGameStateApply(unittest.TestCase):
        ('Jail moves: 0', 'Jail moves: 3')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Player was not sent to jail properly')
-
+                              msg='Player was not sent to jail properly')
 
   '''
   Apply a GameStateChange that decrements a player's jail moves. Test that the
   resulting GameState is correct.
   '''
+
   def test_decrement_jail_moves(self):
     state = GameState(1)
     player = state.players[0]
@@ -822,7 +833,7 @@ class TestGameStateApply(unittest.TestCase):
     # Set up player in jail
     state.apply(GroupOfChanges([
       GameStateChange.send_to_jail(player)]))
-    
+
     # Decrement jail moves, and test that the player's jail moves were changed
     # correctly and that no other changes were made to the state.
     str_before = str(state)
@@ -833,13 +844,13 @@ class TestGameStateApply(unittest.TestCase):
       ('Jail moves: 3', 'Jail moves: 2')
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Player jail moves were not decremented properly')
-
+                              msg='Player jail moves were not decremented properly')
 
   '''
   Apply a GameStateChange that releases a player from jail. Test that the
   resulting GameState is correct.
   '''
+
   def test_leave_jail(self):
     state = GameState(1)
     player = state.players[0]
@@ -862,11 +873,10 @@ class TestGameStateApply(unittest.TestCase):
         GameStateChange.leave_jail(player)]))
       str_after = str(state)
       expected_diff = [
-        ('Jail moves: %d' % (3-num_turns), 'Jail moves: 0')
+        ('Jail moves: %d' % (3 - num_turns), 'Jail moves: 0')
       ]
       self.assertDiffGameStates(str_before, str_after, expected_diff,
-        msg='Player did not leave jail properly')
-
+                                msg='Player did not leave jail properly')
 
   '''
   Applies changes to the GameState state that set up player 0 with the following:
@@ -874,6 +884,7 @@ class TestGameStateApply(unittest.TestCase):
   railroad, and the chance Jail Free card. He is left with whatever cash is
   leftover from his original 1500 after all of these purchases.
   '''
+
   def setup_eliminated_player(self, state):
     player = state.players[0]
     light_blues = [ORIENTAL_AVENUE, VERMONT_AVENUE, CONNECTICUT_AVENUE]
@@ -882,10 +893,9 @@ class TestGameStateApply(unittest.TestCase):
     changes = []
     for prop_name in light_blues:
       changes.append(GameStateChange.buy_property(state.squares[INDEX[prop_name]],
-        player, state.bank))
+                                                  player, state.bank))
 
     state.apply(GroupOfChanges(changes))
-
 
     # Build to 3 house level on light blues
     for count in range(0, 3):
@@ -899,7 +909,7 @@ class TestGameStateApply(unittest.TestCase):
     other_props = [STATES_AVENUE, SHORT_LINE_RAILROAD]
     for prop_name in other_props:
       changes.append(GameStateChange.buy_property(state.squares[INDEX[prop_name]],
-        player, state.bank, mortgaged=True))
+                                                  player, state.bank, mortgaged=True))
 
     state.apply(GroupOfChanges(changes))
 
@@ -908,10 +918,10 @@ class TestGameStateApply(unittest.TestCase):
     deck = state.decks[CHANCE_CARD]
     while deck.peek() != LMBDA_GET_OUT_OF_JAIL_FREE:
       deck.draw()
-    changes.append(GameStateChange.draw_card(deck, player)) # draw Jail Free card
+    changes.append(GameStateChange.draw_card(
+      deck, player))  # draw Jail Free card
 
     state.apply(GroupOfChanges(changes))
-
 
   '''
   Applies changes to the GameState state that set up player 1 with the following:
@@ -920,6 +930,7 @@ class TestGameStateApply(unittest.TestCase):
   starting with $3000. Assumes that the player has only his initial $1500 in
   the state provided.
   '''
+
   def setup_eliminator_player(self, state):
     player = state.players[1]
     yellows = [ATLANTIC_AVENUE, VENTNOR_AVENUE, MARVIN_GARDENS]
@@ -932,7 +943,7 @@ class TestGameStateApply(unittest.TestCase):
     # Give player properties
     for prop_name in yellows + railroads:
       changes.append(GameStateChange.buy_property(state.squares[INDEX[prop_name]],
-        player, state.bank))
+                                                  player, state.bank))
 
     state.apply(GroupOfChanges(changes))
 
@@ -943,11 +954,11 @@ class TestGameStateApply(unittest.TestCase):
           GameStateChange.build(state.squares[INDEX[prop_name]], state)
         ]))
 
-
   '''
   Apply a GameStateChange that eliminates a player from the game, losing to
   the bank. Test that the resulting GameState is correct.
   '''
+
   def test_eliminate_to_bank(self):
     state = GameState(1)
     player = state.players[0]
@@ -959,7 +970,7 @@ class TestGameStateApply(unittest.TestCase):
     # Luxury Tax)
     state.apply(GroupOfChanges([
       GameStateChange.change_position(player, INDEX[LUXURY_TAX], state.bank,
-      state.squares)
+                                      state.squares)
     ]))
 
     # Eliminate the player to the bank, and test that the player's belongings
@@ -992,20 +1003,20 @@ class TestGameStateApply(unittest.TestCase):
       ('Num houses: 3', 'Num houses: 0'),      # Oriental Avenue
       ('Num houses: 3', 'Num houses: 0'),      # Vermont Avenue
       ('Num houses: 3', 'Num houses: 0'),      # Connecticut Avenue
-      ('Mortgaged: True', 'Mortgaged: False'), # States Avenue
-      ('Mortgaged: True', 'Mortgaged: False'), # Short Line Railroad
+      ('Mortgaged: True', 'Mortgaged: False'),  # States Avenue
+      ('Mortgaged: True', 'Mortgaged: False'),  # Short Line Railroad
 
       # Housing stats
       ('Houses remaining: 23', 'Houses remaining: 32')  # 9 houses from light blues
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Player was not eliminated properly. The following changes were made to the GameState:')
-
+                              msg='Player was not eliminated properly. The following changes were made to the GameState:')
 
   '''
   Apply a GameStateChange that eliminates a player from the game, losing to
   another player. Test that the resulting GameState is correct.
   '''
+
   def test_eliminate_to_player(self):
     state = GameState(2)
     player_eliminated = state.players[0]
@@ -1019,7 +1030,7 @@ class TestGameStateApply(unittest.TestCase):
     # other player (e.g. Marvin Gardens)
     state.apply(GroupOfChanges([
       GameStateChange.change_position(player_eliminated, INDEX[MARVIN_GARDENS],
-        state.bank, state.squares)
+                                      state.bank, state.squares)
     ]))
 
     # Eliminate player_eliminated to player_eliminator, and test that
@@ -1058,16 +1069,16 @@ class TestGameStateApply(unittest.TestCase):
       ('Houses remaining: 14', 'Houses remaining: 23')  # 9 houses from light blues
     ]
     self.assertDiffGameStates(str_before, str_after, expected_diff,
-      msg='Player was not eliminated properly. The following changes were made to the GameState:')
+                              msg='Player was not eliminated properly. The following changes were made to the GameState:')
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
+
 
 '''
 Main script. Run with
   python test_gamestate_apply.py
 to debug with pdb.
 '''
-import pdb 
 
 if __name__ == '__main__':
   pdb.set_trace()

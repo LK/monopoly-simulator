@@ -7,6 +7,8 @@ from random import randint
 from constants import *
 
 # TODO: Come up with better DeicisionMaker policies that make every possible state of the game reachable
+
+
 class DefaultDecisionMaker(object):
   def __init__(self):
     pass
@@ -48,7 +50,8 @@ class DefaultDecisionMaker(object):
   # properties, then resorts to demolishing houses. If all of these fail, then
   # he loses
   def pay(self, player_from, player_to, amount, state):
-    transfer_money = GameStateChange.transfer_money(player_from, player_to, amount)
+    transfer_money = GameStateChange.transfer_money(
+      player_from, player_to, amount)
     changes = []
 
     # Try paying all cash first
@@ -77,7 +80,8 @@ class DefaultDecisionMaker(object):
       prop = player_from.props[i]
       i += 1
       if prop.num_houses > 0:
-        demolition = DefaultDecisionMaker._demolish_from_property_group(prop, state)
+        demolition = DefaultDecisionMaker._demolish_from_property_group(
+          prop, state)
         if demolition != None:
           changes.append(demolition)
           difference -= demolition.change_in_cash[player_from]
@@ -108,7 +112,8 @@ class DefaultDecisionMaker(object):
     bid = player.cash / 2
     prop_to_demolish_on = props_to_demolish_on[0]
     hotel_demolition = GameStateChange.demolish(prop, state)
-    house_builds = [GameStateChange.build(prop, state)] * NUM_HOUSES_BEFORE_HOTEL
+    house_builds = [GameStateChange.build(
+      prop, state)] * NUM_HOUSES_BEFORE_HOTEL
     return GroupOfChanges([hotel_demolition] + house_builds)
 
   # By default, players deny all trades
@@ -125,8 +130,8 @@ class DefaultDecisionMaker(object):
         deck = new_state.decks[CHANCE_CARD]
       else:
         deck = new_state.decks[COMMUNITY_CHEST_CARD]
-      use_card     = GameStateChange.decrement_jail_card_count(player, deck)
-      leave_jail   = GameStateChange.leave_jail(player)
+      use_card = GameStateChange.decrement_jail_card_count(player, deck)
+      leave_jail = GameStateChange.leave_jail(player)
       return NotificationChanges(non_building_changes=[use_card, leave_jail])
     else:
       return NotificationChanges()

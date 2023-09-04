@@ -1,30 +1,31 @@
 from default_decision_maker import DefaultDecisionMaker
 from constants import *
 
+
 class Player(object):
 
   @staticmethod
   def _initialize_property_group_counts():
-    groups = [PURPLE, LIGHT_BLUE, PINK, ORANGE, RED, YELLOW, GREEN, DARK_BLUE, RAILROAD, UTILITY]
+    groups = [PURPLE, LIGHT_BLUE, PINK, ORANGE, RED,
+              YELLOW, GREEN, DARK_BLUE, RAILROAD, UTILITY]
     property_group_counts = {}
     for group in groups:
       property_group_counts[group] = 0
     return property_group_counts
 
   def __init__(self, position=0, cash=1500, props=[], decision_maker=DefaultDecisionMaker(), jail_free_count=0, jail_moves=0, is_in_game=True, name=''):
-    self._position              = position
-    self._cash                   = cash
-    self._props                 = []
+    self._position = position
+    self._cash = cash
+    self._props = []
     self._property_group_counts = Player._initialize_property_group_counts()
     for prop in props:
       self._props.append(prop)
       self._property_group_counts[prop.property_group] += 1
-    self._decision_maker        = decision_maker
-    self._jail_free_count        = jail_free_count
-    self._jail_moves            = jail_moves
-    self._is_in_game            = is_in_game
-    self._name                   = name
-
+    self._decision_maker = decision_maker
+    self._jail_free_count = jail_free_count
+    self._jail_moves = jail_moves
+    self._is_in_game = is_in_game
+    self._name = name
 
   def copy(self):
     return Player(position=self._position, cash=self._cash, props=self._props, property_group_counts=self._property_group_counts, decision_maker=self._decision_maker, jail_free_count=self._jail_free_count, jail_moves=self._jail_moves, is_in_game=self._is_in_game)
@@ -67,7 +68,6 @@ class Player(object):
   def name(self):
     return self._name
 
-
   # Setters
 
   @position.setter
@@ -90,8 +90,6 @@ class Player(object):
   def is_in_game(self, is_in_game):
     self._is_in_game = is_in_game
 
-
-
   # Other methods
 
   # Getter-esque methods
@@ -110,11 +108,10 @@ class Player(object):
   def is_in_jail(self):
     return self._jail_moves > 0
 
-
-
   # Setter-esque methods
 
   # Adds the list of properties and updates the corresponding property group counts
+
   def add_props(self, added_props):
     self._props += added_props
     for prop in added_props:
@@ -160,7 +157,6 @@ class Player(object):
     s += "Jail moves: %d\n" % (self._jail_moves)
     s += "Is in game: " + str(self._is_in_game) + "\n"
     return s
-
 
   # DecisionMaker interactions
 

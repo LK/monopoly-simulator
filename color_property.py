@@ -2,9 +2,11 @@ from prop import Property
 from groupofchanges import GroupOfChanges
 from constants import *
 
+
 class ColorProperty(Property):
   def __init__(self, name, price, rents, property_group, size_of_property_group, mortgaged=False, house_price=0, num_houses=0):
-    super(ColorProperty, self).__init__(name, price, rents, property_group, size_of_property_group, mortgaged)
+    super(ColorProperty, self).__init__(name, price, rents,
+                                        property_group, size_of_property_group, mortgaged)
     self._num_houses = num_houses
     self._house_price = house_price
 
@@ -60,4 +62,3 @@ class ColorProperty(Property):
     s += "Num houses: %d\n" % (self._num_houses)
     s += "Mortgaged: " + str(self._mortgaged) + "\n"
     return s
-    

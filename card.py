@@ -8,6 +8,7 @@ from color_property import ColorProperty
 from non_color_property import NonColorProperty
 from constants import *
 
+
 class Card(Square):
 
   # Convenience methods
@@ -17,9 +18,11 @@ class Card(Square):
 
   # Chance and community chest functions
   @staticmethod
-  def _advance_to_square(player, square_index, roll, state): # TODO: Account for GO money when passing GO
+  # TODO: Account for GO money when passing GO
+  def _advance_to_square(player, square_index, roll, state):
     # Apply the player's new position now so they are aware of their position
-    state.apply(Card._group_from_single_change(GameStateChange.change_position(player, square_index, state.bank, state.squares)))
+    state.apply(Card._group_from_single_change(GameStateChange.change_position(
+      player, square_index, state.bank, state.squares)))
     square = state.squares[square_index]
     if isinstance(square, NonColorProperty):
       return square.landed(player, roll, state, from_card=True)
@@ -59,11 +62,10 @@ class Card(Square):
 
   @staticmethod
   def _get_out_of_jail_free(player, state):
-    return GroupOfChanges() # 'jail free' card is handled by GameStateChange.draw_card()
-
-
+    return GroupOfChanges()  # 'jail free' card is handled by GameStateChange.draw_card()
 
   # Chance-only functions
+
   @staticmethod
   def _collect_50(player, state):
     return Card._collect(player, 50, state)
@@ -88,11 +90,11 @@ class Card(Square):
   @staticmethod
   def _pay_building_fees_chance(player, state):
     return Card._pay_building_fees(player, state, CHANCE_PER_HOUSE_FEE,
-      CHANCE_PER_HOTEL_FEE)
-
+                                   CHANCE_PER_HOTEL_FEE)
 
   # Helper function for "advance to nearest __________" cards.
   # Returns the square nearest to the given position going forward
+
   @staticmethod
   def _nearest_to(position, square_indices):
     min_dist = NUM_SQUARES + 1
@@ -112,21 +114,21 @@ class Card(Square):
 
   @staticmethod
   def _advance_to_nearest_utility(player, state):
-    electric_company   = INDEX[ELECTRIC_COMPANY]
-    water_works       = INDEX[WATER_WORKS]
-    nearest_utility   = Card._nearest_to(player.position, [electric_company,
-      water_works])
+    electric_company = INDEX[ELECTRIC_COMPANY]
+    water_works = INDEX[WATER_WORKS]
+    nearest_utility = Card._nearest_to(player.position, [electric_company,
+                                                         water_works])
     roll = Roll().value
     return Card._advance_to_square(player, nearest_utility, roll, state)
 
   @staticmethod
   def _advance_to_nearest_railroad(player, state):
-    reading_railroad       = INDEX[READING_RAILROAD]
-    pennsylvania_railroad  = INDEX[PENNSYLVANIA_RAILROAD]
-    b_and_o_railroad       = INDEX[B_AND_O_RAILROAD]
-    short_line_railroad   = INDEX[SHORT_LINE_RAILROAD]
-    nearest_railroad       = Card._nearest_to(player.position, [reading_railroad,
-      pennsylvania_railroad, b_and_o_railroad, short_line_railroad])
+    reading_railroad = INDEX[READING_RAILROAD]
+    pennsylvania_railroad = INDEX[PENNSYLVANIA_RAILROAD]
+    b_and_o_railroad = INDEX[B_AND_O_RAILROAD]
+    short_line_railroad = INDEX[SHORT_LINE_RAILROAD]
+    nearest_railroad = Card._nearest_to(player.position, [reading_railroad,
+                                                          pennsylvania_railroad, b_and_o_railroad, short_line_railroad])
     return Card._advance_to_square(player, nearest_railroad, 0, state)
 
   @staticmethod
@@ -147,13 +149,12 @@ class Card(Square):
 
   @staticmethod
   def _go_back_three_spaces(player, state):
-    change_position = GameStateChange.change_position(player, player.position - 3, state.bank, state.squares)
+    change_position = GameStateChange.change_position(
+      player, player.position - 3, state.bank, state.squares)
     return GroupOfChanges([change_position])
 
-
-
-
   # Community-chest-only functions
+
   @staticmethod
   def _collect_10(player, state):
     return Card._collect(player, 10, state)
@@ -171,7 +172,7 @@ class Card(Square):
     return Card._collect(player, 45, state)
 
   @staticmethod
-  def _collect_100(player, state): # "xmas funds", "you inherit 100", "life insurance"
+  def _collect_100(player, state):  # "xmas funds", "you inherit 100", "life insurance"
     return Card._collect(player, 100, state)
 
   @staticmethod
@@ -202,7 +203,7 @@ class Card(Square):
   @staticmethod
   def _pay_building_fees_community_chest(player, state):
     return Card._pay_building_fees(player, state, COMMUNITY_CHEST_PER_HOUSE_FEE,
-      COMMUNITY_CHEST_PER_HOTEL_FEE)
+                                   COMMUNITY_CHEST_PER_HOTEL_FEE)
 
   @staticmethod
   def make_chance_functions():
@@ -249,12 +250,12 @@ class Card(Square):
       lambda player, state: Card._pay_50(player, state),
       lambda player, state: Card._pay_100(player, state),
       lambda player, state: Card._pay_150(player, state),
-      lambda player, state: Card._pay_building_fees_community_chest(player, state)
+      lambda player, state: Card._pay_building_fees_community_chest(
+        player, state)
     ]
 
-
-
   # Instance methods
+
   def __init__(self, name, card_type):
     super(Card, self).__init__(name)
     self._card_type = card_type
@@ -272,13 +273,13 @@ class Card(Square):
     return GroupOfChanges.combine([GroupOfChanges([draw_card]), result_of_card])
 
 
-
 # Test client
 def main():
   position = 36
   electric_company = 12
   water_works = 28
   print(Card._nearest_to(position, [electric_company, water_works]))
+
 
 if __name__ == '__main__':
   main()

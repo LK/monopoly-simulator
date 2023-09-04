@@ -2,18 +2,21 @@ from prop import Property
 from groupofchanges import GroupOfChanges
 from constants import *
 
+
 class NonColorProperty(Property):
 
   # Constants
-  _UTILITY_MULTIPLIERS = { 1: 4, 2: 10 } # multipliers for owning 1 or 2 utilities
-  _UTILITY  = True
+  # multipliers for owning 1 or 2 utilities
+  _UTILITY_MULTIPLIERS = {1: 4, 2: 10}
+  _UTILITY = True
   _RAILROAD = False
 
   def __init__(self, name, price, rents, property_group, size_of_property_group, mortgaged=False):
-    super(NonColorProperty, self).__init__(name, price, rents, property_group, size_of_property_group, mortgaged)
+    super(NonColorProperty, self).__init__(name, price, rents,
+                                           property_group, size_of_property_group, mortgaged)
 
   def _type_of_property(self, state):
-    utility_property_group  = state.squares[INDEX[WATER_WORKS]].property_group
+    utility_property_group = state.squares[INDEX[WATER_WORKS]].property_group
     railroad_property_group = state.squares[INDEX[READING_RAILROAD]].property_group
     if self.property_group == utility_property_group:
       return NonColorProperty._UTILITY

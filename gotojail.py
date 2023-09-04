@@ -2,6 +2,7 @@ from square import Square
 from gamestatechange import GameStateChange
 from groupofchanges import GroupOfChanges
 
+
 class GoToJail(Square):
 
   def __init__(self, name):

@@ -11,6 +11,7 @@ for these changes/requests submitted by a Player in response to a notification.
 
 from buildingrequests import BuildingRequests
 
+
 class NotificationChanges(object):
   def __init__(self, non_building_changes=[], building_requests=BuildingRequests()):
     self._non_building_changes = []
@@ -21,8 +22,7 @@ class NotificationChanges(object):
   @property
   def non_building_changes(self):
     return self._non_building_changes
-  
+
   @property
   def building_requests(self):
     return self._building_requests
-  

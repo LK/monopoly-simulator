@@ -9,6 +9,7 @@ generator can always be changed later by substituting this method where relevant
 from random import randint
 from sys import argv
 
+
 class Deck(object):
   def __init__(self, cards):
     self._next = 0                       # index of the next card to draw
@@ -61,14 +62,11 @@ class Deck(object):
     self._cards.insert(r, item)
 
 
-
 # Test client
 def main():
   cards = [1, 2, 3, 4, 5]
   print("---CARDS---")
   print(cards)
-
-
 
   print("Test shuffle() properly randomizes the cards")
   deck = Deck(cards)
@@ -101,19 +99,15 @@ def main():
   print()
   del deck
 
-
-
   print("Test draw() takes cards out in order")
   deck = Deck(cards)
   deck.shuffle()
-  for count in range(0, 2): # repeat twice to check same order both times
+  for count in range(0, 2):  # repeat twice to check same order both times
     for i in range(0, deck.size()):
-      print("Draw card " + str(i+1) + ": " + str(deck.draw()))
+      print("Draw card " + str(i + 1) + ": " + str(deck.draw()))
     print()
   print()
   del deck
-
-
 
   print("Test draw() vs peek()")
   deck = Deck(cards)
@@ -124,8 +118,6 @@ def main():
     print("Peek again", deck.peek())
   print()
   del deck
-
-
 
   print("Test draw_and_remove() + insert_on_bottom() does the same as draw()")
   deck1 = Deck(cards)
@@ -139,8 +131,6 @@ def main():
   print()
   del deck1
   del deck2
-
-
 
   print("Test draw_and_remove() + insert_on_top() does the same as peek()")
   deck1 = Deck(cards)
@@ -157,7 +147,6 @@ def main():
   print()
   del deck1
   del deck2
-
 
 
 if __name__ == "__main__":

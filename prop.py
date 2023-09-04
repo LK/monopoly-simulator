@@ -1,5 +1,6 @@
 from square import Square
 
+
 class Property(Square):
 
   # Initialize a property
@@ -18,7 +19,7 @@ class Property(Square):
   def __init__(self, name, price, rents, property_group, size_of_property_group,
                mortgaged=False):
     super(Property, self).__init__(name)
-    
+
     self._price = price
     self._rents = rents
     self._property_group = property_group
@@ -48,7 +49,7 @@ class Property(Square):
   @property
   def mortgaged(self):
     return self._mortgaged
-  
+
   @mortgaged.setter
   def mortgaged(self, mortgaged):
     self._mortgaged = mortgaged

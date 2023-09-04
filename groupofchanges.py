@@ -8,6 +8,7 @@ Description:
   in the order given during initialization.
 '''
 
+
 class GroupOfChanges(object):
 
   # Takes in a list of GameStateChanges to be applied together as a unit

@@ -1,5 +1,6 @@
 from square import Square
 
+
 class Tax(Square):
 
   def __init__(self, name, tax):
@@ -9,6 +10,6 @@ class Tax(Square):
   @property
   def tax(self):
     return self._tax
-  
+
   def landed(self, player, roll, state):
     return player.pay(state.bank, self._tax, state)
