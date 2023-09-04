@@ -362,6 +362,7 @@ class GameState(object):
       self._squares = GameState._initialize_squares()
       self._bank = GameState._initialize_bank(self._squares)
       self._current_player_index = random.randint(0, num_players - 1)
+      self._game_history = []
 
   # Private
 
@@ -427,7 +428,8 @@ class GameState(object):
 
   # Applies a single GameStateChange
   def _apply_single_change(self, change):
-    print(change.description)
+    # print(change.description)
+    self._game_history.append(change)
 
     for player, change_in_cash in change.change_in_cash.items():
       player.cash += change_in_cash
