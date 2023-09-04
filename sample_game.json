@@ -2,7 +2,15 @@
   "players": [
     {
       "name": "Player 1",
-      "cash": 1000,
+      "cash": 1500,
+      "position": 39,
+      "current_turn": true,
+      "get_out_of_jail_cards": 1,
+      "moves_remaining_in_jail": 0
+    },
+    {
+      "name": "Player 2",
+      "cash": 1500,
       "position": 39,
       "current_turn": true,
       "get_out_of_jail_cards": 1,
@@ -14,196 +22,168 @@
       "name": "Mediterranean Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Baltic Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Reading Railroad",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Oriental Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Vermont Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Connecticut Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "St. Charles Place",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Electric Company",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "States Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Virginia Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Pennsylvania Railroad",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "St. James Place",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Tennessee Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "New York Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Kentucky Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Indiana Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Illinois Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "B. & O. Railroad",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Atlantic Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
-      "name": "Ventor Avenue",
+      "name": "Ventnor Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Water Works",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Marvin Gardens",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Pacific Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "North Carolina Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Pennsylvania Avenue",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Short Line Railroad",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": null
     },
     {
       "name": "Park Place",
       "mortgaged": false,
       "houses": 0,
-      "hotels": 0,
       "owner": "Player 1"
     },
     {
       "name": "Boardwalk",
       "mortgaged": false,
       "houses": 1,
-      "hotels": 0,
       "owner": "Player 1"
     }
   ]

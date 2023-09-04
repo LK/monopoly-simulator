@@ -19,6 +19,7 @@ from gotojail import GoToJail
 from free_space import FreeSpace
 from deck import Deck
 from constants import *
+import json
 import random
 
 
@@ -319,16 +320,47 @@ class GameState(object):
   # Constructor
 
   def __init__(self, load_from_file=None):
+    self._houses_remaining = NUM_HOUSES
+    self._hotels_remaining = NUM_HOTELS
+    self._decks = GameState._initialize_decks()
+
     if load_from_file:
-      pass # TODO
+      with open(load_from_file) as f:
+        data = json.load(f)
+      self._squares = GameState._initialize_squares()
+      squares_dict = {square.name: square for square in self._squares}
+
+      # Initialize properties
+      for prop_data in data['properties']:
+        prop = squares_dict[prop_data['name']]
+        prop.mortgaged = prop_data['mortgaged']
+        if isinstance(prop, ColorProperty):
+          num_houses = prop_data['houses']
+          prop.num_houses = num_houses
+          if prop.has_hotel():
+            self._hotels_remaining -= 1
+          else:
+            self._houses_remaining -= num_houses
+
+      # Initialize bank
+        bank_props = [squares_dict[prop['name']] for prop in data['properties'] if prop['owner'] == None]
+        self._bank = Player(cash=0, props=bank_props, name='The Bank')
+
+      # Initialize players
+      self._players = []
+      for i, player_data in enumerate(data['players']):
+        if player_data['current_turn']:
+          self._current_player_index = i
+
+        props = [squares_dict[prop['name']] for prop in data['properties'] if prop['owner'] == player_data['name']]
+        self._players.append(
+          Player(position=player_data['position'], cash=player_data['cash'], props=props, jail_free_count=player_data['get_out_of_jail_cards'], jail_moves=player_data['moves_remaining_in_jail'], name=player_data['name'])
+        )
     else:
       num_players = 4
       self._players = GameState._initialize_players(num_players)
       self._squares = GameState._initialize_squares()
-      self._houses_remaining = NUM_HOUSES
-      self._hotels_remaining = NUM_HOTELS
       self._bank = GameState._initialize_bank(self._squares)
-      self._decks = GameState._initialize_decks()
       self._current_player_index = random.randint(0, num_players - 1)
 
   # Private
