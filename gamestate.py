@@ -499,8 +499,9 @@ class GameState(object):
   # Applies a GroupOfChanges
 
   def apply(self, changes):
-    for change in changes:
-      self._apply_single_change(change)
+    if changes != None:
+      for change in changes:
+        self._apply_single_change(change)
 
   def __str__(self):
     s = ""

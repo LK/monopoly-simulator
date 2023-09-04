@@ -3,18 +3,18 @@ from non_color_property import NonColorProperty
 from notification_changes import NotificationChanges
 from groupofchanges import GroupOfChanges
 from gamestatechange import GameStateChange
+from roll import Roll
 from random import randint
 from constants import *
 
 # TODO: Come up with better DeicisionMaker policies that make every possible state of the game reachable
 
 
-class DefaultDecisionMaker(object):
-  def __init__(self):
-    pass
+class DecisionMaker(object):
+  def __init__(self, player):
+    self._player = player
 
-  @staticmethod
-  def _can_mortgage_property(prop, state):
+  def _can_mortgage_property(self, prop, state):
     if isinstance(prop, NonColorProperty):
       return True
 
@@ -24,8 +24,7 @@ class DefaultDecisionMaker(object):
 
     return True
 
-  @staticmethod
-  def _demolish_from_property_group(prop, state):
+  def _demolish_from_property_group(self, prop, state):
     max_houses = 0
     max_houses_prop = None
     for prop in state.get_property_group(prop.property_group):
@@ -37,6 +36,42 @@ class DefaultDecisionMaker(object):
       return GameStateChange.demolish(max_houses_prop, state)
     else:
       return None
+
+  def _max_rent(self, state):
+    max_rent = 0
+    for prop in state.squares:
+      if isinstance(prop, ColorProperty):
+        max_rent = max(max_rent, prop.get_rent_with(prop.num_houses, state))
+      elif isinstance(prop, NonColorProperty):
+        owner = state.get_owner(prop)
+        num_owned = owner.property_group_counts[prop.property_group]
+        max_rent = max(max_rent, prop.get_rent(num_owned, Roll.max_roll(), state, from_card=False))
+    return max_rent
+
+  def _can_build(self, prop, state):
+    if not isinstance(prop, ColorProperty) or (
+      state.get_owner(prop) != self._player) or (
+      prop.num_houses == NUM_HOUSES_BEFORE_HOTEL + 1) or (
+      state.houses_remaining == 0) or (
+      prop.num_houses == NUM_HOUSES_BEFORE_HOTEL and state.hotels_remaining == 0):
+      return False
+
+    # Check that houses are being built evenly in the property group
+    for other_prop in state.get_property_group(prop.property_group):
+      if other_prop.num_houses < prop.num_houses:
+        return False
+    return True
+
+  def _return_jail_free_card(self, player, state):
+    # Pick a Deck to return the jail free card to randomly
+    # TODO: Need a better way of picking a Deck to return the jail free card to
+    if (randint(0, 1) == 0):
+      deck = state.decks[CHANCE_CARD]
+    else:
+      deck = state.decks[COMMUNITY_CHEST_CARD]
+    use_card = GameStateChange.decrement_jail_card_count(player, deck)
+    leave_jail = GameStateChange.leave_jail(player)
+    return GroupOfChanges(changes=[use_card, leave_jail])
 
   # By default, player buys the property if he has enough cash on hand.
   # Otherwise he passes
@@ -65,7 +100,7 @@ class DefaultDecisionMaker(object):
     while difference > 0 and i < len(player_from.props):
       prop = player_from.props[i]
       i += 1
-      if not prop.mortgaged and DefaultDecisionMaker._can_mortgage_property(prop, state):
+      if not prop.mortgaged and self._can_mortgage_property(prop, state):
         mortgage = GameStateChange.mortgage(prop, state)
         changes.append(mortgage)
         difference -= mortgage.change_in_cash[player_from]
@@ -80,7 +115,7 @@ class DefaultDecisionMaker(object):
       prop = player_from.props[i]
       i += 1
       if isinstance(prop, ColorProperty) and prop.num_houses > 0:
-        demolition = DefaultDecisionMaker._demolish_from_property_group(
+        demolition = self._demolish_from_property_group(
           prop, state)
         if demolition != None:
           changes.append(demolition)
@@ -122,19 +157,11 @@ class DefaultDecisionMaker(object):
 
   # By default, player does nothing unless he is in jail and has a jail-free
   # card, in which case he uses it to get out immediately
-  def respond_to_state(self, player, new_state):
+  def respond_to_state(self, state):
     if player.jail_moves > 0 and player.jail_free_count > 0:
-      # Pick a Deck to return the jail free card to randomly
-      # TODO: Need a better way of picking a Deck to return the jail free card to
-      if (randint(0, 1) == 0):
-        deck = new_state.decks[CHANCE_CARD]
-      else:
-        deck = new_state.decks[COMMUNITY_CHEST_CARD]
-      use_card = GameStateChange.decrement_jail_card_count(player, deck)
-      leave_jail = GameStateChange.leave_jail(player)
-      return NotificationChanges(non_building_changes=[use_card, leave_jail])
-    else:
-      return NotificationChanges()
+      use_jail_free_card = self._return_jail_free_card(player, state)
+      return NotificationChanges(non_building_changes=use_jail_free_card)
+    return None
 
   # By default, player does not revise his hotel demolitions
   def revise_hotel_demolitions(self, player, original_hotel_demolitions, state):

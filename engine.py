@@ -32,6 +32,8 @@ class Engine(object):
       if self._interactive:
         print('%s rolled a %d%s' % (player.name, roll.value,
               ' (doubles)' if roll.is_doubles else ''))
+
+      # Handle if player is in jail
       if player.jail_moves > 0 and roll.is_doubles:
         self._state.apply(GroupOfChanges(
           changes=[GameStateChange.leave_jail(player)]))
@@ -40,7 +42,7 @@ class Engine(object):
           changes=[GameStateChange.decrement_jail_moves(player)]))
         self._wait()
         continue
-      elif player.jail_moves == 1:
+      elif player.jail_moves == 0:
         # TODO: Allow player to choose to use a "Get out of jail free" card
         pay_changes = player.pay(self._state.bank, 50, self._state)
         leave_changes = GroupOfChanges(
@@ -90,8 +92,9 @@ class Engine(object):
     player_building_requests = {}
     for player in self._state.players:
       notification_changes = player.respond_to_state(self._state)
-      self._state.apply(notification_changes.non_building_changes)
-      player_building_requests[player] = notification_changes.building_requests
+      if notification_changes:
+        self._state.apply(notification_changes.non_building_changes)
+        player_building_requests[player] = notification_changes.building_requests
 
     HousingResolver(player_building_requests, self._state)
 

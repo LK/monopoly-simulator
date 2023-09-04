@@ -1,4 +1,4 @@
-from default_decision_maker import DefaultDecisionMaker
+from decision_maker import DecisionMaker
 from constants import *
 
 
@@ -13,7 +13,7 @@ class Player(object):
       property_group_counts[group] = 0
     return property_group_counts
 
-  def __init__(self, position=0, cash=1500, props=[], decision_maker=DefaultDecisionMaker(), jail_free_count=0, jail_moves=0, is_in_game=True, name=''):
+  def __init__(self, position=0, cash=1500, props=[], decision_maker='default', jail_free_count=0, jail_moves=0, is_in_game=True, name=''):
     self._position = position
     self._cash = cash
     self._props = []
@@ -21,11 +21,14 @@ class Player(object):
     for prop in props:
       self._props.append(prop)
       self._property_group_counts[prop.property_group] += 1
-    self._decision_maker = decision_maker
     self._jail_free_count = jail_free_count
     self._jail_moves = jail_moves
     self._is_in_game = is_in_game
     self._name = name
+    if decision_maker == 'default':
+      self._decision_maker = DecisionMaker(self)
+    else:
+      raise Exception('DecisionMaker not supported')
 
   def copy(self):
     return Player(name=self._name, position=self._position, cash=self._cash, props=self._props, decision_maker=self._decision_maker, jail_free_count=self._jail_free_count, jail_moves=self._jail_moves, is_in_game=self._is_in_game)
@@ -178,8 +181,8 @@ class Player(object):
   def will_trade(self, proposal, state):
     return self.decision_maker.will_trade(self, proposal, state)
 
-  def respond_to_state(self, new_state):
-    return self.decision_maker.respond_to_state(self, new_state)
+  def respond_to_state(self, state):
+    return self.decision_maker.respond_to_state(self, state)
 
   def revise_hotel_demolitions(self, original_hotel_demolitions, state):
     return self.decision_maker.revise_hotel_demolitions(self, original_hotel_demolitions, state)

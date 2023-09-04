@@ -10,19 +10,13 @@ from constants import *
 
 
 class Card(Square):
-
-  # Convenience methods
-  @staticmethod
-  def _group_from_single_change(change):
-    return GroupOfChanges(changes=[change])
-
   # Chance and community chest functions
   @staticmethod
   # TODO: Account for GO money when passing GO
   def _advance_to_square(player, square_index, roll, state):
     # Apply the player's new position now so they are aware of their position
-    state.apply(Card._group_from_single_change(GameStateChange.change_position(
-      player, square_index, state.bank, state.squares)))
+    state.apply(GroupOfChanges(changes=[GameStateChange.change_position(
+      player, square_index, state.bank, state.squares)]))
     square = state.squares[square_index]
     if isinstance(square, NonColorProperty):
       return square.landed(player, roll, state, from_card=True)
