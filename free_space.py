@@ -8,3 +8,6 @@ class FreeSpace(Square):
 
   def landed(self, player, roll, state):
     return GroupOfChanges()
+
+  def copy(self):
+    return FreeSpace(self.name)

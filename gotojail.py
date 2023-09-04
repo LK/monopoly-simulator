@@ -10,3 +10,6 @@ class GoToJail(Square):
 
   def landed(self, player, roll, state):
     return GroupOfChanges(changes=[GameStateChange.send_to_jail(player)])
+
+  def copy(self):
+    return GoToJail(self.name)

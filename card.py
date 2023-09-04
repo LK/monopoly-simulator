@@ -209,49 +209,48 @@ class Card(Square):
   def make_chance_functions():
     return [
       # Chance and community chest functions
-      lambda player, state: Card._advance_to_go(player, state),
-      lambda player, state: Card._go_to_jail(player, state),
+      Card._advance_to_go,
+      Card._go_to_jail,
       LMBDA_GET_OUT_OF_JAIL_FREE,
 
       # Chance-only functions
-      lambda player, state: Card._collect_50(player, state),
-      lambda player, state: Card._collect_150(player, state),
-      lambda player, state: Card._pay_each_player_50(player, state),
-      lambda player, state: Card._pay_poor_tax_of_15(player, state),
-      lambda player, state: Card._pay_building_fees_chance(player, state),
-      lambda player, state: Card._advance_to_nearest_utility(player, state),
-      lambda player, state: Card._advance_to_nearest_railroad(player, state),
-      lambda player, state: Card._advance_to_nearest_railroad(player, state),
-      lambda player, state: Card._advance_to_reading_railroad(player, state),
-      lambda player, state: Card._advance_to_boardwalk(player, state),
-      lambda player, state: Card._advance_to_illinois_avenue(player, state),
-      lambda player, state: Card._advance_to_st_charles_place(player, state),
-      lambda player, state: Card._go_back_three_spaces(player, state)
+      Card._collect_50,
+      Card._collect_150,
+      Card._pay_each_player_50,
+      Card._pay_poor_tax_of_15,
+      Card._pay_building_fees_chance,
+      Card._advance_to_nearest_utility,
+      Card._advance_to_nearest_railroad,
+      Card._advance_to_nearest_railroad,
+      Card._advance_to_reading_railroad,
+      Card._advance_to_boardwalk,
+      Card._advance_to_illinois_avenue,
+      Card._advance_to_st_charles_place,
+      Card._go_back_three_spaces,
     ]
 
   @staticmethod
   def make_community_chest_functions():
     return [
       # Chance and community chest functions
-      lambda player, state: Card._advance_to_go(player, state),
-      lambda player, state: Card._go_to_jail(player, state),
+      Card._advance_to_go,
+      Card._go_to_jail,
       LMBDA_GET_OUT_OF_JAIL_FREE,
 
       # Community-chest-only functions
-      lambda player, state: Card._collect_10(player, state),
-      lambda player, state: Card._collect_20(player, state),
-      lambda player, state: Card._collect_25(player, state),
-      lambda player, state: Card._collect_45(player, state),
-      lambda player, state: Card._collect_100(player, state),
-      lambda player, state: Card._collect_100(player, state),
-      lambda player, state: Card._collect_100(player, state),
-      lambda player, state: Card._collect_200(player, state),
-      lambda player, state: Card._collect_50_from_every_player(player, state),
-      lambda player, state: Card._pay_50(player, state),
-      lambda player, state: Card._pay_100(player, state),
-      lambda player, state: Card._pay_150(player, state),
-      lambda player, state: Card._pay_building_fees_community_chest(
-        player, state)
+      Card._collect_10,
+      Card._collect_20,
+      Card._collect_25,
+      Card._collect_45,
+      Card._collect_100,
+      Card._collect_100,
+      Card._collect_100,
+      Card._collect_200,
+      Card._collect_50_from_every_player,
+      Card._pay_50,
+      Card._pay_100,
+      Card._pay_150,
+      Card._pay_building_fees_community_chest,
     ]
 
   # Instance methods
@@ -271,6 +270,9 @@ class Card(Square):
       result_of_card = card_lmbda(player, state)
 
     return GroupOfChanges.combine([GroupOfChanges([draw_card]), result_of_card])
+
+  def copy(self):
+    return Card(self.name, self._card_type)
 
 
 # Test client

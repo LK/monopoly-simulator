@@ -8,8 +8,8 @@ import argparse
 
 
 class Engine(object):
-  def __init__(self, load_from_file=None, interactive=True, stalemate_threshold=None):
-    self._state = GameState(load_from_file=load_from_file)
+  def __init__(self, game_state, interactive=True, stalemate_threshold=None):
+    self._state = game_state
     self._interactive = interactive
     self._stalemate_threshold = stalemate_threshold
 
@@ -23,7 +23,7 @@ class Engine(object):
 
   def run(self):
     steps = 0
-    while not self._completed() and (steps < self._stalemate_threshold or self._stalemate_threshold is None):
+    while not self._completed() and (self._stalemate_threshold is None or steps < self._stalemate_threshold):
       steps += 1
       # cash = [player.cash for player in self._state.players]
       # print cash
@@ -101,7 +101,8 @@ class Engine(object):
 
 def main():
   parser = argparse.ArgumentParser(prog='Monopoly Simulator')
-  parser.add_argument('-l', '--load-from-file', help='Name of JSON file to load from. If none provided, the simulator will start a new game.')
+  parser.add_argument('-l', '--load-from-file',
+                      help='Name of JSON file to load from. If none provided, the simulator will start a new game.')
   args = parser.parse_args()
 
   engine = Engine(load_from_file=args.load_from_file)

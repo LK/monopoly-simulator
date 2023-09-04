@@ -357,7 +357,7 @@ class GameState(object):
           Player(position=player_data['position'], cash=player_data['cash'], props=props, jail_free_count=player_data['get_out_of_jail_cards'], jail_moves=player_data['moves_remaining_in_jail'], name=player_data['name'])
         )
     else:
-      num_players = 4
+      num_players = 2
       self._players = GameState._initialize_players(num_players)
       self._squares = GameState._initialize_squares()
       self._bank = GameState._initialize_bank(self._squares)
@@ -367,11 +367,10 @@ class GameState(object):
 
   def _copy(self):
     num_players = len(self._players)
-    copy = GameState(num_players)
+    copy = GameState()
     for i in range(0, num_players):
       copy._players[i] = self._players[i].copy()
     for square in self._squares:
-      # TODO: Implement Square.copy() for all subclasses
       copy._squares.append(square.copy())
     copy._houses_remaining = self._houses_remaining
     copy._hotels_remaining = self._hotels_remaining

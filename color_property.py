@@ -62,3 +62,6 @@ class ColorProperty(Property):
     s += "Num houses: %d\n" % (self._num_houses)
     s += "Mortgaged: " + str(self._mortgaged) + "\n"
     return s
+
+  def copy(self):
+    return ColorProperty(self.name, self.price, [x for x in self.rents], self.property_group, self.size_of_property_group, self.mortgaged, self.house_price, self.num_houses)
