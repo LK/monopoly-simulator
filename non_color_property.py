@@ -37,7 +37,7 @@ class NonColorProperty(Property):
       return player.pay(owner, rent, state)
 
   # Returns the rent on this property based on the number of properties in this
-  # group owned, anding player's roll, and whether they came from a card or not
+  # group owned, landing player's roll, and whether they came from a card or not
   def get_rent(self, num_owned, roll, state, from_card):
     if self._type_of_property(state) == NonColorProperty._UTILITY:
       if from_card:

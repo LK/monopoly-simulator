@@ -61,6 +61,9 @@ class Deck(object):
     r = randint(0, self.size() - 1)
     self._cards.insert(r, item)
 
+  def has_card(self, item):
+    return item in self._cards
+
 
 # Test client
 def main():

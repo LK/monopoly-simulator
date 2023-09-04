@@ -310,19 +310,23 @@ class GameState(object):
         all_props += [prop]
     return Player(cash=0, props=all_props, name='\033[94mThe Bank\033[0m')
 
+  # deck_type=CHANCE_CARD or COMMUNITY_CHEST_CARD
   @staticmethod
-  def _initialize_decks():
-    chance_deck = Deck(Card.make_chance_functions())
-    community_chest_deck = Deck(Card.make_community_chest_functions())
-    return {CHANCE_CARD: chance_deck, COMMUNITY_CHEST_CARD: community_chest_deck}
+  def _initialize_deck(deck_type=CHANCE_CARD, with_jail_free=True):
+    init = Card.make_chance_functions if deck_type == CHANCE_CARD else Card.make_community_chest_functions
+    if not with_jail_free:
+      card_functions = [lmbda for lmbda in init() if lmbda != LMBDA_GET_OUT_OF_JAIL_FREE]
+    else:
+      card_functions = init()
+    return Deck(card_functions)
 
   # Constructor
 
   def __init__(self, load_from_file=None):
     self._houses_remaining = NUM_HOUSES
     self._hotels_remaining = NUM_HOTELS
-    self._decks = GameState._initialize_decks()
     self._game_history = []
+    deck_types = [CHANCE_CARD, COMMUNITY_CHEST_CARD]
 
     if load_from_file:
       with open(load_from_file) as f:
@@ -349,22 +353,36 @@ class GameState(object):
 
       # Initialize players
       self._players = []
+      jail_cards_used = 0
       for i, player_data in enumerate(data['players']):
         if player_data['current_turn']:
           self._current_player_index = i
 
-        props = [squares_dict[prop['name']]
-                 for prop in data['properties'] if prop['owner'] == player_data['name']]
+        if player_data['get_out_of_jail_cards'] > 0:
+          jail_cards_used += player_data['get_out_of_jail_cards']
+
+        props = [squares_dict[prop['name']] for prop in data['properties'] if prop['owner'] == player_data['name']]
         self._players.append(
           Player(position=player_data['position'], cash=player_data['cash'], props=props,
                  jail_free_count=player_data['get_out_of_jail_cards'], jail_moves=player_data['moves_remaining_in_jail'], name=player_data['name'])
         )
+
+        # Set jail free cards to be removed from decks
+        if jail_cards_used == 2:
+          with_jail_free = [False, False]
+        elif jail_cards_used > 0:
+          with_jail_free = [True, False]
+        else:
+          with_jail_free = [True, True]
     else:
       num_players = 2
       self._players = GameState._initialize_players(num_players)
       self._squares = GameState._initialize_squares()
       self._bank = GameState._initialize_bank(self._squares)
       self._current_player_index = 0
+
+    # Initialize decks
+    self._decks = {deck_type: GameState._initialize_deck(deck_type=deck_type, with_jail_free=wjf) for deck_type, wjf in zip(deck_types, with_jail_free)}
 
   # Methods
 
@@ -496,6 +514,10 @@ class GameState(object):
     for square in self._squares:
       s += str(square) + "\n"
     s += "\n"
+
+    s += "Decks with jail free:\n"
+    s += "Chance: %s\n" % (self._decks[CHANCE_CARD].has_card(LMBDA_GET_OUT_OF_JAIL_FREE))
+    s += "Community chest: %s\n" % (self._decks[COMMUNITY_CHEST_CARD].has_card(LMBDA_GET_OUT_OF_JAIL_FREE))
 
     s += "Houses remaining: %d\n" % (self._houses_remaining)
     s += "Hotels remaining: %d\n" % (self._hotels_remaining)
