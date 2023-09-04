@@ -315,7 +315,8 @@ class GameState(object):
   def _initialize_deck(deck_type=CHANCE_CARD, with_jail_free=True):
     init = Card.make_chance_functions if deck_type == CHANCE_CARD else Card.make_community_chest_functions
     if not with_jail_free:
-      card_functions = [lmbda for lmbda in init() if lmbda != LMBDA_GET_OUT_OF_JAIL_FREE]
+      card_functions = [lmbda for lmbda in init() if lmbda !=
+                        LMBDA_GET_OUT_OF_JAIL_FREE]
     else:
       card_functions = init()
     return Deck(card_functions)
@@ -361,7 +362,8 @@ class GameState(object):
         if player_data['get_out_of_jail_cards'] > 0:
           jail_cards_used += player_data['get_out_of_jail_cards']
 
-        props = [squares_dict[prop['name']] for prop in data['properties'] if prop['owner'] == player_data['name']]
+        props = [squares_dict[prop['name']]
+                 for prop in data['properties'] if prop['owner'] == player_data['name']]
         self._players.append(
           Player(position=player_data['position'], cash=player_data['cash'], props=props,
                  jail_free_count=player_data['get_out_of_jail_cards'], jail_moves=player_data['moves_remaining_in_jail'], name=player_data['name'])
@@ -380,9 +382,11 @@ class GameState(object):
       self._squares = GameState._initialize_squares()
       self._bank = GameState._initialize_bank(self._squares)
       self._current_player_index = 0
+      with_jail_free = [True, True]
 
     # Initialize decks
-    self._decks = {deck_type: GameState._initialize_deck(deck_type=deck_type, with_jail_free=wjf) for deck_type, wjf in zip(deck_types, with_jail_free)}
+    self._decks = {deck_type: GameState._initialize_deck(
+      deck_type=deck_type, with_jail_free=wjf) for deck_type, wjf in zip(deck_types, with_jail_free)}
 
   # Methods
 
@@ -516,8 +520,10 @@ class GameState(object):
     s += "\n"
 
     s += "Decks with jail free:\n"
-    s += "Chance: %s\n" % (self._decks[CHANCE_CARD].has_card(LMBDA_GET_OUT_OF_JAIL_FREE))
-    s += "Community chest: %s\n" % (self._decks[COMMUNITY_CHEST_CARD].has_card(LMBDA_GET_OUT_OF_JAIL_FREE))
+    s += "Chance: %s\n" % (
+      self._decks[CHANCE_CARD].has_card(LMBDA_GET_OUT_OF_JAIL_FREE))
+    s += "Community chest: %s\n" % (
+      self._decks[COMMUNITY_CHEST_CARD].has_card(LMBDA_GET_OUT_OF_JAIL_FREE))
 
     s += "Houses remaining: %d\n" % (self._houses_remaining)
     s += "Hotels remaining: %d\n" % (self._hotels_remaining)
