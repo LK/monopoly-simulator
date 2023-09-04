@@ -64,7 +64,46 @@ class WinRateAnalyzer(Analyzer):
         win_confidences.get(player, 0) * 100))
 
 
-analyzers = [WinRateAnalyzer]
+class LandProbabilityAnalyzer(Analyzer):
+  NAME = 'Land Probability Analyzer'
+
+  @classmethod
+  def extract(cls, state: GameState) -> list[int]:
+    res = [0] * 40
+
+    position_changes = [
+      change for change in state._game_history if change.new_position]
+
+    # group by changes with cause 'roll'
+    position_changes_per_roll = []
+    for change in position_changes:
+      if change.cause == 'roll':
+        position_changes_per_roll.append([])
+
+      position_changes_per_roll[-1].append(change)
+
+    for changes in position_changes_per_roll:
+      for pos in changes[-1].new_position.values():
+        if pos != -1:
+          res[pos] += 1
+
+    return res
+
+  @classmethod
+  def analyze(cls, results: list[list[int]]):
+    probabilities = [0] * 40
+    for result in results:
+      for i, count in enumerate(result):
+        probabilities[i] += count
+
+    total = sum(probabilities)
+    probabilities = [count / total for count in probabilities]
+
+    for i, prob in enumerate(probabilities):
+      print(f'{i}: {prob * 100:.2f}%')
+
+
+analyzers = [WinRateAnalyzer, LandProbabilityAnalyzer]
 
 
 def run_simulation(state, seed, stalemate_threshold):
@@ -75,18 +114,6 @@ def run_simulation(state, seed, stalemate_threshold):
   res = engine.run()
 
   return [analyzer.extract(res) for analyzer in analyzers]
-
-  # print()
-  # print('Stalemates with 4 railroads: %d (%.2f%%)' % (
-  #   len(stalemates_with_4_railroads),
-  #   len(stalemates_with_4_railroads) / len(results) * 100))
-
-  # for result in results:
-  #   if result.winner != None and result.railroads[result.winner] != 4:
-  #     print(f'Won without 4 railroads: {result.seed}')
-
-  #   if result.winner == None and len([x for x in result.railroads.values() if x == 4]) > 0:
-  #     print(f'Stalemate with 4 railroads: {result.seed}')
 
 
 def main():
@@ -149,6 +176,7 @@ def main():
   for i, analyzer in enumerate(analyzers):
     print(f'===== {analyzer.NAME} =====')
     analyzer.analyze([r[i] for r in results])
+    print()
 
 
 if __name__ == '__main__':

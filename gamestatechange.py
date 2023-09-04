@@ -14,11 +14,14 @@ from constants import *
 
 
 class GameStateChange(object):
+  class Cause:
+    ROLL = 'roll'
+
   def __init__(self, change_in_cash={}, new_position={}, added_props={}, removed_props={},
                card_drawn={}, card_replaced={}, change_in_jail_moves={}, change_in_jail_free_count={},
                is_in_game={}, change_in_houses={}, change_in_houses_remaining=0,
                change_in_hotels_remaining=0, is_mortgaged={}, next_player=None,
-               description=''):
+               description='', cause=None):
     self._change_in_cash = {}
     for player in list(change_in_cash.keys()):
       self._change_in_cash[player] = change_in_cash[player]
@@ -68,6 +71,7 @@ class GameStateChange(object):
 
     self._next_player = next_player
     self._description = description
+    self._cause = cause
 
   @property
   def change_in_cash(self):
@@ -128,6 +132,10 @@ class GameStateChange(object):
   @property
   def description(self):
     return self._description
+
+  @property
+  def cause(self):
+    return self._cause
 
   @staticmethod
   def combine(self, changes):  # TODO: Deprecated - remove combine()
@@ -235,7 +243,7 @@ class GameStateChange(object):
 
   # TODO: Remove argument 'squares' when we no longer need to print the square name out
   @staticmethod
-  def change_position(player, new_position, bank, squares):
+  def change_position(player, new_position, bank, squares, cause=None):
     max_roll = 12
     description = player.name + ' moved to ' + squares[new_position].name
     if player.position >= (INDEX[GO] - max_roll) % NUM_SQUARES and new_position < (INDEX[GO] - max_roll) % NUM_SQUARES:
@@ -243,11 +251,11 @@ class GameStateChange(object):
       # TODO: Declare a constant for GO money (200)
       return GameStateChange(new_position={player: new_position},
                              change_in_cash={player: +200, bank: -200},
-                             description=description + ' passing ' + GO)
+                             description=description + ' passing ' + GO, cause=cause)
     else:
       # Normal position change
       return GameStateChange(new_position={player: new_position},
-                             description=description)
+                             description=description, cause=cause)
 
   @staticmethod
   def mortgage(prop, state):
@@ -348,7 +356,6 @@ class GameStateChange(object):
         return GameStateChange(next_player=j,
                                description='Set current player to ' + state.players[j].name)
     raise Exception('No players left in the game')
-
 
   @staticmethod
   def eliminate(player_eliminated, player_eliminator, state):
