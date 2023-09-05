@@ -48,31 +48,6 @@ class DecisionMaker(object):
         max_rent = max(max_rent, prop.get_rent(num_owned, Roll.max_value(), state, from_card=False))
     return max_rent
 
-  # Determine if the player can build on the given property, optionally
-  # accounting for pending_changes, a GroupOfChanges to be applied to the state.
-  def _can_build(self, prop, state, pending_changes=None):
-    prop_delta_houses = pending_changes.net_houses_on(prop) if pending_changes != None else 0
-    prop_houses = prop.num_houses + prop_delta_houses
-
-    delta_houses = pending_changes.net_houses() if pending_changes != None else 0
-    delta_hotels = pending_changes.net_hotels() if pending_changes != None else 0
-
-    # Check baseline conditions
-    if not isinstance(prop, ColorProperty) or (
-      not state.owns_property_group(self._player, prop.property_group)) or (
-      prop_houses == NUM_HOUSES_BEFORE_HOTEL + 1) or (
-      state.houses_remaining + delta_houses == 0) or (
-      prop_houses == NUM_HOUSES_BEFORE_HOTEL and state.hotels_remaining + delta_hotels == 0):
-      return False
-
-    # Check that houses are being built evenly in the property group
-    for other_prop in state.get_property_group(prop.property_group):
-      other_prop_delta_houses = pending_changes.net_houses_on(other_prop) if pending_changes != None else 0
-      other_prop_houses = other_prop.num_houses + other_prop_delta_houses
-      if other_prop_houses < prop_houses:
-        return False
-    return True
-
   def _return_jail_free_card(self, player, state):
     # Pick a Deck to return the jail free card to randomly
     # TODO: Need a better way of picking a Deck to return the jail free card to

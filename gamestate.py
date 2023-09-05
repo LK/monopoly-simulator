@@ -455,6 +455,31 @@ class GameState(object):
   def are_enough_hotels(self, qty):
     return self._hotels_remaining - qty >= 0
 
+  # Determine if the player can build on the given property, optionally
+  # accounting for pending_changes, a GroupOfChanges to be applied to the state.
+  def can_build(self, player, prop, pending_changes=None):
+    prop_delta_houses = pending_changes.net_houses_on(prop) if pending_changes != None else 0
+    prop_houses = prop.num_houses + prop_delta_houses
+
+    delta_houses = pending_changes.net_houses() if pending_changes != None else 0
+    delta_hotels = pending_changes.net_hotels() if pending_changes != None else 0
+
+    # Check baseline conditions
+    if not isinstance(prop, ColorProperty) or (
+      not self.owns_property_group(player, prop.property_group)) or (
+      prop_houses == NUM_HOUSES_BEFORE_HOTEL + 1) or (
+      self.houses_remaining + delta_houses == 0) or (
+      prop_houses == NUM_HOUSES_BEFORE_HOTEL and self.hotels_remaining + delta_hotels == 0):
+      return False
+
+    # Check that houses are being built evenly in the property group
+    for other_prop in self.get_property_group(prop.property_group):
+      other_prop_delta_houses = pending_changes.net_houses_on(other_prop) if pending_changes != None else 0
+      other_prop_houses = other_prop.num_houses + other_prop_delta_houses
+      if other_prop_houses < prop_houses:
+        return False
+    return True
+
   # Applies a single GameStateChange
   def _apply_single_change(self, change):
     print(change.description)

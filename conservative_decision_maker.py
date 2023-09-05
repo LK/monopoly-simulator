@@ -79,7 +79,7 @@ class ConservativeDecisionMaker(DecisionMaker):
         prop = state.squares[prop_idx]
         # print('prop={prop}'.format(prop=str(prop)))
         # print('can_build={can_build}'.format(can_build=self._can_build(prop, state)))
-        if self._can_build(prop, state, pending_changes=changes):
+        if state.can_build(self._player, prop, pending_changes=changes):
           change = GameStateChange.build(prop, state)
           changes = GroupOfChanges.combine([changes, GroupOfChanges(changes=[change])])
           can_build = True
