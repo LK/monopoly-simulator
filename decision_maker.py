@@ -57,8 +57,9 @@ class DecisionMaker(object):
     delta_houses = pending_changes.net_houses() if pending_changes != None else 0
     delta_hotels = pending_changes.net_hotels() if pending_changes != None else 0
 
+    # Check baseline conditions
     if not isinstance(prop, ColorProperty) or (
-      state.get_owner(prop) != self._player) or (
+      not state.owns_property_group(self._player, prop.property_group)) or (
       prop_houses == NUM_HOUSES_BEFORE_HOTEL + 1) or (
       state.houses_remaining + delta_houses == 0) or (
       prop_houses == NUM_HOUSES_BEFORE_HOTEL and state.hotels_remaining + delta_hotels == 0):

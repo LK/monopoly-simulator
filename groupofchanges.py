@@ -12,10 +12,11 @@ Description:
 class GroupOfChanges(object):
 
   # Takes in a list of GameStateChanges to be applied together as a unit
-  def __init__(self, changes=[]):
+  def __init__(self, changes=None):
     self._changes = []
-    for change in changes:
-      self._changes.append(change)
+    if changes != None:
+      for change in changes:
+        self._changes.append(change)
 
   # Returns an iterator so this object becomes iterable
   def __iter__(self):
@@ -60,7 +61,8 @@ class GroupOfChanges(object):
     return hotels
 
   def net_houses_on(self, prop):
-    return sum([change.change_in_houses[prop] for change in self._changes])
+    return sum([change.change_in_houses[prop] if prop in change.change_in_houses else 0
+                for change in self._changes])
 
   def net_houses(self):
     return sum([change.change_in_houses_remaining for change in self._changes])
@@ -69,4 +71,5 @@ class GroupOfChanges(object):
     return sum([change.change_in_hotels_remaining for change in self._changes])
 
   def net_change_in_cash(self, player):
-    return sum([change.change_in_cash[player] for change in self._changes])
+    return sum([change.change_in_cash[player] if player in change.change_in_cash else 0
+                for change in self._changes])

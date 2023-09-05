@@ -73,12 +73,12 @@ class ConservativeDecisionMaker(DecisionMaker):
     cash_delta = 0
     while self._player.cash + cash_delta >= self._cash_reserve_multiple * self._max_rent(state):
       can_build = False
-      print('new_cash={cash}, max_rent={max_rent}'.format(cash=self._player.cash+cash_delta, max_rent=self._cash_reserve_multiple * self._max_rent(state)))
+      # print('new_cash={cash}, max_rent={max_rent}'.format(cash=self._player.cash+cash_delta, max_rent=self._cash_reserve_multiple * self._max_rent(state)))
       for prop_name in self._property_ranking:
         prop_idx = INDEX[prop_name]
         prop = state.squares[prop_idx]
-        print('prop={prop}'.format(prop=str(prop)))
-        print('can_build={can_build}'.format(can_build=self._can_build(prop, state)))
+        # print('prop={prop}'.format(prop=str(prop)))
+        # print('can_build={can_build}'.format(can_build=self._can_build(prop, state)))
         if self._can_build(prop, state, pending_changes=changes):
           change = GameStateChange.build(prop, state)
           changes = GroupOfChanges.combine([changes, GroupOfChanges(changes=[change])])

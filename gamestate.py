@@ -443,6 +443,12 @@ class GameState(object):
           return player
     return self._bank
 
+  def owns_property_group(self, player, prop_group):
+    for prop in self.get_property_group(prop_group):
+      if self.get_owner(prop) != player:
+        return False
+    return True
+
   def are_enough_houses(self, qty):
     return self._houses_remaining - qty >= 0
 
@@ -451,7 +457,7 @@ class GameState(object):
 
   # Applies a single GameStateChange
   def _apply_single_change(self, change):
-    # print(change.description)
+    print(change.description)
     self._game_history.append(change)
 
     for player, change_in_cash in change.change_in_cash.items():
