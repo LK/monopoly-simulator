@@ -1,3 +1,4 @@
+from buildingrequests import BuildingRequests
 from decision_maker import DecisionMaker
 from gamestatechange import GameStateChange
 from groupofchanges import GroupOfChanges
@@ -89,5 +90,5 @@ class ConservativeDecisionMaker(DecisionMaker):
       if not can_build:
         break
 
-    non_building_changes = GroupOfChanges(changes=changes)
-    return NotificationChanges(non_building_changes=non_building_changes)
+    building_requests = BuildingRequests(house_builds=changes)
+    return NotificationChanges(building_requests=building_requests)

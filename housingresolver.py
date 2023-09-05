@@ -49,11 +49,10 @@ class HousingResolver(object):
     self._houses_demolished = 0
     self._hotels_demolished = 0
     for _, building_requests in self._player_building_requests.items():
-      self._houses_built += building_requests.houses_built()
-      self._hotels_built += building_requests.hotels_built()
-      self._houses_demolished += building_requests.houses_demolished()
-      self._hotels_demolished += building_requests.hotels_demolished()
-    self._resolve()
+      self._houses_built += building_requests.houses_built
+      self._hotels_built += building_requests.hotels_built
+      self._houses_demolished += building_requests.houses_demolished
+      self._hotels_demolished += building_requests.hotels_demolished
 
   # Building/demolishing
 
@@ -126,7 +125,12 @@ class HousingResolver(object):
     for i in range(num_houses):
       highest_bid = 0
       highest_changes = None
+      # Run multiple rounds of auctions, eliminating players who have bids less
+      # than the highest, until there is only 1 player left or no one bids.
+      # Record the game state changes corresponding to the highest bidder.
       while True:
+        # Request a bid from each player. Record the player(s) with the highest
+        # bid, along with their proposed changes
         highest_bid_for_round = highest_bid
         highest_changes_for_round = dict()
         for player in players:
@@ -148,6 +152,8 @@ class HousingResolver(object):
           elif bid == highest_bid_for_round:
             highest_changes_for_round[player] = goc
 
+        # If there is a tie, ask the tied players to bid again, timing their
+        # responses. The player with the fastest average time of 3 bids wins
         if len(highest_changes_for_round) > 1:
           fastest_time = 10000
           fastest_player = None
@@ -171,6 +177,7 @@ class HousingResolver(object):
 
           highest_changes_for_round = {fastest_player: fastest_goc}
 
+        # Update highest bid of the auction so far
         if highest_bid_for_round > highest_bid:
           highest_bid = highest_bid_for_round
           highest_changes = highest_changes_for_round[list(
@@ -272,12 +279,36 @@ class HousingResolver(object):
       else:
         return self._state.apply(GroupOfChanges())
 
+  # Convenience Methods
+
+  # Returns a dict mapping players to a list of properties on which they indent to build houses on
+
+  def _properties_to_build_houses_on(self):
+    retval = dict()
+    for (player, building_request) in self._player_building_requests.items():
+      properties = []
+      for change in building_request.house_builds:
+        properties.append(list(change.change_in_houses.keys())[0])
+
+      retval[player] = properties
+    return retval
+
+  def _properties_to_build_hotels_on(self):
+    retval = dict()
+    for (player, building_request) in self._player_building_requests.items():
+      properties = []
+      for change in building_request.hotel_builds:
+        properties.append(list(change.change_in_houses.keys())[0])
+
+      retval[player] = properties
+    return retval
+
   # Main resolution procedure
 
   # Resolves the housing conflicts according to our rules, and applies the
   # changes directly to the GameState
 
-  def _resolve(self):
+  def resolve(self):
     # 1: Demolish houses
     self._demolish_houses()
 
@@ -329,27 +360,3 @@ class HousingResolver(object):
 
     else:  # no shortage, so order doesn't matter
       self._build_and_demolish_all()
-
-  # Convenience Methods
-
-  # Returns a dict mapping players to a list of properties on which they indent to build houses on
-
-  def _properties_to_build_houses_on(self):
-    retval = dict()
-    for (player, building_request) in self._player_building_requests.items():
-      properties = []
-      for change in building_request.house_builds:
-        properties.append(list(change.change_in_houses.keys())[0])
-
-      retval[player] = properties
-    return retval
-
-  def _properties_to_build_hotels_on(self):
-    retval = dict()
-    for (player, building_request) in self._player_building_requests.items():
-      properties = []
-      for change in building_request.hotel_builds:
-        properties.append(list(change.change_in_houses.keys())[0])
-
-      retval[player] = properties
-    return retval

@@ -97,7 +97,8 @@ class Engine(object):
         if notification_changes.building_requests:
           player_building_requests[player] = notification_changes.building_requests
 
-    HousingResolver(player_building_requests, self._state)
+    housing_resolver = HousingResolver(player_building_requests, self._state)
+    housing_resolver.resolve()
 
   def _completed(self):
     remaining = 0
