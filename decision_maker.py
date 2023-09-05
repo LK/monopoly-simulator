@@ -45,20 +45,30 @@ class DecisionMaker(object):
       elif isinstance(prop, NonColorProperty):
         owner = state.get_owner(prop)
         num_owned = owner.property_group_counts[prop.property_group]
-        max_rent = max(max_rent, prop.get_rent(num_owned, Roll.max_roll(), state, from_card=False))
+        max_rent = max(max_rent, prop.get_rent(num_owned, Roll.max_value(), state, from_card=False))
     return max_rent
 
-  def _can_build(self, prop, state):
+  # Determine if the player can build on the given property, optionally
+  # accounting for pending_changes, a GroupOfChanges to be applied to the state.
+  def _can_build(self, prop, state, pending_changes=None):
+    prop_delta_houses = pending_changes.net_houses_on(prop) if pending_changes != None else 0
+    prop_houses = prop.num_houses + prop_delta_houses
+
+    delta_houses = pending_changes.net_houses() if pending_changes != None else 0
+    delta_hotels = pending_changes.net_hotels() if pending_changes != None else 0
+
     if not isinstance(prop, ColorProperty) or (
       state.get_owner(prop) != self._player) or (
-      prop.num_houses == NUM_HOUSES_BEFORE_HOTEL + 1) or (
-      state.houses_remaining == 0) or (
-      prop.num_houses == NUM_HOUSES_BEFORE_HOTEL and state.hotels_remaining == 0):
+      prop_houses == NUM_HOUSES_BEFORE_HOTEL + 1) or (
+      state.houses_remaining + delta_houses == 0) or (
+      prop_houses == NUM_HOUSES_BEFORE_HOTEL and state.hotels_remaining + delta_hotels == 0):
       return False
 
     # Check that houses are being built evenly in the property group
     for other_prop in state.get_property_group(prop.property_group):
-      if other_prop.num_houses < prop.num_houses:
+      other_prop_delta_houses = pending_changes.net_houses_on(other_prop) if pending_changes != None else 0
+      other_prop_houses = other_prop.num_houses + other_prop_delta_houses
+      if other_prop_houses < prop_houses:
         return False
     return True
 
@@ -158,8 +168,8 @@ class DecisionMaker(object):
   # By default, player does nothing unless he is in jail and has a jail-free
   # card, in which case he uses it to get out immediately
   def respond_to_state(self, state):
-    if player.jail_moves > 0 and player.jail_free_count > 0:
-      use_jail_free_card = self._return_jail_free_card(player, state)
+    if self._player.jail_moves > 0 and self._player.jail_free_count > 0:
+      use_jail_free_card = self._return_jail_free_card(self._player, state)
       return NotificationChanges(non_building_changes=use_jail_free_card)
     return None
 

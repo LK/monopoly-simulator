@@ -1,6 +1,7 @@
 from decision_maker import DecisionMaker
 from gamestatechange import GameStateChange
 from groupofchanges import GroupOfChanges
+from notification_changes import NotificationChanges
 from constants import *
 
 class ConservativeDecisionMaker(DecisionMaker):
@@ -67,13 +68,26 @@ class ConservativeDecisionMaker(DecisionMaker):
   # Player will build houses only if they have enough cash
   # reserve to pay the highest rent times a multiple, and they
   # build on the best properties first.
-  def respond_to_state(self, player, state):
-    changes = []
-    while player.cash >= self._cash_reserve_multiple * self._max_rent(state):
+  def respond_to_state(self, state):
+    changes = None
+    cash_delta = 0
+    while self._player.cash + cash_delta >= self._cash_reserve_multiple * self._max_rent(state):
+      can_build = False
+      print('new_cash={cash}, max_rent={max_rent}'.format(cash=self._player.cash+cash_delta, max_rent=self._cash_reserve_multiple * self._max_rent(state)))
       for prop_name in self._property_ranking:
         prop_idx = INDEX[prop_name]
         prop = state.squares[prop_idx]
-        if self._can_build(prop, state):
-          changes.append(GameStateChange.build(prop, state))
+        print('prop={prop}'.format(prop=str(prop)))
+        print('can_build={can_build}'.format(can_build=self._can_build(prop, state)))
+        if self._can_build(prop, state, pending_changes=changes):
+          change = GameStateChange.build(prop, state)
+          changes = GroupOfChanges.combine([changes, GroupOfChanges(changes=[change])])
+          can_build = True
           break
-    return GroupOfChanges(changes=changes)
+
+      cash_delta = changes.net_change_in_cash(self._player) if changes != None else 0
+      if not can_build:
+        break
+
+    non_building_changes = GroupOfChanges(changes=changes)
+    return NotificationChanges(non_building_changes=non_building_changes)

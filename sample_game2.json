@@ -11,7 +11,7 @@
     },
     {
       "name": "Player 2",
-      "cash": 900,
+      "cash": 3000,
       "position": 10,
       "current_turn": false,
       "get_out_of_jail_cards": 0,

@@ -366,7 +366,8 @@ class GameState(object):
                  for prop in data['properties'] if prop['owner'] == player_data['name']]
         self._players.append(
           Player(position=player_data['position'], cash=player_data['cash'], props=props,
-                 jail_free_count=player_data['get_out_of_jail_cards'], jail_moves=player_data['moves_remaining_in_jail'], name=player_data['name'])
+                 jail_free_count=player_data['get_out_of_jail_cards'], jail_moves=player_data['moves_remaining_in_jail'], name=player_data['name'],
+                 decision_maker=player_data['decision_maker'])
         )
 
         # Set jail free cards to be removed from decks
@@ -450,7 +451,7 @@ class GameState(object):
 
   # Applies a single GameStateChange
   def _apply_single_change(self, change):
-    # print(change.description)
+    print(change.description)
     self._game_history.append(change)
 
     for player, change_in_cash in change.change_in_cash.items():

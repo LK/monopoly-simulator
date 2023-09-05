@@ -1,6 +1,6 @@
 '''
 Author:   Lenny Khazan & Michael Friedman
-Created:  
+Created:
 
 Description:
   This class contains a list of GameStateChanges that should be applied as a unit.
@@ -26,7 +26,8 @@ class GroupOfChanges(object):
   def combine(groups_of_changes):
     combined_group_of_changes = []
     for group_of_changes in groups_of_changes:
-      combined_group_of_changes += group_of_changes
+      if group_of_changes != None:
+        combined_group_of_changes += group_of_changes
     return GroupOfChanges(combined_group_of_changes)
 
   def houses_built(self):
@@ -57,3 +58,15 @@ class GroupOfChanges(object):
       if change.change_in_hotels_remaining > 0:
         hotels += change.change_in_hotels_remaining
     return hotels
+
+  def net_houses_on(self, prop):
+    return sum([change.change_in_houses[prop] for change in self._changes])
+
+  def net_houses(self):
+    return sum([change.change_in_houses_remaining for change in self._changes])
+
+  def net_hotels(self):
+    return sum([change.change_in_hotels_remaining for change in self._changes])
+
+  def net_change_in_cash(self, player):
+    return sum([change.change_in_cash[player] for change in self._changes])

@@ -1,6 +1,6 @@
 '''
 Author:   Lenny Khazan
-Created:  
+Created:
 
 Description:
 Notifications are broadcasted to Players by the Engine to make them aware of
@@ -13,10 +13,9 @@ from buildingrequests import BuildingRequests
 
 
 class NotificationChanges(object):
-  def __init__(self, non_building_changes=[], building_requests=BuildingRequests()):
-    self._non_building_changes = []
-    for change in non_building_changes:
-      self._non_building_changes.append(change)
+  # building_requests should be a BuildingRequests object
+  def __init__(self, non_building_changes=None, building_requests=None):
+    self._non_building_changes = non_building_changes
     self._building_requests = building_requests
 
   @property

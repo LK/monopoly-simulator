@@ -1,8 +1,14 @@
 from decision_maker import DecisionMaker
+from conservative_decision_maker import ConservativeDecisionMaker
 from constants import *
 
 
 class Player(object):
+
+  decision_makers = {
+      'default': DecisionMaker,
+      'conservative': ConservativeDecisionMaker,
+  }
 
   @staticmethod
   def _initialize_property_group_counts():
@@ -25,10 +31,10 @@ class Player(object):
     self._jail_moves = jail_moves
     self._is_in_game = is_in_game
     self._name = name
-    if decision_maker == 'default':
-      self._decision_maker = DecisionMaker(self)
+    if decision_maker in Player.decision_makers:
+      self._decision_maker = Player.decision_makers[decision_maker](self)
     else:
-      raise Exception('DecisionMaker not supported')
+      raise Exception('DecisionMaker "{name}" not supported'.format(name=decision_maker))
 
   def copy(self):
     return Player(name=self._name, position=self._position, cash=self._cash, props=self._props, decision_maker=self._decision_maker, jail_free_count=self._jail_free_count, jail_moves=self._jail_moves, is_in_game=self._is_in_game)
@@ -159,6 +165,7 @@ class Player(object):
     s += "Jail free count: %d\n" % (self._jail_free_count)
     s += "Jail moves: %d\n" % (self._jail_moves)
     s += "Is in game: " + str(self._is_in_game) + "\n"
+    s += "Decision maker type: %s\n" % (self._decision_maker.__class__.__name__)
     return s
 
   # DecisionMaker interactions
@@ -182,7 +189,7 @@ class Player(object):
     return self.decision_maker.will_trade(self, proposal, state)
 
   def respond_to_state(self, state):
-    return self.decision_maker.respond_to_state(self, state)
+    return self.decision_maker.respond_to_state(state)
 
   def revise_hotel_demolitions(self, original_hotel_demolitions, state):
     return self.decision_maker.revise_hotel_demolitions(self, original_hotel_demolitions, state)
