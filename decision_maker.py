@@ -114,27 +114,39 @@ class DecisionMaker(object):
     # Player cannot pay it off, so he loses
     return GroupOfChanges(changes=[GameStateChange.eliminate(player_from, player_to, state)])
 
-  # By default, player bids half his cash
+  # Call when there is an auction for houses due to housing shortage. Each
+  # call represents a single round of bidding for a single house. player is the
+  # current player, highest_bid is the highest bid so far, and props_to_build_on
+  # is the list of properties that the player originally requested to build on,
+  # which triggered a housing shortage. Returns a GroupOfChanges representing
+  # the player paying their bid and building the house, which will be applied if
+  # they win.
+  #
+  # By default, player bids half their cash to build on the first property in
+  # their list.
   def bid_house_builds(self, player, highest_bid, props_to_build_on, state):
     bid = player.cash / 2
     prop_to_build_on = props_to_build_on[0]
-    house_build = GameStateChange.build(prop, state)
+    house_build = GameStateChange.build(prop_to_build_on, state)
     return GroupOfChanges([house_build])
 
-  # By default, player bids half his cash
+  # Call when there is an auction for hotels due to hotel shortage.
+  # Analogous to bid_house_builds.
   def bid_hotel_builds(self, player, highest_bid, props_to_build_on, state):
     bid = player.cash / 2
     prop_to_build_on = props_to_build_on[0]
-    hotel_build = GameStateChange.build(prop, state)
+    hotel_build = GameStateChange.build(prop_to_build_on, state)
     return GroupOfChanges([hotel_build])
 
-  # By default, player bids half his cash
+  # Call when there is an auction for hotel demolitions due to house
+  # shortage (since demolishing hotels requires houses to downgrade to).
+  # Analogous to bid_house_builds.
   def bid_hotel_demolitions(self, player, highest_bid, props_to_demolish_on, state):
     bid = player.cash / 2
     prop_to_demolish_on = props_to_demolish_on[0]
-    hotel_demolition = GameStateChange.demolish(prop, state)
+    hotel_demolition = GameStateChange.demolish(prop_to_demolish_on, state)
     house_builds = [GameStateChange.build(
-      prop, state)] * NUM_HOUSES_BEFORE_HOTEL
+      prop_to_demolish_on, state)] * NUM_HOUSES_BEFORE_HOTEL
     return GroupOfChanges([hotel_demolition] + house_builds)
 
   # By default, players deny all trades

@@ -482,7 +482,7 @@ class GameState(object):
 
   # Applies a single GameStateChange
   def _apply_single_change(self, change):
-    print(change.description)
+    # print(change.description)
     self._game_history.append(change)
 
     for player, change_in_cash in change.change_in_cash.items():
