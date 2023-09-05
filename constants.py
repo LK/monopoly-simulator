@@ -16,9 +16,7 @@ NUM_SQUARES = 40
 # Represents the "Get out of jail free" card
 LMBDA_GET_OUT_OF_JAIL_FREE = 'jail card'
 
-# Max number of turns a player can spend in jail. When jail moves
-# reach 0, the player must leave on that roll.
-JAIL_MOVES = 2
+JAIL_MOVES = 3
 
 # Property group labels
 PURPLE = 0

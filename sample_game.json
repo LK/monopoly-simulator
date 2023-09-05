@@ -16,7 +16,7 @@
       "current_turn": false,
       "get_out_of_jail_cards": 0,
       "moves_remaining_in_jail": 2,
-      "decision_maker": "conservative"
+      "decision_maker": "default"
     }
   ],
   "properties": [
