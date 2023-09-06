@@ -20,24 +20,6 @@ from constants import *
 
 
 class HousingResolver(object):
-
-  # Constants
-  _BEFORE = False
-  _AFTER = not _BEFORE
-  _BEFORE_HOUSE_BUILDS = _BEFORE
-  _BEFORE_HOTEL_BUILDS = _BEFORE
-  _BEFORE_HOUSE_DEMOLITIONS = _BEFORE
-  _BEFORE_HOTEL_DEMOLITIONS = _BEFORE
-  _AFTER_HOUSE_BUILDS = _AFTER
-  _AFTER_HOTEL_BUILDS = _AFTER
-  _AFTER_HOUSE_DEMOLITIONS = _AFTER
-  _AFTER_HOTEL_DEMOLITIONS = _AFTER
-
-  # These are used to override conditions that determine a shortage, in order to
-  # enforce our Convention
-  _OVERRIDE_TRUE = True
-  _OVERRIDE_FALSE = False
-
   # Takes in a dictionary mapping Players to their BuildingRequests and the
   # current GameState
   def __init__(self, player_building_requests, state):
@@ -83,23 +65,23 @@ class HousingResolver(object):
   # Shortage tests
 
   # Returns true if there is a hotel shortage, false if not, based on whether
-  # hotels were demolished yet
+  # to include hotel demolitions in the calculation
 
-  def _is_hotel_shortage(self, were_hotels_demolished):
-    if were_hotels_demolished:
+  def _is_hotel_shortage(self, include_hotel_demos=False):
+    if not include_hotel_demos:
       return self._hotels_built > self._state.hotels_remaining
     else:
       return self._hotels_built > self._state.hotels_remaining + self._hotels_demolished
 
   # Returns true if there is a house shortage, false if not, based on whether
-  # houses were demolished yet AND whether hotels were built yet
-  def _is_house_shortage(self, were_houses_demolished, were_hotels_built):
-    if were_houses_demolished and were_hotels_built:
+  # to include house demolitions and hotel builds in the calculation
+  def _is_house_shortage(self, include_house_demos=False, include_hotel_builds=False):
+    if not include_house_demos and not include_hotel_builds:
       return self._houses_built > self._state.houses_remaining
     else:
-      if not were_houses_demolished and were_hotels_built:
+      if include_house_demos and not include_hotel_builds:
         num_houses_to_become_available = self._houses_demolished
-      elif were_houses_demolished and not were_hotels_built:
+      elif not include_house_demos and include_hotel_builds:
         num_houses_to_become_available = NUM_HOUSES_BEFORE_HOTEL * self._hotels_built
       else:
         num_houses_to_become_available = self._houses_demolished + \
@@ -244,11 +226,11 @@ class HousingResolver(object):
   # Special case procedure for hotel demolitions
 
   # Returns true if there are enough houses to demolish the requested number of
-  # hotels, false if not, based on whether houses were built yet
-
-  def _are_enough_houses_for_hotel_demolitions(self, were_houses_built):
+  # hotels, false if not, based on whether to include house builds in the
+  # calculation
+  def _are_enough_houses_for_hotel_demolitions(self, include_house_builds=False):
     num_houses_needed = NUM_HOUSES_BEFORE_HOTEL * self._hotels_demolished
-    if were_houses_built:
+    if not include_house_builds:
       return num_houses_needed <= self._state.houses_remaining
     else:
       return num_houses_needed <= self._state.houses_remaining + self._houses_built
@@ -256,8 +238,8 @@ class HousingResolver(object):
   # Settles the case when players want to demolish hotels, but there are fewer
   # than 4 houses available. Applies the changes that demolish hotels and
   # builds houses appropriately according to the players' desires
-  def _settle_hotel_demolitions(self, were_houses_built):
-    if self._are_enough_houses_for_hotel_demolitions(were_houses_built):
+  def _settle_hotel_demolitions(self, include_house_builds=False):
+    if self._are_enough_houses_for_hotel_demolitions(include_house_builds=include_house_builds):
       for player, building_requests in self._player_building_requests.items():
         self._state.apply(building_requests.hotel_demolitions)
     else:
@@ -312,9 +294,9 @@ class HousingResolver(object):
     # 1: Demolish houses
     self._demolish_houses()
 
-    if self._is_hotel_shortage(HousingResolver._BEFORE_HOTEL_DEMOLITIONS):
+    if self._is_hotel_shortage(include_hotel_demos=True):
       # 2: Build houses
-      if not self._is_house_shortage(HousingResolver._AFTER_HOUSE_DEMOLITIONS, HousingResolver._OVERRIDE_TRUE):
+      if not self._is_house_shortage():
         self._build_houses()
       else:
         # Auction houses
@@ -324,10 +306,10 @@ class HousingResolver(object):
 
       # 3: Demolish hotels
       # special case dealt with separately
-      self._settle_hotel_demolitions(HousingResolver._AFTER_HOUSE_BUILDS)
+      self._settle_hotel_demolitions()
 
       # 4: Build hotels
-      if not self._is_hotel_shortage(HousingResolver._AFTER_HOTEL_DEMOLITIONS):
+      if not self._is_hotel_shortage():
         self._build_hotels()
       else:
         # Auction the remaining hotels
@@ -335,9 +317,9 @@ class HousingResolver(object):
           self._state.hotels_remaining, self._get_players_building_hotels(), self._state)
         self._state.apply(result_of_auction)
 
-    elif self._is_house_shortage(HousingResolver._AFTER_HOUSE_DEMOLITIONS, HousingResolver._BEFORE_HOTEL_BUILDS):
+    elif self._is_house_shortage(include_hotel_builds=True):
       # 2: Build hotels
-      if not self._is_hotel_shortage(HousingResolver._OVERRIDE_TRUE):
+      if not self._is_hotel_shortage():
         self._build_hotels()
       else:
         # Auction for the remaining hotels
@@ -346,7 +328,7 @@ class HousingResolver(object):
         self._state.apply(result_of_auction)
 
       # 3: Build houses
-      if not self._is_house_shortage(HousingResolver._AFTER_HOUSE_DEMOLITIONS, HousingResolver._AFTER_HOTEL_BUILDS):
+      if not self._is_house_shortage():
         self._build_houses()
       else:
         # Auction for the remaining houses
@@ -356,7 +338,7 @@ class HousingResolver(object):
 
       # 4: Demolish hotels
       # special case dealt with separately
-      self._settle_hotel_demolitions(HousingResolver._AFTER_HOUSE_BUILDS)
+      self._settle_hotel_demolitions()
 
     else:  # no shortage, so order doesn't matter
       self._build_and_demolish_all()
