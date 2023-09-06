@@ -34,7 +34,8 @@ class Player(object):
     if decision_maker in Player.decision_makers:
       self._decision_maker = Player.decision_makers[decision_maker](self)
     else:
-      raise Exception('DecisionMaker "{name}" not supported'.format(name=decision_maker))
+      raise Exception(
+        'DecisionMaker "{name}" not supported'.format(name=decision_maker))
 
   def copy(self):
     return Player(name=self._name, position=self._position, cash=self._cash, props=self._props, decision_maker=self._decision_maker, jail_free_count=self._jail_free_count, jail_moves=self._jail_moves, is_in_game=self._is_in_game)
@@ -165,7 +166,8 @@ class Player(object):
     s += "Jail free count: %d\n" % (self._jail_free_count)
     s += "Jail moves: %d\n" % (self._jail_moves)
     s += "Is in game: " + str(self._is_in_game) + "\n"
-    s += "Decision maker type: %s\n" % (self._decision_maker.__class__.__name__)
+    s += "Decision maker type: %s\n" % (
+      self._decision_maker.__class__.__name__)
     return s
 
   # DecisionMaker interactions
@@ -173,8 +175,8 @@ class Player(object):
   def buy_or_deny(self, prop, state):
     return self.decision_maker.buy_or_deny(self, prop, state)
 
-  def pay(self, player, amount, state):
-    return self.decision_maker.pay(self, player, amount, state)
+  def pay(self, player, amount, state, cause=None):
+    return self.decision_maker.pay(self, player, amount, state, cause=cause)
 
   def bid_house_builds(self, highest_bid, props_to_build_on, state):
     return self.decision_maker.bid_house_builds(self, highest_bid, props_to_build_on, state)

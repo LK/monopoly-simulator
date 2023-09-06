@@ -16,6 +16,7 @@ from constants import *
 class GameStateChange(object):
   class Cause:
     ROLL = 'roll'
+    RENT = 'rent'
 
   def __init__(self, change_in_cash={}, new_position={}, added_props={}, removed_props={},
                card_drawn={}, card_replaced={}, change_in_jail_moves={}, change_in_jail_free_count={},
@@ -213,9 +214,9 @@ class GameStateChange(object):
   # TODO: Raise exceptions when the parameters passed in are invalid or try to do something illegal
 
   @staticmethod
-  def transfer_money(player_from, player_to, amount):
+  def transfer_money(player_from, player_to, amount, cause=None):
     return GameStateChange(change_in_cash={player_from: -amount, player_to: +amount},
-                           description=player_from.name + ' paid ' + str(amount) + ' to ' + player_to.name)
+                           description=player_from.name + ' paid ' + str(amount) + ' to ' + player_to.name, cause=cause)
 
   @staticmethod
   def transfer_property(player_from, player_to, prop):

@@ -34,7 +34,7 @@ class NonColorProperty(Property):
     else:
       num_owned = owner.property_group_counts[self.property_group]
       rent = self.get_rent(num_owned, roll, state, from_card)
-      return player.pay(owner, rent, state)
+      return player.pay(owner, rent, state, cause='rent')
 
   # Returns the rent on this property based on the number of properties in this
   # group owned, landing player's roll, and whether they came from a card or not

@@ -103,7 +103,43 @@ class LandProbabilityAnalyzer(Analyzer):
       print(f'{i}: {prob * 100:.2f}%')
 
 
-analyzers = [WinRateAnalyzer, LandProbabilityAnalyzer]
+class RevenueAnalyzer(Analyzer):
+  NAME = 'Revenue Analyzer'
+
+  @classmethod
+  def extract(cls, state: GameState) -> dict[int, int]:
+    res = dict()
+    positions = dict()
+
+    for change in state._game_history:
+      if change.new_position:
+        for player, pos in change.new_position.items():
+          positions[player] = pos
+
+      if change.cause == 'rent':
+        player_from = [k for k, v in change.change_in_cash.items() if v < 0][0]
+        square = state.squares[positions[player_from]].name
+
+        rent_value = [v for v in change.change_in_cash.values() if v > 0][0]
+        res[square] = res.get(square, 0) + rent_value
+
+    return res
+
+  @classmethod
+  def analyze(cls, results: list[dict[int, int]]):
+    revenue = dict()
+    for result in results:
+      for square, value in result.items():
+        revenue[square] = revenue.get(square, 0) + value
+
+    for k in revenue.keys():
+      revenue[k] /= len(results)
+
+    for square, value in sorted(revenue.items(), key=lambda x: x[1], reverse=True):
+      print(f'{square}: {value}')
+
+
+analyzers = [WinRateAnalyzer, LandProbabilityAnalyzer, RevenueAnalyzer]
 
 
 def run_simulation(state, seed, stalemate_threshold):

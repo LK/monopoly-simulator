@@ -78,7 +78,8 @@ class DecisionMaker(object):
       elif isinstance(prop, NonColorProperty):
         owner = state.get_owner(prop)
         num_owned = owner.property_group_counts[prop.property_group]
-        max_rent = max(max_rent, prop.get_rent(num_owned, Roll.max_value(), state, from_card=False))
+        max_rent = max(max_rent, prop.get_rent(
+          num_owned, Roll.max_value(), state, from_card=False))
     return max_rent
 
   def _return_jail_free_card(self, player, state):
@@ -117,9 +118,9 @@ class DecisionMaker(object):
   # By default, the player attempts to pay all cash, then resorts to mortgaging
   # properties, then resorts to demolishing houses. If all of these fail, then
   # he loses
-  def pay(self, player_from, player_to, amount, state):
+  def pay(self, player_from, player_to, amount, state, cause=None):
     transfer_money = GameStateChange.transfer_money(
-      player_from, player_to, amount)
+      player_from, player_to, amount, cause=cause)
     changes = []
 
     # Try paying all cash first

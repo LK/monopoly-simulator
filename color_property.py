@@ -18,7 +18,7 @@ class ColorProperty(Property):
       return player.buy_or_deny(self, state)
     else:
       rent = self.get_rent_with(self.num_houses, state)
-      return player.pay(owner, rent, state)
+      return player.pay(owner, rent, state, cause='rent')
 
   # Getters
 
