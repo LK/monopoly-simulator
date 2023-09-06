@@ -13,18 +13,33 @@ Description:
   (See design/housing-resolver.txt for explanation)
 '''
 
+from enum import Enum
 from groupofchanges import GroupOfChanges
 from gamestatechange import GameStateChange
 import datetime
 from constants import *
 
+# Passed to HousingResolver to determines how to resolve house/hotel shortages
+class ShortageResolution(Enum):
+  AUCTION = 'auction' # houses/hotels are to be auctioned among players
+  EQUAL = 'equal' # houses/hotels are to be divided equally among players
+  NOOP = 'noop' # no one is to build the remaining houses/hotels
+
+# Constants to represent the type of house/hotel shortage
+class ShortageType(Enum):
+  HOUSE_BUILD = 'house_build'
+  HOTEL_BUILD = 'hotel_build'
+  HOTEL_DEMO = 'hotel_demo'
 
 class HousingResolver(object):
   # Takes in a dictionary mapping Players to their BuildingRequests and the
-  # current GameState
-  def __init__(self, player_building_requests, state):
+  # current GameState. shortage_resolution is one of ShortageResolution
+  def __init__(self, player_building_requests, state, shortage_resolution=ShortageResolution.EQUAL):
     self._player_building_requests = player_building_requests
     self._state = state
+    if shortage_resolution not in ShortageResolution:
+      raise Exception('Invalid shortage resolution: %s' % shortage_resolution)
+    self._shortage_resolution = shortage_resolution
 
     self._houses_built = 0
     self._hotels_built = 0
@@ -236,30 +251,16 @@ class HousingResolver(object):
       return num_houses_needed <= self._state.houses_remaining + self._houses_built
 
   # Settles the case when players want to demolish hotels, but there are fewer
-  # than 4 houses available. Applies the changes that demolish hotels and
-  # builds houses appropriately according to the players' desires
-  def _settle_hotel_demolitions(self, include_house_builds=False):
-    if self._are_enough_houses_for_hotel_demolitions(include_house_builds=include_house_builds):
-      for player, building_requests in self._player_building_requests.items():
+  # than 4 houses available. Applies the resulting changes
+  def _settle_hotel_demolitions(self):
+    if self._are_enough_houses_for_hotel_demolitions(include_house_builds=False):
+      for _, building_requests in self._player_building_requests.items():
         self._state.apply(building_requests.hotel_demolitions)
     else:
-      # Ask players demolishing hotels if it is ok to reduce past the 4 house
-      # level, or auction them
       players_demolishing_hotels = self._get_players_demolishing_hotels()
       if len(players_demolishing_hotels) > 1:
-        result_of_auction = HousingResolver._auction_hotel_demolitions(
-          self._state.houses_remaining, players_demolishing_hotels, self._state)
-        self._state.apply(result_of_auction)
-      elif len(players_demolishing_hotels) == 1:
-        # Ask the 1 player if he wants to reduce past the 4 house level
-        player = players_demolishing_hotels[0]
-        original_hotel_demolitions = player_building_requests[player].hotel_demolitions
-        revised_hotel_demolitions = player.revise_hotel_demolitions(
-          original_hotel_demolitions, self._state)
-        # TODO: Validate that these hotel demolitions are actually legal
-        self._state.apply(revised_hotel_demolitions)
-      else:
-        return self._state.apply(GroupOfChanges())
+        result = self._handle_shortage(ShortageType.HOTEL_DEMO)
+        self._state.apply(result)
 
   # Convenience Methods
 
@@ -285,6 +286,70 @@ class HousingResolver(object):
       retval[player] = properties
     return retval
 
+  # Handling shortages
+
+  # Divides houses/hotels equally among the players, excluding any remainder.
+  # Returns the resulting building changes.
+  def _divide_equally(self, typ: ShortageType, num_units: int, players) -> GroupOfChanges:
+    # Reorganize building requests to index houses/hotels built/demo'd by typ
+    amount_requested = {
+      player: {
+        ShortageType.HOUSE_BUILD: self._player_building_requests[player].houses_built,
+        ShortageType.HOTEL_BUILD: self._player_building_requests[player].hotels_built,
+        ShortageType.HOTEL_DEMO: self._player_building_requests[player].hotels_demolished,
+      } for player in players
+    }
+
+    # Round robin allocate items to players equally until you reach the amount
+    # they requested or run out
+    allocation = {player: 0 for player in players}
+    remaining = set([i for i in range(len(players))])
+    current = 0
+    unit_increment = NUM_HOUSES_BEFORE_HOTEL if typ == ShortageType.HOTEL_DEMO else 1
+    while len(remaining) > 0 and num_units > 0:
+      if current in remaining:
+        current_player = players[current]
+        allocation[current_player] += 1
+        num_units -= unit_increment
+        if allocation[current_player] >= amount_requested[current_player][typ]:
+          remaining.remove(current)
+      current += 1 % len(players)
+
+    # Pass allocated amounts to players to build
+    result = []
+    for player in players:
+      if allocation[player] > 0:
+        functions = {ShortageType.HOUSE_BUILD: player.build_allocated_houses} # TODO: add other types when they're implemented
+        changes = functions[typ](allocation[player], self._state)
+        result.append(changes)
+    return GroupOfChanges.combine(result)
+
+
+  # Handles housing shortages via the shortage resolution method. Returns a
+  # the resulting building changes.
+  def _handle_shortage(self, typ: ShortageType) -> GroupOfChanges:
+    if self._shortage_resolution == ShortageResolution.EQUAL:
+      params = {
+        ShortageType.HOUSE_BUILD: (self._state.houses_remaining, self._get_players_building_houses()),
+        ShortageType.HOTEL_BUILD: (self._state.hotels_remaining, self._get_players_building_hotels()),
+        ShortageType.HOTEL_DEMO: (self._state.houses_remaining, self._get_players_demolishing_hotels()),
+      }
+      num_items, players = params[typ]
+      result = self._divide_equally(typ, num_items, players)
+    elif self._shortage_resolution == ShortageResolution.AUCTION:
+      if typ == ShortageType.HOUSE_BUILD:
+        result = HousingResolver._auction_house_builds(
+          self._state.houses_remaining, self._get_players_building_houses(), self._state)
+      elif typ == ShortageType.HOTEL_BUILD:
+        result = HousingResolver._auction_hotel_builds(
+          self._state.hotels_remaining, self._get_players_building_hotels(), self._state)
+      else:
+        result = HousingResolver._auction_hotel_demolitions(
+          self._state.houses_remaining, self._get_players_demolishing_hotels(), self._state)
+    else:
+      result = None
+    return result
+
   # Main resolution procedure
 
   # Resolves the housing conflicts according to our rules, and applies the
@@ -299,10 +364,8 @@ class HousingResolver(object):
       if not self._is_house_shortage():
         self._build_houses()
       else:
-        # Auction houses
-        result_of_auction = HousingResolver._auction_house_builds(
-          self._state.houses_remaining, self._get_players_building_houses(), self._state)
-        self._state.apply(result_of_auction)
+        result = self._handle_shortage(ShortageType.HOUSE_BUILD)
+        self._state.apply(result)
 
       # 3: Demolish hotels
       # special case dealt with separately
@@ -312,29 +375,23 @@ class HousingResolver(object):
       if not self._is_hotel_shortage():
         self._build_hotels()
       else:
-        # Auction the remaining hotels
-        result_of_auction = HousingResolver._auction_hotel_builds(
-          self._state.hotels_remaining, self._get_players_building_hotels(), self._state)
-        self._state.apply(result_of_auction)
+        result = self._handle_shortage(ShortageType.HOTEL_BUILD)
+        self._state.apply(result)
 
     elif self._is_house_shortage(include_hotel_builds=True):
       # 2: Build hotels
       if not self._is_hotel_shortage():
         self._build_hotels()
       else:
-        # Auction for the remaining hotels
-        result_of_auction = HousingResolver._auction_hotel_builds(
-          self._state.hotels_remaining, self._get_players_building_hotels(), self._state)
-        self._state.apply(result_of_auction)
+        result = self._handle_shortage(ShortageType.HOTEL_BUILD)
+        self._state.apply(result)
 
       # 3: Build houses
       if not self._is_house_shortage():
         self._build_houses()
       else:
-        # Auction for the remaining houses
-        result_of_auction = HousingResolver._auction_house_builds(
-          self._state.houses_remaining, self._get_players_building_houses(), self._state)
-        self._state.apply(result_of_auction)
+        result = self._handle_shortage(ShortageType.HOUSE_BUILD)
+        self._state.apply(result)
 
       # 4: Demolish hotels
       # special case dealt with separately

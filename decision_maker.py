@@ -97,7 +97,7 @@ class DecisionMaker(object):
   # cannot build any, given the player's preference ranking for properties, and
   # optionally given any pending changes to account for before the house will be
   # built.
-  def _build_best_house(self, state, property_ranking=property_ranking, pending_changes=None):
+  def _build_best_house(self, state, property_ranking=property_ranking, pending_changes=None) -> GameStateChange:
     for prop_name in property_ranking:
       prop_idx = INDEX[prop_name]
       prop = state.squares[prop_idx]
