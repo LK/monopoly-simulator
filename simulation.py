@@ -118,7 +118,7 @@ def run_simulation(state, seed, stalemate_threshold):
 
 def main():
   parser = argparse.ArgumentParser()
-  parser.add_argument('iterations', type=int)
+  parser.add_argument('iterations', type=int, nargs='?')
   parser.add_argument('-l', '--load-from-file',
                       help='Name of JSON file to load from. If none provided, the simulator will start a new game.')
   parser.add_argument('-s', '--seed', type=int,
@@ -135,13 +135,17 @@ def main():
   completed = 0
   results = []
 
-  if args.seed:
+  if args.seed is not None:
     random.seed(args.seed)
     initial_state.randomize()
     engine = Engine(initial_state, interactive=False,
                     stalemate_threshold=args.stalemate_threshold)
     result = engine.run()
     print(f'Result: {result}')
+    return
+
+  if not args.iterations:
+    print('Please specify number of iterations.')
     return
 
   # Create tqdm progress bar
