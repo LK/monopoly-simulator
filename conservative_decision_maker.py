@@ -36,9 +36,14 @@ class ConservativeDecisionMaker(DecisionMaker):
 
   # Player will build on the best properties that they can afford
   def build_allocated_houses(self, house_allocation, state):
-    changes = []
+    changes = None
     num_houses = house_allocation[self._player]
-    return None
+    for _ in range(num_houses):
+      change = self._build_best_house(state, property_ranking=self._property_ranking, pending_changes=changes)
+      if change == None:
+        break
+      changes = GroupOfChanges.combine([changes, GroupOfChanges(changes=[change])])
+    return changes
 
   # Player will build on the best houses, maintaining enough cash
   # reserve to pay the highest rent times a multiple

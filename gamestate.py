@@ -464,9 +464,12 @@ class GameState(object):
     delta_houses = pending_changes.net_houses() if pending_changes != None else 0
     delta_hotels = pending_changes.net_hotels() if pending_changes != None else 0
 
+    cash_delta = pending_changes.net_change_in_cash(player) if pending_changes != None else 0
+
     # Check baseline conditions
     if not isinstance(prop, ColorProperty) or (
       not self.owns_property_group(player, prop.property_group)) or (
+      player.cash + cash_delta < prop.house_price) or (
       prop_houses == NUM_HOUSES_BEFORE_HOTEL + 1) or (
       self.houses_remaining + delta_houses == 0) or (
       prop_houses == NUM_HOUSES_BEFORE_HOTEL and self.hotels_remaining + delta_hotels == 0):
