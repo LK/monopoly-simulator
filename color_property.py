@@ -53,8 +53,11 @@ class ColorProperty(Property):
   def demolish(self, qty):
     self.num_houses -= qty
 
-  def has_hotel(self):
-    return self.num_houses == NUM_HOUSES_BEFORE_HOTEL + 1
+  # Returns whether property has a hotel, optionally accounting for pending
+  # GroupOfChanges.
+  def has_hotel(self, pending_changes=None):
+    delta_houses = pending_changes.net_houses_on(self) if pending_changes != None else 0
+    return self.num_houses + delta_houses == NUM_HOUSES_BEFORE_HOTEL + 1
 
   def __str__(self):
     s = ""

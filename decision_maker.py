@@ -11,39 +11,6 @@ from constants import *
 
 
 class DecisionMaker(object):
-  # Default order in which player prefers to build on properties
-  property_ranking = [
-    BOARDWALK,
-    PARK_PLACE,
-
-    NEW_YORK_AVENUE,
-    ST_JAMES_PLACE,
-    TENNESSEE_AVENUE,
-
-    INDIANA_AVENUE,
-    KENTUCKY_AVENUE,
-    ILLINOIS_AVENUE,
-
-    ATLANTIC_AVENUE,
-    VENTNOR_AVENUE,
-    MARVIN_GARDENS,
-
-    VIRGINIA_AVENUE,
-    ST_CHARLES_PLACE,
-    STATES_AVENUE,
-
-    CONNECTICUT_AVENUE,
-    ORIENTAL_AVENUE,
-    VERMONT_AVENUE,
-
-    BALTIC_AVENUE,
-    MEDITERRANEAN_AVENUE,
-
-    PENNSYLVANIA_AVENUE,
-    PACIFIC_AVENUE,
-    NORTH_CAROLINA_AVENUE,
-  ]
-
   def __init__(self, player):
     self._player = player
 
@@ -92,20 +59,6 @@ class DecisionMaker(object):
     use_card = GameStateChange.decrement_jail_card_count(player, deck)
     leave_jail = GameStateChange.leave_jail(player)
     return GroupOfChanges(changes=[use_card, leave_jail])
-
-  # Returns a GameStateChange building the best house or None if the player
-  # cannot build any, given the player's preference ranking for properties, and
-  # optionally given any pending changes to account for before the house will be
-  # built.
-  def _build_best_house(self, state, property_ranking=property_ranking, pending_changes=None) -> GameStateChange:
-    for prop_name in property_ranking:
-      prop_idx = INDEX[prop_name]
-      prop = state.squares[prop_idx]
-      # print('prop={prop}'.format(prop=str(prop)))
-      # print('can_build={can_build}'.format(can_build=self._can_build(prop, state)))
-      if state.can_build(self._player, prop, pending_changes=pending_changes):
-        return GameStateChange.build(prop, state)
-    return None
 
   # By default, player buys the property if he has enough cash on hand.
   # Otherwise he passes
