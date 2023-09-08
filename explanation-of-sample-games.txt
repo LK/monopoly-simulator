@@ -1,0 +1,20 @@
+sample_game4.json
+- expected behavior is that player 2's first move, using conservative decision maker, will build the following, they have exactly enough money for this before reaching the min cash reserve:
+  - hotel on indiana
+  - 2 houses on baltic
+  - house on mediterranean
+
+sample_game5.json
+- 29 houses in use (3 left)
+- 8 hotels in use (4 left)
+- player 2's first move, using conservative decision maker, should be to max out until out of houses/hotels
+- Expected behavior is:
+  - house on illinois
+  - house on indiana
+  - house on illinois (hence using up all houses, and cannot build more here)
+  - hotel on baltic (releasing 4 houses)
+  - 4 houses across the reds evenly (hence another housing shortage)
+  - hotel on mediterranean
+  - 4 houses across the reds evenly
+  - hotel on illinois
+  - hotel on kentucky (hence a hotel shortage and cannot build more here)
