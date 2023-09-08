@@ -11,6 +11,7 @@ Description:
 
 from color_property import ColorProperty
 from constants import *
+from groupofchanges import GroupOfChanges
 
 
 class GameStateChange(object):
@@ -275,9 +276,12 @@ class GameStateChange(object):
                            description=owner.name + ' unmortgaged ' + prop.name)
 
   @staticmethod
-  def build(prop, state):
-    owner = state.get_owner(prop)
-    if prop.num_houses == NUM_HOUSES_BEFORE_HOTEL:
+  def build(prop, state, pending_changes: GroupOfChanges = None):
+    new_owner = pending_changes.new_owner(prop) if pending_changes != None else None
+    owner = state.get_owner(prop) if new_owner == None else new_owner
+    delta_houses = pending_changes.net_houses_on(prop) if pending_changes != None else 0
+    new_num_houses = prop.num_houses + delta_houses
+    if new_num_houses == NUM_HOUSES_BEFORE_HOTEL:
       # Build a hotel
       return GameStateChange(change_in_houses={prop: +1},
                              change_in_cash={

@@ -2,27 +2,55 @@
 Author:   Michael Friedman
 Created:  8/25/16
 
-Description:
-  This class holds a set of building requests from a player. It contains a
-  GroupOfChanges for each of the following:
-    - House Builds
-    - Hotel Builds
-    - House Demolitions
-    - Hotel Demolitions
-  BuildingRequests are kept separate from other changes a player wishes to make
-  to the game so that the HousingResolver can settle building conflicts before
-  applying them.
+This class holds a set of building requests from a player. It contains a
+GroupOfChanges for each of the following:
+  - House Builds
+  - Hotel Builds
+  - House Demolitions
+  - Hotel Demolitions
+BuildingRequests should be constructed whenever there are building-related
+changes, and they are passed to the HousingResolver so it can settle building
+conflicts before applying them.
 '''
 
-class BuildingRequests(object):
+from collections import defaultdict
+from constants import *
+from groupofchanges import GroupOfChanges
 
-  # Construct from four GroupOfChanges objects, one for each category of
-  # building changes
-  def __init__(self, house_builds=None, hotel_builds=None, house_demolitions=None, hotel_demolitions=None):
-    self._house_builds = house_builds
-    self._hotel_builds = hotel_builds
-    self._house_demolitions = house_demolitions
-    self._hotel_demolitions = hotel_demolitions
+class BuildingRequests(object):
+  # changes should consist of only building-related changes
+  def __init__(self, changes: GroupOfChanges):
+    # Validate
+    for change in changes:
+      if len(change.change_in_houses) != 1:
+        raise Exception('Invalid change: does not build or demo on one property: {change}'.format(change=change.change_in_houses))
+
+    # Separate changes into house and hotel builds/demos
+    changes_map = defaultdict(lambda: [])
+    for change in changes:
+      for prop in change.change_in_houses:
+        changes_map[prop].append(change)
+
+    house_builds = []
+    hotel_builds = []
+    house_demolitions = []
+    hotel_demolitions = []
+    for prop, changes_list in changes_map.items():
+      group = GroupOfChanges(changes_list)
+      delta_houses = group.net_houses_on(prop)
+      if not prop.has_hotel() and prop.has_hotel(pending_changes=group):
+        hotel_builds.append(group)
+      elif prop.has_hotel() and prop.num_houses + delta_houses == NUM_HOUSES_BEFORE_HOTEL:
+        hotel_demolitions.append(group)
+      elif delta_houses > 0:
+        house_builds.append(group)
+      else:
+        house_demolitions.append(group)
+
+    self._house_builds = GroupOfChanges.combine(house_builds)
+    self._hotel_builds = GroupOfChanges.combine(hotel_builds)
+    self._house_demolitions = GroupOfChanges.combine(house_demolitions)
+    self._hotel_demolitions = GroupOfChanges.combine(hotel_demolitions)
 
     # Calculate integer quantities of houses/hotels built and demolished
     self._houses_built = self._house_builds.houses_built() if self._house_builds != None else 0

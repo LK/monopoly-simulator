@@ -65,7 +65,6 @@ class ConservativeDecisionMaker(DecisionMaker):
         else:
           delta_hotels = pending_changes.net_hotels() if pending_changes != None else 0
           enough_units = state.hotels_remaining + delta_hotels > 0
-        print('prop={prop}, enough_cash={enough_cash}, prop_houses={prop_houses}, enough_units={enough_units}'.format(prop=prop.name, enough_cash=enough_cash, prop_houses=prop_houses, enough_units=enough_units))
         if not enough_units:
           continue
         elif enough_cash:
@@ -115,8 +114,7 @@ class ConservativeDecisionMaker(DecisionMaker):
       prop = self._get_best_property_to_build(state, pending_changes=changes)
       if prop == None:
         break
-      change = GameStateChange.build(prop, state)
+      change = GameStateChange.build(prop, state, pending_changes=changes)
       changes = GroupOfChanges.combine([changes, GroupOfChanges(changes=[change])])
-    print('changes: houses={houses}, hotels={hotels}'.format(houses=changes.net_houses(), hotels=changes.net_hotels()))
-    building_requests = BuildingRequests(house_builds=changes)
+    building_requests = BuildingRequests(changes)
     return NotificationChanges(building_requests=building_requests)

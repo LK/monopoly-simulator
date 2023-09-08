@@ -73,3 +73,11 @@ class GroupOfChanges(object):
   def net_change_in_cash(self, player):
     return sum([change.change_in_cash[player] if player in change.change_in_cash else 0
                 for change in self._changes])
+
+  def new_owner(self, prop):
+    owner = None
+    for change in self._changes:
+      for player, props in change.added_props:
+        if prop in props:
+          owner = player
+    return owner
