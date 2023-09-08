@@ -187,6 +187,9 @@ class Player(object):
   def bid_hotel_demolitions(self, highest_bid, props_to_demolish_on, state):
     return self.decision_maker.bid_hotel_demolitions(self, highest_bid, props_to_demolish_on, state)
 
+  def build_allocated_houses(self, house_allocation, state):
+    return self.decision_maker.build_allocated_houses(house_allocation, state)
+
   def will_trade(self, proposal, state):
     return self.decision_maker.will_trade(self, proposal, state)
 
