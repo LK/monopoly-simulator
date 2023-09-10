@@ -1,10 +1,17 @@
 from buildingrequests import BuildingRequests
 from decision_maker import DecisionMaker
+from enum import Enum
 from gamestatechange import GameStateChange
 from groupofchanges import GroupOfChanges
+from housingresolver import ShortageType
 from notification_changes import NotificationChanges
 from prop import Property
 from constants import *
+
+# Represents options for which type of buildings to build
+class BuildOption(Enum):
+  ALL = "all" # this means build houses and hotels
+  HOTEL = "hotel" # this means build only hotels
 
 class ConservativeDecisionMaker(DecisionMaker):
   # Default order in which player prefers to build on properties
@@ -48,8 +55,10 @@ class ConservativeDecisionMaker(DecisionMaker):
     self._property_ranking = property_ranking
 
   # Returns the best non-maxed-out property from the preference ranking, while
-  # maintaining a cash reserve.
-  def _get_best_property_to_build(self, state, pending_changes=None) -> Property:
+  # maintaining a cash reserve. typ represents the type of buildings to build,
+  # e.g. if only hotels, it will not consider properties on which you're not
+  # at the 4 house level.
+  def _get_best_property_to_build(self, state, typ: BuildOption = BuildOption.ALL, pending_changes: GroupOfChanges = None) -> Property:
     for prop_name in self._property_ranking:
       prop_idx = INDEX[prop_name]
       prop = state.squares[prop_idx]
@@ -60,6 +69,7 @@ class ConservativeDecisionMaker(DecisionMaker):
         prop_houses = prop.num_houses + delta_prop_houses
         enough_cash = self._player.cash + delta_cash - prop.house_price >= self._cash_reserve_multiple * self._max_rent(state)
         if prop_houses < NUM_HOUSES_BEFORE_HOTEL:
+          if typ == BuildOption.HOTEL: continue # skip where not ready to build hotel
           delta_houses = pending_changes.net_houses() if pending_changes != None else 0
           enough_units = state.houses_remaining + delta_houses > 0
         else:
@@ -71,6 +81,15 @@ class ConservativeDecisionMaker(DecisionMaker):
           return prop
         else:
           break
+    return None
+
+  # Returns the lowest ranked property with a hotel
+  def _get_best_property_to_demo_hotel(self, state, pending_changes: GroupOfChanges = None) -> Property:
+    for prop_name in reversed(self._property_ranking):
+      prop_idx = INDEX[prop_name]
+      prop = state.squares[prop_idx]
+      if state.owns_property_group(self._player, prop.property_group) and prop.has_hotel(pending_changes=pending_changes):
+        return prop
     return None
 
   # Player doesnt bid
@@ -93,12 +112,17 @@ class ConservativeDecisionMaker(DecisionMaker):
   def will_trade(self, player, proposal, state):
     return False
 
-  # Player will build on the best properties that they can afford
-  def build_allocated_houses(self, house_allocation, state):
+  # Player will build/demo on the best properties that they can afford
+  def handle_allocated_units(self, house_allocation, typ: ShortageType, state) -> GroupOfChanges:
     changes = None
     num_houses = house_allocation[self._player]
     for _ in range(num_houses):
-      prop = self._get_best_property_to_build(state, pending_changes=changes)
+      if typ == ShortageType.HOUSE_BUILD:
+        prop = self._get_best_property_to_build(state, typ=BuildOption.ALL, pending_changes=changes)
+      elif typ == ShortageType.HOTEL_BUILD:
+        prop = self._get_best_property_to_build(state, typ=BuildOption.HOTEL, pending_changes=changes)
+      else:
+        prop = self._get_best_property_to_demo_hotel(state, pending_changes=changes)
       if prop == None:
         break
       change = GameStateChange.build(prop, state)

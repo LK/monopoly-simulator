@@ -319,8 +319,7 @@ class HousingResolver(object):
     result = []
     for player in players:
       if allocation[player] > 0:
-        functions = {ShortageType.HOUSE_BUILD: player.build_allocated_houses} # TODO: add other types when they're implemented
-        changes = functions[typ](allocation, self._state)
+        changes = player.handle_allocated_units(allocation, typ, self._state)
         result.append(changes)
     return GroupOfChanges.combine(result)
 

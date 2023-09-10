@@ -1,4 +1,5 @@
 from color_property import ColorProperty
+from housingresolver import ShortageType
 from non_color_property import NonColorProperty
 from notification_changes import NotificationChanges
 from groupofchanges import GroupOfChanges
@@ -150,13 +151,14 @@ class DecisionMaker(object):
       prop_to_demolish_on, state)] * NUM_HOUSES_BEFORE_HOTEL
     return GroupOfChanges([hotel_demolition] + house_builds)
 
-  # Call when the allocation of houses among players has been determined after
-  # resolving a housing shortage. house_allocation is a dict {player: num_houses}
+  # Call when the allocation of houses/hotels among players has been determined
+  # after resolving a housing shortage. house_allocation is a dict {player: num_units}
   # representing the allocation. Returns a GroupOfChanges representing the
-  # player building the houses allocated to them on their desired properties.
+  # player building/demo'ing the units allocated to them on their desired
+  # properties.
   #
   # By default, player doesn't build.
-  def build_allocated_houses(self, house_allocation, state):
+  def handle_allocated_units(self, house_allocation, typ: ShortageType, state) -> GroupOfChanges:
     return None
 
   # By default, players deny all trades

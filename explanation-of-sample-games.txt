@@ -1,10 +1,10 @@
-sample_game4.json
-- expected behavior is that player 2's first move, using conservative decision maker, will build the following, they have exactly enough money for this before reaching the min cash reserve:
+sample_game3.json
+- expected behavior is that player 2's first move, using conservative decision maker, will build the following. They have exactly enough money for this before reaching the min cash reserve:
   - hotel on indiana
   - 2 houses on baltic
   - house on mediterranean
 
-sample_game5.json
+sample_game4.json
 - 29 houses in use (3 left)
 - 8 hotels in use (4 left)
 - player 2's first move, using conservative decision maker, should be to max out until out of houses/hotels
