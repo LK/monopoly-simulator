@@ -129,16 +129,25 @@ class ConservativeDecisionMaker(DecisionMaker):
       changes = GroupOfChanges.combine([changes, GroupOfChanges(changes=[change])])
     return changes
 
-  # Player will build on the best houses, maintaining enough cash
-  # reserve to pay the highest rent times a multiple
+  # Player will:
+  # - build on the best houses, maintaining enough cash reserve to pay the
+  #   highest rent times a multiple
+  # - use a jail free card on the last jail move
   def respond_to_state(self, state):
+    # Build
     prop = None
-    changes = None
+    building_changes = None
     while True:
-      prop = self._get_best_property_to_build(state, pending_changes=changes)
+      prop = self._get_best_property_to_build(state, pending_changes=building_changes)
       if prop == None:
         break
-      change = GameStateChange.build(prop, state, pending_changes=changes)
-      changes = GroupOfChanges.combine([changes, GroupOfChanges(changes=[change])])
-    building_requests = BuildingRequests(changes)
-    return NotificationChanges(building_requests=building_requests)
+      change = GameStateChange.build(prop, state, pending_changes=building_changes)
+      building_changes = GroupOfChanges.combine([building_changes, GroupOfChanges(changes=[change])])
+    building_requests = BuildingRequests(building_changes)
+
+    # Use jail card
+    non_building_changes = None
+    if self._player.jail_moves == 1 and self._player.jail_free_count > 0:
+      non_building_changes = self._return_jail_free_card(self._player, state)
+
+    return NotificationChanges(non_building_changes=non_building_changes, building_requests=building_requests)

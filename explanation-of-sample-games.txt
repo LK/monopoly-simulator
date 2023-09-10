@@ -7,8 +7,8 @@ sample_game3.json
 sample_game4.json
 - 29 houses in use (3 left)
 - 8 hotels in use (4 left)
-- player 2's first move, using conservative decision maker, should be to max out until out of houses/hotels
-- Expected behavior is:
+- player 2 uses conservative decision maker
+- player 2's first action should be to max out until out of houses/hotels. Expected behavior is:
   - house on illinois
   - house on indiana
   - house on illinois (hence using up all houses, and cannot build more here)
@@ -18,3 +18,5 @@ sample_game4.json
   - 4 houses across the reds evenly
   - hotel on illinois
   - hotel on kentucky (hence a hotel shortage and cannot build more here)
+- player 2 also has 2 jail moves and a jail free card. On their second turn (if they don't roll doubles on the first), they should use the card to get out
+

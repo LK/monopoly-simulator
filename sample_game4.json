@@ -5,7 +5,7 @@
       "cash": 1000,
       "position": 39,
       "current_turn": true,
-      "get_out_of_jail_cards": 1,
+      "get_out_of_jail_cards": 0,
       "moves_remaining_in_jail": 0,
       "decision_maker": "default"
     },
@@ -14,7 +14,7 @@
       "cash": 5000,
       "position": 10,
       "current_turn": false,
-      "get_out_of_jail_cards": 0,
+      "get_out_of_jail_cards": 1,
       "moves_remaining_in_jail": 2,
       "decision_maker": "conservative"
     }

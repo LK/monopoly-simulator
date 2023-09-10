@@ -165,8 +165,7 @@ class DecisionMaker(object):
   def will_trade(self, player, proposal, state):
     return False
 
-  # By default, player does nothing unless he is in jail and has a jail-free
-  # card, in which case he uses it to get out immediately
+  # By default, player will only use a jail free card if they're in jail
   def respond_to_state(self, state):
     if self._player.jail_moves > 0 and self._player.jail_free_count > 0:
       use_jail_free_card = self._return_jail_free_card(self._player, state)

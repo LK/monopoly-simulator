@@ -72,7 +72,7 @@ class Engine(object):
     elif player.jail_moves >= 2:
       self._state.apply(GroupOfChanges(
         changes=[GameStateChange.decrement_jail_moves(player)]))
-      return False
+      return True
     elif player.jail_moves == 1:
       pay_changes = player.pay(self._state.bank, 50, self._state)
       leave_changes = GroupOfChanges(
@@ -90,7 +90,7 @@ class Engine(object):
     )
     self._state.apply(self._state.squares[position].landed(
       player, roll.value, self._state))
-    return True
+    return not roll.is_doubles
 
   def _notify_all(self):
     if self._interactive:
