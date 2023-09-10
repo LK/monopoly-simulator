@@ -17,6 +17,7 @@ NUM_SQUARES = 40
 LMBDA_GET_OUT_OF_JAIL_FREE = 'jail card'
 
 JAIL_MOVES = 3
+MAX_DOUBLES = 3 # max num doubles in a single turn. on the last, go jail
 
 # Property group labels
 PURPLE = 0

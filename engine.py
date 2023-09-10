@@ -1,4 +1,5 @@
 from gamestate import GameState
+from player import Player
 from roll import Roll
 from groupofchanges import GroupOfChanges
 from gamestatechange import GameStateChange
@@ -12,58 +13,35 @@ class Engine(object):
     self._state = game_state
     self._interactive = interactive
     self._stalemate_threshold = stalemate_threshold
+    self._state.interactive = self._interactive
 
   def _wait(self):
-    if self._interactive:
-      cmd = input('')
-      if cmd == 'state':
-        print()
-        print(str(self._state))
+    cmd = input('> ')
+    if cmd == 'state':
       print()
+      print(str(self._state))
+    print()
 
   def run(self):
     steps = 0
     while not self._completed() and (self._stalemate_threshold is None or steps < self._stalemate_threshold):
       steps += 1
-      # cash = [player.cash for player in self._state.players]
-      # print cash
       player = self._state.players[self._state.current_player_index]
-      roll = Roll()
+
+      self._notify_all()
+
+      # Roll dice
       if self._interactive:
-        print('%s rolled a %d%s' % (player.name, roll.value,
-              ' (doubles)' if roll.is_doubles else ''))
-
-      # Handle if player is in jail
-      if player.jail_moves > 0 and roll.is_doubles:
-        self._state.apply(GroupOfChanges(
-          changes=[GameStateChange.leave_jail(player)]))
-      elif player.jail_moves >= 2:
-        self._state.apply(GroupOfChanges(
-          changes=[GameStateChange.decrement_jail_moves(player)]))
-        self._wait()
-        continue
-      elif player.jail_moves == 1:
-        # TODO: Allow player to choose to use a "Get out of jail free" card
-        pay_changes = player.pay(self._state.bank, 50, self._state)
-        leave_changes = GroupOfChanges(
-          changes=[GameStateChange.leave_jail(player)])
-        self._state.apply(GroupOfChanges.combine([pay_changes, leave_changes]))
-
-      self._take_turn(player, roll.value)
-
+        print('Rolling {name}...'.format(name=player.name))
       num_rolls = 0
-      max_rolls = 2
-      while roll.is_doubles:
-        roll = Roll()
-        if self._interactive:
-          print('%s rolled a %d%s' % (player.name, roll.value,
-                ' (doubles)' if roll.is_doubles else ''))
+      while True:
         num_rolls += 1
-        if num_rolls > max_rolls:
-          self._state.apply(GroupOfChanges(
-            changes=[GameStateChange.send_to_jail(player)]))
+        if self._roll(player, num_rolls):
           break
-        self._take_turn(player, roll.value)
+
+      self._notify_all()
+      if self._interactive:
+        self._wait()
 
       # Set to next player
       next_changes = GroupOfChanges(
@@ -73,8 +51,36 @@ class Engine(object):
 
     return self._state
 
-  def _take_turn(self, player, roll):
-    position = (player.position + roll) % NUM_SQUARES
+  # Rolls the dice and resolves the roll. roll_index is what number
+  # roll this is, 1 to 3. Returns whether the rolling part of this turn is
+  # over. You should keep rolling until it returns True
+  def _roll(self, player: Player, roll_index: int) -> bool:
+    roll = Roll()
+    if self._interactive:
+      print('%s rolled a %d%s' % (player.name, roll.value,
+            ' (doubles)' if roll.is_doubles else ''))
+
+    if roll.is_doubles and roll_index == MAX_DOUBLES:
+      self._state.apply(GroupOfChanges(
+        changes=[GameStateChange.send_to_jail(player)]))
+      return True
+
+    # Handle if player is in jail
+    if player.jail_moves > 0 and roll.is_doubles:
+      self._state.apply(GroupOfChanges(
+        changes=[GameStateChange.leave_jail(player)]))
+    elif player.jail_moves >= 2:
+      self._state.apply(GroupOfChanges(
+        changes=[GameStateChange.decrement_jail_moves(player)]))
+      return False
+    elif player.jail_moves == 1:
+      pay_changes = player.pay(self._state.bank, 50, self._state)
+      leave_changes = GroupOfChanges(
+        changes=[GameStateChange.leave_jail(player)])
+      self._state.apply(GroupOfChanges.combine([pay_changes, leave_changes]))
+
+    # Move player and resolve where they landed
+    position = (player.position + roll.value) % NUM_SQUARES
     self._state.apply(
       GroupOfChanges([
         GameStateChange.change_position(
@@ -83,12 +89,12 @@ class Engine(object):
       ])
     )
     self._state.apply(self._state.squares[position].landed(
-      player, roll, self._state))
-    self._notify_all()
-
-    self._wait()
+      player, roll.value, self._state))
+    return True
 
   def _notify_all(self):
+    if self._interactive:
+      print('Notifying players...')
     player_building_requests = {}
     for player in self._state.players:
       notification_changes = player.respond_to_state(self._state)

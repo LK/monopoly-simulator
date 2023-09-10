@@ -323,7 +323,8 @@ class GameState(object):
 
   # Constructor
 
-  def __init__(self, load_from_file=None):
+  def __init__(self, load_from_file=None, interactive=False):
+    self._interactive = interactive
     self._houses_remaining = NUM_HOUSES
     self._hotels_remaining = NUM_HOTELS
     self._game_history = []
@@ -430,6 +431,15 @@ class GameState(object):
   def current_player_index(self):
     return self._current_player_index
 
+  @property
+  def interactive(self):
+    return self._interactive
+
+  # Setters
+  @interactive.setter
+  def interactive(self, interactive):
+    self._interactive = interactive
+
   # Other
   def get_property_group(self, prop_group):
     property_group = [square if isinstance(
@@ -475,7 +485,8 @@ class GameState(object):
 
   # Applies a single GameStateChange
   def _apply_single_change(self, change):
-    print(change.description)
+    if self._interactive:
+      print(change.description)
     self._game_history.append(change)
 
     for player, change_in_cash in change.change_in_cash.items():
