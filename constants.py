@@ -20,16 +20,16 @@ JAIL_MOVES = 3
 MAX_DOUBLES = 3 # max num doubles in a single turn. on the last, go jail
 
 # Property group labels
-PURPLE = 0
-LIGHT_BLUE = 1
-PINK = 2
-ORANGE = 3
-RED = 4
-YELLOW = 5
-GREEN = 6
-DARK_BLUE = 7
-RAILROAD = 100
-UTILITY = 101
+PURPLE = "Purple"
+LIGHT_BLUE = "Light Blue"
+PINK = "Pink"
+ORANGE = "Orange"
+RED = "Red"
+YELLOW = "Yellow"
+GREEN = "Green"
+DARK_BLUE = "Dark Blue"
+RAILROAD = "Railroad"
+UTILITY = "Utility"
 
 # Square names
 GO = "Go"

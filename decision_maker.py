@@ -1,12 +1,12 @@
 from color_property import ColorProperty
 from housingresolver import ShortageType
 from non_color_property import NonColorProperty
-from notification_changes import NotificationChanges
 from groupofchanges import GroupOfChanges
 from gamestatechange import GameStateChange
 from roll import Roll
 from random import randint
 from constants import *
+from typing import Tuple
 
 # TODO: Come up with better DeicisionMaker policies that make every possible state of the game reachable
 
@@ -165,12 +165,14 @@ class DecisionMaker(object):
   def will_trade(self, player, proposal, state):
     return False
 
-  # By default, player will only use a jail free card if they're in jail
-  def respond_to_state(self, state):
+  # By default, player will only use a jail free card if they're in jail.
+  # Returns 2 GroupOfChanges: the first consists of only non-building changes,
+  # and the second separately consists of any building changes.
+  def respond_to_state(self, state) -> Tuple[GroupOfChanges, GroupOfChanges]:
     if self._player.jail_moves > 0 and self._player.jail_free_count > 0:
       use_jail_free_card = self._return_jail_free_card(self._player, state)
-      return NotificationChanges(non_building_changes=use_jail_free_card)
-    return None
+      return use_jail_free_card, None
+    return None, None
 
   # By default, player does not revise his hotel demolitions
   def revise_hotel_demolitions(self, player, original_hotel_demolitions, state):

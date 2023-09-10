@@ -13,6 +13,7 @@ Description:
   (See design/housing-resolver.txt for explanation)
 '''
 
+from buildingrequests import BuildingRequests
 from enum import Enum
 from groupofchanges import GroupOfChanges
 from gamestatechange import GameStateChange
@@ -34,8 +35,8 @@ class ShortageType(Enum):
 class HousingResolver(object):
   # Takes in a dictionary mapping Players to their BuildingRequests and the
   # current GameState. shortage_resolution is one of ShortageResolution
-  def __init__(self, player_building_requests, state, shortage_resolution=ShortageResolution.EQUAL):
-    self._player_building_requests = player_building_requests
+  def __init__(self, player_building_changes: GroupOfChanges, state, shortage_resolution=ShortageResolution.EQUAL):
+    self._player_building_requests = {player: BuildingRequests(changes) for player, changes in player_building_changes.items()}
     self._state = state
     if shortage_resolution not in ShortageResolution:
       raise Exception('Invalid shortage resolution: %s' % shortage_resolution)

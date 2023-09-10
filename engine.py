@@ -66,9 +66,11 @@ class Engine(object):
       return True
 
     # Handle if player is in jail
+    left_jail = False
     if player.jail_moves > 0 and roll.is_doubles:
       self._state.apply(GroupOfChanges(
         changes=[GameStateChange.leave_jail(player)]))
+      left_jail = True
     elif player.jail_moves >= 2:
       self._state.apply(GroupOfChanges(
         changes=[GameStateChange.decrement_jail_moves(player)]))
@@ -78,6 +80,7 @@ class Engine(object):
       leave_changes = GroupOfChanges(
         changes=[GameStateChange.leave_jail(player)])
       self._state.apply(GroupOfChanges.combine([pay_changes, leave_changes]))
+      left_jail = True
 
     # Move player and resolve where they landed
     position = (player.position + roll.value) % NUM_SQUARES
@@ -90,20 +93,20 @@ class Engine(object):
     )
     self._state.apply(self._state.squares[position].landed(
       player, roll.value, self._state))
-    return not roll.is_doubles
+    return not roll.is_doubles or left_jail
 
   def _notify_all(self):
     if self._interactive:
       print('Notifying players...')
-    player_building_requests = {}
+    player_building_changes = {}
     for player in self._state.players:
-      notification_changes = player.respond_to_state(self._state)
-      if notification_changes:
-        self._state.apply(notification_changes.non_building_changes)
-        if notification_changes.building_requests:
-          player_building_requests[player] = notification_changes.building_requests
+      non_building_changes, building_changes = player.respond_to_state(self._state)
+      if non_building_changes:
+        self._state.apply(non_building_changes)
+      if building_changes:
+        player_building_changes[player] = building_changes
 
-    housing_resolver = HousingResolver(player_building_requests, self._state)
+    housing_resolver = HousingResolver(player_building_changes, self._state)
     housing_resolver.resolve()
 
   def _completed(self):

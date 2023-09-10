@@ -1,10 +1,8 @@
-from buildingrequests import BuildingRequests
 from decision_maker import DecisionMaker
 from enum import Enum
 from gamestatechange import GameStateChange
 from groupofchanges import GroupOfChanges
 from housingresolver import ShortageType
-from notification_changes import NotificationChanges
 from prop import Property
 from constants import *
 
@@ -143,11 +141,10 @@ class ConservativeDecisionMaker(DecisionMaker):
         break
       change = GameStateChange.build(prop, state, pending_changes=building_changes)
       building_changes = GroupOfChanges.combine([building_changes, GroupOfChanges(changes=[change])])
-    building_requests = BuildingRequests(building_changes)
 
     # Use jail card
     non_building_changes = None
     if self._player.jail_moves == 1 and self._player.jail_free_count > 0:
       non_building_changes = self._return_jail_free_card(self._player, state)
 
-    return NotificationChanges(non_building_changes=non_building_changes, building_requests=building_requests)
+    return non_building_changes, building_changes
